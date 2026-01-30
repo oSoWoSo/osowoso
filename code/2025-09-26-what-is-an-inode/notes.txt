@@ -51,7 +51,7 @@ with the filename we can get the inode, and with the inode we can get the data.
 the kernel abstracts this so we don't need to do this manually.
 
 all file types have an inode - including directories.  directories are a special
-type of file, just link symlinks, pipes, etc.
+type of file, just like symlinks, pipes, etc.
 
 5. dir0 (IMAGE_SIZE=50%)
 
