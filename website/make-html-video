@@ -1,36 +1,32 @@
-<!doctype html>
-<html>
-	<head>
-		<title>video | osowoso.org</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+#!/usr/bin/env bash
+#shellcheck disable=SC2089
+#
+# Make video.html file
+#
+# Author: zenobit <zen@duck.com>
+# Date: February 03, 2026
+# License: MIT
+#
 
-		<link rel="icon" href="/static/favicon.jpg">
+echo "Creating video.html"
 
-		<link rel="stylesheet" href="/static/style.css?v=3">
-		<link rel="stylesheet" href="/static/ansi.css?v=2">
+file=video
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-	</head>
-	<body>
-		<div id="container">
-			<div id="top-nav">
-				<ul>
-					<li><a href="/">home</a></li>
+title='video | osowoso.org'
+
+id='<pre class="footer"><code>'
+
+h='	<li><a href="/">home</a></li>
 					<li><a href="/projects">projects</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
 					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact">contact</a></li>
-				</ul>
-			</div>
+					<li class="right"><a href="/contact">contact</a></li>'
 
-			<h1 class="title" id="video-title">[object Object]</h1>
-			<p class="content">
-				<span id="video-description">nothing here yet bud</span>
+top='<h1 class="title" id="video-title">[object Object]</h1>'
+
+body='	<span id="video-description">nothing here yet bud</span>
 
 
 				<br>
@@ -60,28 +56,9 @@
 										<li>- <a id="video-youtube-link" href="#">Watch on YouTube</a></li>
 										<li>- <a id="video-instagram-link" href="#">Watch on Instagram</a></li>
 										<li>- <a id="video-tiktok-link" href="#">Watch on TikTok</a></li>
-								</ul>
-			</p>
-			<pre class="footer"><code>
-			<!-- GitHub Discussions Widget -->
-			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
-				<script src="https://giscus.app/client.js"
-					data-repo="osowoso/osowoso"
-					data-repo-id="R_kgDOPwu1wg"
-					data-category-id="DIC_kwDOPwu1ws4C1qTI"
-					data-mapping="pathname"
-					data-strict="0"
-					data-reactions-enabled="1"
-					data-emit-metadata="0"
-					data-input-position="bottom"
-					data-theme="noborder_dark"
-					data-lang="en"
-					data-loading="lazy"
-					crossorigin="anonymous"
-					async>
-				</script>
-			</div>
-			<!-- End GitHub Discussions Widget -->
+								</ul>'
+
+footer=$(cat << EOF
 source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
 &copy; zenobit - osowoso <script>document.write(new Date().getFullYear())</script>
 			</code></pre>
@@ -178,3 +155,74 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 		</script>
 	</body>
 </html>
+EOF
+)
+
+# shellcheck disable=SC2090
+giscus=$(
+	GISCUS_REPO="${GISCUS_REPO:-osowoso/osowoso}"
+	GISCUS_REPO_ID="${GISCUS_REPO_ID:-R_kgDOPwu1wg}"
+	GISCUS_CATEGORY_ID="${GISCUS_CATEGORY_ID:-DIC_kwDOPwu1ws4C1qTI}"
+	GISCUS_MAPPING="${GISCUS_MAPPING:-pathname}"
+	GISCUS_THEME="${GISCUS_THEME:-noborder_dark}"
+	GISCUS_LANG="${GISCUS_LANG:-en}"
+	cat << EOF
+			<!-- GitHub Discussions Widget -->
+			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
+				<script src="https://giscus.app/client.js"
+					data-repo="$GISCUS_REPO"
+					data-repo-id="$GISCUS_REPO_ID"
+					data-category-id="$GISCUS_CATEGORY_ID"
+					data-mapping="$GISCUS_MAPPING"
+					data-strict="0"
+					data-reactions-enabled="1"
+					data-emit-metadata="0"
+					data-input-position="bottom"
+					data-theme="$GISCUS_THEME"
+					data-lang="$GISCUS_LANG"
+					data-loading="lazy"
+					crossorigin="anonymous"
+					async>
+				</script>
+			</div>
+			<!-- End GitHub Discussions Widget -->
+EOF
+)
+
+export title h top body giscus footer
+
+cat << EOF> "static/${file}.html"
+<!doctype html>
+<html>
+	<head>
+		<title>${title}</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="icon" href="/static/favicon.jpg">
+
+		<link rel="stylesheet" href="/static/style.css?v=3">
+		<link rel="stylesheet" href="/static/ansi.css?v=2">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="container">
+			<div id="top-nav">
+				<ul>
+				${h}
+				</ul>
+			</div>
+
+			${top}
+			<p class="content">
+			${body}
+			</p>
+			${id}
+${giscus}
+${footer}
+EOF
+
+unset title h top body footer

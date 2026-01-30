@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+#
+# Generate HTML for GitHub Discussions integration using giscus
+# Embeds discussion widget into osowoso.org pages
+#
+# Author: zenobit
+# Date: January 30, 2026
+# License: MIT
+#
+# Usage:
+#   ./make-giscus file.html          # Add Giscus to file
+#   ./make-giscus -a                 # Add to all pages in _site
+#   GISCUS_THEME=dark ./make-giscus  # Custom theme
+
+set -e
+
+# Konfigurace (lze přepsat prostředím)
+GISCUS_REPO="${GISCUS_REPO:-osowoso/osowoso}"
+GISCUS_REPO_ID="${GISCUS_REPO_ID:-R_kgDOPwu1wg}"
+GISCUS_CATEGORY_ID="${GISCUS_CATEGORY_ID:-DIC_kwDOPwu1ws4C1qTI}"
+GISCUS_MAPPING="${GISCUS_MAPPING:-pathname}"
+GISCUS_THEME="${GISCUS_THEME:-noborder_dark}"
+GISCUS_LANG="${GISCUS_LANG:-en}"
+
+# Barvy
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+log() {
+	echo -e "${GREEN}[GISCUS]${NC} $1"
+}
+
+info() {
+	echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+# Funkce pro přidání Giscus do souboru
+add_giscus() {
+	local file="$1"
+
+	if [ ! -f "$file" ]; then
+		echo -e "${YELLOW}[WARNING]${NC} File not found: $file" >&2
+		return 1
+	fi
+
+	# Kontrola, zda už Giscus není přidán
+	if grep -q "giscus.app/client.js" "$file"; then
+		info "Already has Giscus: $file"
+		return 0
+	fi
+
+	# Přidat Giscus na konec souboru
+	cat << EOF >> "$file"
+			<!-- GitHub Discussions Widget -->
+			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
+				<script src="https://giscus.app/client.js"
+					data-repo="$GISCUS_REPO"
+					data-repo-id="$GISCUS_REPO_ID"
+					data-category-id="$GISCUS_CATEGORY_ID"
+					data-mapping="$GISCUS_MAPPING"
+					data-strict="0"
+					data-reactions-enabled="1"
+					data-emit-metadata="0"
+					data-input-position="bottom"
+					data-theme="$GISCUS_THEME"
+					data-lang="$GISCUS_LANG"
+					data-loading="lazy"
+					crossorigin="anonymous"
+					async>
+				</script>
+			</div>
+			<!-- End GitHub Discussions Widget -->
+EOF
+
+	log "Added Giscus to: $file"
+}
+
+# Přidat do všech stránek
+add_to_all() {
+	log "Adding Giscus to all pages in _site/"
+
+	if [ ! -d "_site" ]; then
+		echo -e "${YELLOW}[WARNING]${NC} _site directory not found" >&2
+		return 1
+	fi
+
+	local count=0
+
+	# Hlavní stránky
+	for page in index.html contact/index.html episodes/index.html \
+				projects/index.html resources/index.html \
+				contributing/index.html void/index.html; do
+		if [ -f "_site/$page" ]; then
+			add_giscus "_site/$page" && ((count++)) || true
+		fi
+	done
+
+	# Stránky epizod
+	if [ -d "_site/ep" ]; then
+		while IFS= read -r -d '' ep_file; do
+			add_giscus "$ep_file" && ((count++)) || true
+		done < <(find _site/ep -name "*.html" -type f -print0)
+	fi
+
+	log "Updated $count files"
+}
+
+# Help
+show_help() {
+	cat <<EOF
+make-giscus - Add Giscus discussions to HTML pages
+
+Usage:
+  $0 <file.html>           Add Giscus to specific file
+  $0 -a, --all             Add Giscus to all pages in _site/
+  $0 -h, --help            Show this help
+
+Configuration (via environment variables):
+  GISCUS_REPO="owner/repo"
+  GISCUS_REPO_ID="R_xxx"
+  GISCUS_CATEGORY_ID="DIC_xxx"
+  GISCUS_THEME="noborder_dark"  (light, dark, noborder_dark, etc.)
+  GISCUS_LANG="en"
+
+Examples:
+  # Single file
+  $0 _site/index.html
+
+  # All pages
+  $0 --all
+
+  # Custom theme
+  GISCUS_THEME=dark $0 _site/index.html
+
+  # Custom repo
+  GISCUS_REPO="myuser/myrepo" $0 --all
+
+Available themes:
+  light, dark, dark_dimmed, transparent_dark,
+  preferred_color_scheme, noborder_light,
+  noborder_dark, cobalt, purple_dark
+
+EOF
+}
+
+# Main
+case "${1:-}" in
+	-h|--help)
+		show_help
+		exit 0
+		;;
+	-a|--all)
+		add_to_all
+		;;
+	"")
+		echo "Error: No file specified" >&2
+		echo "Usage: $0 <file.html> or $0 --all" >&2
+		echo "Run '$0 --help' for more info" >&2
+		exit 1
+		;;
+	*)
+		add_giscus "$1"
+		;;
+esac

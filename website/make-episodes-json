@@ -4,12 +4,14 @@
 # JSONP instead.
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: March 17, 2024
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 varname=$1
 
-baselink='https://ysap.sh'
+baselink='https://osowoso.org'
 
 # this is an "episode" object in the final json
 read -d '' -r json <<-"EOF"
@@ -45,14 +47,14 @@ done < <(./make-list)
 # generate output JSON
 printf -v now '%(%s)T' -1
 output=$(printf '%s\n' "${objects[@]}" | jq -n \
-    --argjson date "$now" \
-    --arg link "$baselink" \
-    '{
-        "name": "You Suck at Programming",
-        "site": $link,
-        "generated": $date,
-        "episodes": [inputs]
-     }'
+	--argjson date "$now" \
+	--arg link "$baselink" \
+	'{
+		"name": "open Source World Society",
+		"site": $link,
+		"generated": $date,
+		"episodes": [inputs]
+	 }'
 )
 
 # print the data (optionally as jsonp if the first arg is set)

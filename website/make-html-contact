@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+#shellcheck disable=SC2089
+#
+# Make contact.html file
+#
+# Author: zenobit <zen@duck.com>
+# Date: February 03, 2026
+# License: MIT
+#
+
+echo "Creating contact.html"
+
+file=contact
+
+title='contact | osowoso.org'
+
+id='<div id="socials">
+				<div id="socials">
+					<a href="https://codeberg.org/oSoWoSo">Codeberg</a> |
+					<a href="https://github.com/oSoWoSo">GitHub</a> |
+					<a href="https://gitlab.com/osowoso">GitLab</a> |
+					<a href="https://git.disroot.org/oSoWoSo">Disroot</a>
+				</div>
+					<!--
+					<a href="https://osowoso.org/sh">SourceHut</a> |
+					-->
+					<!--
+					<a href="https://osowoso.org/or">or</a> |
+					-->
+				<div id="git">
+					<a href="https://smp10.simplex.im/g#rg4Sryn9kAgLt5I4u9SdL4b34MQgR141e7y1LiOV7sI">SimpleX</a> |
+					<a href="https://youtube.com/@oSoWoSo.">YouTube</a> |
+					<a href="https://patreon.com/oSoWoSo">Patreon</a>
+					<!--
+					<a href="https://osowoso.org/merch">Merch</a>
+					-->
+					<!--
+					<a href=""></a>
+					-->
+				</div>
+			</div>'
+
+h='	<li><a href="/">home</a></li>
+					<li><a href="/projects">projects</a></li>
+					<li><a href="/contributing">contributing</a></li>
+					<li><a href="/void">void</a></li>
+					<li><a href="/resources">resources</a></li>
+					<li><a href="/episodes">episodes</a></li>
+					<li class="right"><a href="/contact" class="active">contact</a></li>'
+
+top='<h1 class="title">&gt; contact</h1>
+			<img src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />'
+
+body='	You can track our gits below and join the SimpleX to chat with the community.
+				<br>
+				<br>
+				If you want to contact me directly please use the following email.
+				<br>
+				<br>
+				<a href="mailto:zen@duck.com">zen@duck.com</a>'
+
+footer='			<pre class="footer"><code>
+source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
+&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
+			</code></pre>
+		</div>
+	</body>
+</html>'
+
+# shellcheck disable=SC2090
+giscus=$(
+	GISCUS_REPO="${GISCUS_REPO:-osowoso/osowoso}"
+	GISCUS_REPO_ID="${GISCUS_REPO_ID:-R_kgDOPwu1wg}"
+	GISCUS_CATEGORY_ID="${GISCUS_CATEGORY_ID:-DIC_kwDOPwu1ws4C1qTI}"
+	GISCUS_MAPPING="${GISCUS_MAPPING:-pathname}"
+	GISCUS_THEME="${GISCUS_THEME:-noborder_dark}"
+	GISCUS_LANG="${GISCUS_LANG:-en}"
+	cat << EOF
+			<!-- GitHub Discussions Widget -->
+			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
+				<script src="https://giscus.app/client.js"
+					data-repo="$GISCUS_REPO"
+					data-repo-id="$GISCUS_REPO_ID"
+					data-category-id="$GISCUS_CATEGORY_ID"
+					data-mapping="$GISCUS_MAPPING"
+					data-strict="0"
+					data-reactions-enabled="1"
+					data-emit-metadata="0"
+					data-input-position="bottom"
+					data-theme="$GISCUS_THEME"
+					data-lang="$GISCUS_LANG"
+					data-loading="lazy"
+					crossorigin="anonymous"
+					async>
+				</script>
+			</div>
+			<!-- End GitHub Discussions Widget -->
+EOF
+)
+
+export title h top body giscus footer
+
+cat << EOF> "static/${file}.html"
+<!doctype html>
+<html>
+	<head>
+		<title>${title}</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="icon" href="/static/favicon.jpg">
+
+		<link rel="stylesheet" href="/static/style.css?v=3">
+		<link rel="stylesheet" href="/static/ansi.css?v=2">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="container">
+			<div id="top-nav">
+				<ul>
+				${h}
+				</ul>
+			</div>
+
+			${top}
+			<p class="content">
+			${body}
+			</p>
+			${id}
+${giscus}
+${footer}
+EOF
+
+unset title h top body footer

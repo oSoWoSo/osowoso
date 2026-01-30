@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# Test website locally
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: January 30, 2026
+# License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
+
+python3 -m http.server -d _site &
+
+sleep 1
+
+if pgrep -f "python3 -m http.server" > /dev/null; then
+	_g "Server is running on http://localhost:8000"
+	_r "For stop press enter..."
+	read -p ""
+	pkill -f "python3 -m http.server"
+	_y "Server stopped"
+else
+	_r "Server failed to start."
+	exit 1
+fi

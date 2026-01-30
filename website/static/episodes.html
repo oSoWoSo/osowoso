@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>episodes | ysap.sh</title>
+		<title>episodes | osowoso.org</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -19,14 +19,17 @@
 			<div id="top-nav">
 				<ul>
 					<li><a href="/">home</a></li>
-					<li><a href="/episodes" class="active">episodes</a></li>
+					<li><a href="/projects">projects</a></li>
+					<li><a href="/contributing">contributing</a></li>
+					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
+					<li><a href="/episodes">episodes</a></li>
 					<li class="right"><a href="/contact">contact</a></li>
 				</ul>
 			</div>
 
 			<h1 class="title">&gt; episodes</h1>
-			<img src="/static/ysap.png" class="logo hide-mobile" alt="ysap" height="75" />
+			<img src="/static/osowoso.png" class="logo hide-mobile" alt="osowoso" height="75" />
 			<p class="content">
 				<span class="highlight">You Suck at
 					Programming</span> is the series that
@@ -36,7 +39,7 @@
 				features 2-5 minute videos that cover cool
 				Unix/Bash facts or gotchas, offering insights
 				that are either useful or, at the very least,
-				      interesting.
+					  interesting.
 				<br>
 				<br>
 				There is also a compilation of the first 50
@@ -45,7 +48,7 @@
 				on YouTube</a>.
 				<br>
 				<br>
-				<span class="highlight">$ curl</span> ysap.sh/episodes
+				<span class="highlight">$ curl</span> osowoso.org/episodes
 				<br>
 			</p>
 			<br>
@@ -62,9 +65,28 @@
 				</tbody>
 			</table>
 
-			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/bahamas10/ysap">github.com/bahamas10/ysap</a>
-&copy; dave eddy - ysap <script>document.write(new Date().getFullYear())</script>
+			<!-- GitHub Discussions Widget -->
+			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
+				<script src="https://giscus.app/client.js"
+					data-repo="osowoso/osowoso"
+					data-repo-id="R_kgDOPwu1wg"
+					data-category-id="DIC_kwDOPwu1ws4C1qTI"
+					data-mapping="pathname"
+					data-strict="0"
+					data-reactions-enabled="1"
+					data-emit-metadata="0"
+					data-input-position="bottom"
+					data-theme="noborder_dark"
+					data-lang="en"
+					data-loading="lazy"
+					crossorigin="anonymous"
+					async>
+				</script>
+			</div>
+			<!-- End GitHub Discussions Widget -->
+<pre class="footer"><code>
+source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
+&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
 			</code></pre>
 		</div>
 		<script src="/static/episodes.js"></script>
@@ -106,31 +128,3 @@ source: <a class="alt" href="https://github.com/bahamas10/ysap">github.com/baham
 						case '"': c = '&quot;'; break;
 						case "'": c = '&#39;'; break;
 						case '/': c = '&#47;'; break;
-						case '`':
-							if (i % 2 === 0) {
-								c = '<span class="code">';
-							} else {
-								c = '</span>'
-							}
-							i++;
-							break;
-					}
-					s += c;
-				});
-				td.innerHTML = s;
-				td.classList.add('description');
-				tr.appendChild(td);
-
-				td = document.createElement('td');
-				let a = document.createElement('a');
-				a.href = '/v/' + num;
-				a.textContent = 'ysap.sh/v/' + num;
-				td.appendChild(a);
-				td.classList.add('link');
-				tr.appendChild(td);
-
-				tbody.appendChild(tr);
-			});
-		</script>
-	</body>
-</html>

@@ -4,8 +4,10 @@
 # stdout
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: April 05, 2025
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 dir=${1:-../episodes}
 

@@ -4,16 +4,23 @@
 # be piped into `tools/box`
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: April 05, 2025
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 . ./theme || exit 1
 
 readarray -t ABOUT << "EOF"
-Yo what's up everyone my name's
-Dave and you suck at programming.
-Connect with my socials or use this
-site to easily find my content!
+Don't buy a pig in a poke
+Don't use proprietary Operating System or software
+
+Use Open Source
+Like Linux kernel
+Used in best open source OS's on planet Earth
+Join us...
+
+Our world is in our hands...
 EOF
 
 for line in "${ABOUT[@]}"; do

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Print the socials - indended to be passed to `tools/box`
+# Print the git hostings - indended to be passed to `tools/box`
 #
 # Author: Dave Eddy <dave@daveeddy.com>
 # Date: January 30, 2026
@@ -10,15 +10,16 @@
 
 . ./theme || exit
 
-readarray -t SOCIALS << "EOF"
-YouTube|https://youtube.com/@oSoWoSo.
-Patreon|https://patreon.com/oSoWoSo
-SimpleX|https://smp10.simplex.im/g#rg4Sryn9kAgLt5I4u9SdL4b34MQgR141e7y1LiOV7sI
+readarray -t GIT << "EOF"
+Codeberg|https://codeberg.org/oSoWoSo
+GitHub|https://github.com/oSoWoSo
+GitLab|https://gitlab.com/osowoso
+Disroot|https://git.disroot.org/oSoWoSo
 EOF
 
 UNDERLINE=$'\x1b[3m'
 
-for line in "${SOCIALS[@]}"; do
+for line in "${GIT[@]}"; do
 	IFS='|' read -r name url <<< "$line"
 
 	echo -n "$COLOR2$name$RST"
