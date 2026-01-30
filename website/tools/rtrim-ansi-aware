@@ -3,7 +3,7 @@
 # Trim extraneous whitespace from the right of an input stream in a way that is
 # aware of any ANSI styling.
 #
-# Basically, I don't like that `curl ysap.sh` has some extra whitespace to the
+# Basically, I don't like that `curl osowoso.org` has some extra whitespace to the
 # right that causes it to word wrap on smaller terminals even though no visible
 # characters are there - so I wrote this tool to clean it up.  This only works
 # for lines that end in a reset sequence.
