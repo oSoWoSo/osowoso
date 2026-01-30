@@ -5,8 +5,10 @@
 # Heavily inspired by https://stackoverflow.com/a/54766117
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: March 28, 2025
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 # echo ... | strip-ansi
 strip-ansi() (

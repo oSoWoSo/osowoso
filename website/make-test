@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# Test website locally
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: January 30, 2026
+# License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
+
+_r() {
+	gum style --border rounded --border-foreground "#e50203" --padding "0 1" "$@"
+}
+
+_g() {
+	gum style --border rounded --border-foreground "#14a113" --padding "0 1" "$@"
+}
+
+_y() {
+	gum style --border rounded --border-foreground "#fdde13" --padding "0 1" "$@"
+}
+
+python3 -m http.server -d _site &
+
+sleep 1
+
+if pgrep -f "python3 -m http.server" > /dev/null; then
+	_g "Server is running on http://localhost:8000"
+else
+	_r "Server failed to start."
+	exit 1
+fi
+
+_r "For stop press enter..."
+read -p ""
+pkill -f "python3 -m http.server"
+_y "Server stopped"

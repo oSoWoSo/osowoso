@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 #
-# Make the body of the index page for ysap.sh
+# Make the body of the index page for osowoso.org
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: April 05, 2025
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 . ./theme || exit 1
 
@@ -16,6 +18,7 @@ mapfile -t SOCIALS < <(./make-socials |
 
 # get the max of both boxes
 num_about=${#ABOUT[@]}
+num_git=${#GIT[@]}
 num_socials=${#SOCIALS[@]}
 if ((num_socials > num_about)); then
 	max=$num_socials
@@ -30,6 +33,7 @@ about_len=${#about_stripped}
 for ((i = 0; i < max; i++)); do
 	line1=${ABOUT[i]}
 	line2=${SOCIALS[i]}
+	line3=${GIT[i]}
 
 	if [[ -z $line1 ]]; then
 		line1=$(./tools/repeat-char ' ' "$about_len")

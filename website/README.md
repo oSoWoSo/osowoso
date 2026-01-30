@@ -1,10 +1,10 @@
-YSAP Website
+open Source World Society Website
 ============
 
-https://ysap.sh
+https://osowoso.org
 
 ```
-curl ysap.sh
+curl osowoso.org
 ```
 
 Usage

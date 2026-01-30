@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 #
-# Generate the page as seen by `curl ysap.sh`
+# Generate the page as seen by `curl osowoso.org`
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: April 05, 2025
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 . ./theme || exit
 

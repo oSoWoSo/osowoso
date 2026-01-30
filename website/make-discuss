@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# Generate HTML for GitHub Discussions integration using giscus
+# Embeds discussion widget into osowoso.org pages
+#
+# Author: zenobit
+# Date: January 30, 2026
+# License: MIT
+
+cat << 'EOF'
+			<!-- GitHub Discussions Widget -->
+			<div class="discussions-container" style="margin: 2em 0 1em 0; padding: 1em 0; border-top: 1px solid #444;">
+				<script src="https://giscus.app/client.js"
+				        data-repo="osowoso/osowoso"
+				        data-repo-id="R_kgDOPwu1wg"
+				        data-category-id="DIC_kwDOPwu1ws4C1qTI"
+				        data-mapping="pathname"
+				        data-strict="0"
+				        data-reactions-enabled="1"
+				        data-emit-metadata="0"
+				        data-input-position="bottom"
+				        data-theme="noborder_dark"
+				        data-lang="en"
+				        data-loading="lazy"
+				        crossorigin="anonymous"
+				        async>
+				</script>
+			</div>
+			<!-- End GitHub Discussions Widget -->
+EOF

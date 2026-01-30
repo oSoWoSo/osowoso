@@ -3,8 +3,10 @@
 # Ensure the required dep programs are available
 #
 # Author: Dave Eddy <dave@daveeddy.com>
-# Date: March 25, 2024
+# Date: January 30, 2026
 # License: MIT
+#
+# Contributors: zenobit <zen@duck.com>
 
 code=0
 
