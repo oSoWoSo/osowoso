@@ -6,7 +6,7 @@
 A series on programming (actually just bash scripting) on youtube, tiktok and
 instagram hosted by Dave Eddy.
 
-- https://ysap.sh
+- https://osowoso.org
 
 Repository
 ----------
@@ -15,18 +15,18 @@ Repository
 - [episodes/](episodes/) - scripts and notes used during YSAP videos.
 - [patreon/](patreon/) - scripts and programs used for patreon shoutouts.
 - [tools/](tools/) - helper tools used for content creation.
-- [website/](website/) - scripts used for creating the [ysap.sh](https://ysap.sh) site.
+- [website/](website/) - scripts used for creating the [osowoso.org](https://osowoso.org) site.
 
 Episodes
 --------
 
 Updated list of episodes can be seen here:
 
-- https://ysap.sh/episodes
+- https://osowoso.org/episodes
 
 You can also access it on your terminal with:
 
-    curl ysap.sh/episodes
+    curl osowoso.org/episodes
 
 ![You Suck at Programming
 Episodes](https://files.daveeddy.com/ysap/ysap-episodes.jpg)
