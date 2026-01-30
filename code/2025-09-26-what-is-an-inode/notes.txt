@@ -80,7 +80,7 @@ pull up js
 pull up src
 check uv docs
 
-it seems like its in scandir
+it seems like it's in scandir
 
 ls -U1 on illumos
 ls -f1 on mac
