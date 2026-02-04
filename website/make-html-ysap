@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2089
 #
-# Make episodes.html file
+# Make ysap.html file
 #
 # Author: zenobit <zen@duck.com>
 # Date: February 03, 2026
 # License: MIT
 #
 
-echo "Creating episodes.html"
+echo "ysap.html"
 
-file=episodes
+file=ysap
 
-title='episodes | osowoso.org'
+title='ysap | osowoso.org'
 
 id='<br>
 
@@ -34,15 +34,16 @@ h='	<li><a href="/">home</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap" class="active">ysap</a></li>
 					<li class="right"><a href="/contact">contact</a></li>'
 
-top='<h1 class="title">&gt; episodes</h1>
-			<img src="/static/osowoso.png" class="logo hide-mobile" alt="osowoso" height="75" />'
+top='<h1 class="title">&gt; ysap</h1>
+			<img src="/static/ysap.png" class="logo hide-mobile" alt="ysap.sh" height="75" />'
 
-body='	<span class="highlight">You Suck at
-					Programming</span> is the series that
-				kickstarted my content creation journey!<br><br>
+body='Included on  oSoWoSo page because is awesome, and teach how to create this website.
+<br>
+<br>
+<span class="highlight">You Suck at Programming</span> is the series that kickstarted Dave Eddy content creation journey!<br><br>
 
 				This series
 				features 2-5 minute videos that cover cool
@@ -57,16 +58,16 @@ body='	<span class="highlight">You Suck at
 				on YouTube</a>.
 				<br>
 				<br>
-				<span class="highlight">$ curl</span> osowoso.org/episodes
+				<span class="highlight">$ curl</span> osowoso.org/ysap/index.txt
 				<br>'
 
-footer=$(cat <<EOF
+footer=$(cat <<'EOF'
 <pre class="footer"><code>
 source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
 &copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
 			</code></pre>
 		</div>
-		<script src="/static/episodes.js"></script>
+		<script src="/static/ysap.js"></script>
 		<script>
 			var tbody = document.getElementById('episodes-tbody');
 			const episodeCount = EPISODES.episodes.length;
@@ -105,6 +106,34 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 						case '"': c = '&quot;'; break;
 						case "'": c = '&#39;'; break;
 						case '/': c = '&#47;'; break;
+						case '`':
+							if (i % 2 === 0) {
+								c = '<span class="code">';
+							} else {
+								c = '</span>'
+							}
+							i++;
+							break;
+					}
+					s += c;
+				});
+				td.innerHTML = s;
+				td.classList.add('description');
+				tr.appendChild(td);
+
+				td = document.createElement('td');
+				let a = document.createElement('a');
+				a.href = '/y/' + num;
+				a.textContent = 'osowoso.org/y/' + num;
+				td.appendChild(a);
+				td.classList.add('link');
+				tr.appendChild(td);
+
+				tbody.appendChild(tr);
+			});
+		</script>
+	</body>
+</html>
 EOF
 )
 
@@ -141,7 +170,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "static/${file}.html"
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

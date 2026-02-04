@@ -109,148 +109,189 @@ target_help() { ## help - Show help
 
 # Target: build
 target_build() { ## Builds the site into _site folder (Will run by default if no argument given)
-	_header 'Building oSoWoSo website...'
+	_header 'Building oSoWoSo website'
 
 	# Ensure static assets exist
 	target_static_assets
 
 	# Create directory structure
-	_g "Creating directory structure..."
-	mkdir -p _site _site/contact _site/contributing _site/episodes \
+	_g 'Creating default structure'
+	mkdir -p _site _site/contact _site/contributing _site/ysap \
 			 _site/projects _site/resources _site/static _site/void
 
 	# Disable indexing for certain dirs
-	_g "Setting up directory indexes..."
+	_g 'Setting up directory indexes'
 	echo -n > _site/static/index.html
 
 	# Create static html files
-	_g "Generating HTML files..."
-	for h in index contact contrib episodes projects resources video void; do
-		if [ -x "./make-html-${h}" ]; then
-			"./make-html-${h}"
+	_g 'Generating HTML'
+	for h in projects contributing void resources y ysap contact; do
+		if [ "$h" = contributing ]; then
+			./make-html-contrib #&& rm "_site/contributing.html"
+		elif [ "$h" = y ]; then
+			./make-html y
+		elif [ -x "./make-html-${h}" ]; then
+			"./make-html-${h}" #&& rm "_site/$h.html"
 		else
 			_r "make-html-${h} script not found or not executable"
 		fi
 	done
 
+	# Create all pages for each video
+	_g 'Generating ysap video pages'
+	if [ -x ./make-ysap-pages ]; then
+		./make-ysap-pages
+		rm -f _site/y.html
+	else
+		_re 'make-ysap-pages script not found or not executable'
+	fi
+
+	# Create static html from md files
+	_g 'Generating from md'
+	for m in ../*.md; do
+		./make-html-from-md "$m"
+	done
+	#find ../ -maxdepth 1 -name "*.md" -exec sh -c 'pandoc "$0" -s -w html -M title:"${0%.md}" -o "_site/${0%.md}.html"' {} \;
+	#find . -name "*.md" -exec pandoc -s -o static/{}.html {} \;
+	#ls ../ | grep '.md' | pandoc -s -o static/{}.html {} \;
+	mv *.html _site/
+
 	# Copy static files
-	_g "Copying static files..."
+	_g 'Copying static files'
+	# Icons and other image files
 	cat static/favicon.ico > _site/favicon.ico
 	cat static/favicon.jpg > _site/static/favicon.jpg
-	cat static/robots.txt > _site/robots.txt
 	cat static/osowoso.png > _site/static/osowoso.png
+	cat static/ysap.png > _site/static/ysap.png
+	# robots.txt - for scrapers?
+	cat static/robots.txt > _site/robots.txt
+	# Styling
 	cat static/style.css > _site/static/style.css
 	cat static/ansi.css > _site/static/ansi.css
+	# Terminal simulation
 	cat static/terminal.js > _site/static/terminal.js
-	cat static/index.html > _site/index.html
-	cat static/contact.html > _site/contact/index.html
-	cat static/contrib.html > _site/contributing/index.html
-	cat static/episodes.html > _site/episodes/index.html
-	cat static/projects.html > _site/projects/index.html
-	cat static/resources.html > _site/resources/index.html
-	cat static/void.html > _site/void/index.html
+	# All html files
+	#cat static/contact.html > _site/contact/index.html
+	#cat static/contributing.html > _site/contributing/index.html
+	#cat static/episodes.html > _site/episodes/index.html
+	#cat static/projects.html > _site/projects/index.html
+	#cat static/resources.html > _site/resources/index.html
+	#cat static/void.html > _site/void/index.html
+	_g 'Creating structure if needed'
+	for f in _site/*.html; do
+		if [ ! "$f" = index.html ]; then
+			#cat "$f" > "_site/$f"
+			#echo 'later'
+		#else
+			name=$(echo "${f%.html}" | cut -d'/' -f2)
+			mkdir -p "_site/$name"
+			echo "$name/index.html"
+			#echo "cat $f > _site/$name/index.html"
+			cat "$f" > "_site/$name/index.html"
+		fi
+	done
+	./make-html-index
+	#cat static/index.html > _site/index.html
 
 	# Make /ping endpoint
-	_g "Creating ping endpoint..."
+	_g 'Creating ping endpoint'
 	echo 'pong' > _site/ping
 
 	# Create ASCII index page for curl users
-	_g "Generating ASCII pages..."
+	_g 'Generating ASCII pages'
 	if [ -x ./make-index ]; then
 		./make-index > _site/index.txt
 	else
-		_re "make-index script not found or not executable"
+		_re 'make-index script not found or not executable'
 	fi
 
 	# Create ASCII help page
 	if [ -x ./make-help ]; then
 		./make-help > _site/help
 	else
-		_re "make-help script not found or not executable"
+		_re 'make-help script not found or not executable'
 	fi
 
-	# Create episodes ASCII table
-	if [ -x ./make-episodes ]; then
-		./make-episodes > _site/episodes/index.txt
+	# Create ysap ASCII table
+	if [ -x ./make-ysap ]; then
+		./make-ysap > _site/ysap/index.txt
 	else
-		_re "make-episodes script not found or not executable"
+		_re 'make-ysap script not found or not executable'
 	fi
 
-	# Make episodes JSON file for curl
-	_g "Generating JSON data..."
-	if [ -x ./make-episodes-json ]; then
-		./make-episodes-json > _site/json
+	# Make ysap JSON file for curl
+	_g 'Generating JSON data'
+	if [ -x ./make-ysap-json ]; then
+		./make-ysap-json > _site/json
 	else
-		_re "make-episodes-json script not found or not executable"
+		_re 'make-ysap-json script not found or not executable'
 	fi
 
 	# Make jsonp for HTML files
-	_g "Generating JSONP files..."
+	_g 'Generating JSONP files'
 	if [ -x ./make-commands-jsonp ]; then
 		./make-commands-jsonp > _site/static/commands.js
 	else
-		_re "make-commands-jsonp script not found or not executable"
+		_re 'make-commands-jsonp script not found or not executable'
 	fi
 
-	if [ -x ./make-episodes-json ]; then
-		./make-episodes-json EPISODES > _site/static/episodes.js
+	if [ -x ./make-ysap-json ]; then
+		./make-ysap-json EPISODES > _site/static/ysap.js
 	else
-		_re "make-episodes-json script not found or not executable"
+		_re 'make-ysap-json script not found or not executable'
 	fi
 
-	cat _site/json > _site/episodes.json
+	cat _site/json > _site/ysap.json
 
 	# Add discussion to pages
-	_g "Adding Giscus discussions..."
+	_g 'Adding Giscus discussions'
 	if [ -x ./make-giscus ]; then
-		_y "TODO: For now disabled!"
+		_y 'TODO: For now disabled!'
 		#./make-giscus --all
 	else
-		_b "make-giscus script not found, skipping discussions"
+		_b 'make-giscus script not found, skipping discussions'
 	fi
 
-	# Create all pages for each video
-	_g "Generating video pages..."
-	if [ -x ./make-video-pages ]; then
-		./make-video-pages
-	else
-		_re "make-video-pages script not found or not executable"
-	fi
-
-	_footer "Build complete! Site is in ./_site/"
+	_footer 'Build complete!'
+	echo 'In _site/'
+	_y "$(ls --group-directories-first -F _site/)"
 }
 
 # Target: static-assets
 target_static_assets() { ## Ensure static assets (icons, images) exist
-	_g "Checking static assets..."
+	_g 'Checking static assets'
 
 	# Check for favicon.ico
 	if [ ! -f static/favicon.ico ]; then
+		mkdir -p static
 		if [ -f ../artwork/favicon.ico ]; then
-			_b "Copying favicon.ico from artwork..."
+			_b 'Copying favicon.ico from artwork'
 			cp ../artwork/favicon.ico static/
 		else
-			_re "static/favicon.ico not found and ../artwork/favicon.ico doesn't exist"
+			_re "static/favicon.ico not found
+			../artwork/favicon.ico doesn't exist"
 		fi
 	fi
 
 	# Check for favicon.jpg
 	if [ ! -f static/favicon.jpg ]; then
 		if [ -f ../artwork/favicon.jpg ]; then
-			_b "Copying favicon.jpg from artwork..."
+			_b 'Copying favicon.jpg from artwork'
 			cp ../artwork/favicon.jpg static/
 		else
-			_re "static/favicon.jpg not found and ../artwork/favicon.jpg doesn't exist"
+			_re "static/favicon.jpg not found
+			../artwork/favicon.jpg doesn't exist"
 		fi
 	fi
 
 	# Check for osowoso.png
 	if [ ! -f static/osowoso.png ]; then
 		if [ -f ../artwork/osowoso.png ]; then
-			_b "Copying osowoso.png from artwork..."
+			_b 'Copying osowoso.png from artwork'
 			cp ../artwork/osowoso.png static/
 		else
-			_re "static/osowoso.png not found and ../artwork/osowoso.png doesn't exist"
+			_re "static/osowoso.png not found
+../artwork/osowoso.png doesn't exist"
 		fi
 	fi
 }
@@ -272,28 +313,28 @@ target_serve() { ## Serve site locally out of _site folder
 		_re "Site not built. Run './build.sh build' first."
 	fi
 
-	_g "Starting local server on http://localhost:8000"
-	_b "Press Ctrl+C to stop"
+	_g 'Starting local server on http://localhost:8000'
+	_b 'Press Ctrl+C to stop'
 	python3 -m http.server -d _site 8000
 }
 
 # Target: check-deps
 target_check_deps() { ## Check to ensure needed dependencies are installed
-	_g "Checking dependencies..."
+	_g 'Checking dependencies'
 
 	if [ -x ./check-deps ]; then
 		./check-deps
 	else
-		_re "check-deps script not found or not executable"
+		_re 'check-deps script not found or not executable'
 	fi
 }
 
 # Target: check
 target_check() { ## Check tools syntax using shellcheck
-	_g "Running shellcheck on scripts..."
+	_g 'Running shellcheck on scripts'
 
 	if ! command -v shellcheck &> /dev/null; then
-		_re "shellcheck not installed. Install with: apt install shellcheck"
+		_re 'shellcheck not installed. Install with: apt install shellcheck'
 	fi
 
 	shellcheck -x check-* make-* tools/* || true
@@ -301,17 +342,17 @@ target_check() { ## Check tools syntax using shellcheck
 
 # Target: test
 target_test() { ## Serve site from _site folder to check it
-	_g "Starting test server..."
+	_g 'Starting test server'
 	if [ -x ./make-test ]; then
 		./make-test
 	else
-		_re "make-test script not found or not executable"
+		_re 'make-test script not found or not executable'
 	fi
 }
 
 # Target: clean
 target_clean() { ## Remove any generated files
-	_g "Cleaning generated files..."
+	_g 'Cleaning generated files'
 
 	rm -rf _site
 	rm -rf dynamic
@@ -319,26 +360,27 @@ target_clean() { ## Remove any generated files
 	rm -f static/favicon.jpg
 	rm -f static/osowoso.png
 
-	_g "Clean complete"
+	_g 'Clean complete'
 }
 
 # Target: deploy
 target_deploy() { ## Deploy the site (using rsync or local copy)
 	if [ ! -d _site ]; then
-		_re "Site not built. Run './build.sh build' first."
+		_re "Site not built. Run './build.sh build\' first."
 	fi
 
-	_g "Deploying site..."
+	_g 'Deploying site'
 
 	# Option 1: Remote deployment (uncomment if you have remote server)
 	#rsync -avh --delete ./_site/ web:/var/www/osowoso.org/
+
 	# Deploy to pico.sh
-	rsync --delete -rv ./_site/ pgs.sh:/osowoso && _g "Deployed to pico.sh"
+	rsync --delete -rv ./_site/ pgs.sh:/osowoso && _g 'Deployed to pico.sh'
 
 	# Option 2: Local deployment
 	#sudo rm -rf /var/www/osowoso.org
 	#sudo mkdir -p /var/www/osowoso.org
-	#sudo cp -r ./_site/* /var/www/osowoso.org/ && _g "Local deploy complete!"
+	#sudo cp -r ./_site/* /var/www/osowoso.org/ && _g 'Local deploy complete!"
 }
 
 # Main script logic
@@ -355,7 +397,8 @@ main() {
 	if declare -f "$func_name" > /dev/null; then
 		"$func_name"
 	else
-		_re "Unknown target: $target. Run '$0 help' for available targets."
+		#shellcheck disable=SC2016,2086
+		_re 'Unknown target: $target. Run '$0 help' for available targets.'
 	fi
 }
 

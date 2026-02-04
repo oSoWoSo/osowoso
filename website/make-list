@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Loop each episode and generate a tab-separated list of all episodes seen to
+# Loop each episode and generate a tab-separated list of all YSAP episodes seen to
 # stdout
 #
 # Author: Dave Eddy <dave@daveeddy.com>
@@ -9,7 +9,7 @@
 #
 # Contributors: zenobit <zen@duck.com>
 
-dir=${1:-../episodes}
+dir=${1:-../ysap}
 
 for pt in "$dir"/pt*/meta.txt; do
 	mapfile -t lines < "$pt"
@@ -18,7 +18,7 @@ for pt in "$dir"/pt*/meta.txt; do
 	title=${lines[0]}
 	num=${title%%.*}
 	title=${title#*. }
-	link=/v/$num
+	link=/y/$num
 	desc=${lines[1]}
 
 	# read the key values pairs at the bottom

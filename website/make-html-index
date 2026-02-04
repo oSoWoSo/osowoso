@@ -8,7 +8,7 @@
 # License: MIT
 #
 
-echo "Creating index.html"
+_g "Creating index.html"
 
 file=index
 
@@ -41,8 +41,26 @@ h='	<li><a href="/" class="active">home</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap">ysap</a></li>
 					<li class="right"><a href="/contact">contact</a></li>'
+#get_h() {
+	#local tmp
+	#tmp=$(mktemp)
+	#echo '	<li><a href="/" class="active">home</a></li>' > "$tmp"
+	##_g $(ls -F _site | grep '/' | cut -d'/' -f1)
+	#for d in $(ls -F _site | grep '/' | cut -d'/' -f1); do
+		#if [ ! "$d" = contact ]; then
+			#echo "					<li><a href=\"/$d/index.html\">$d</a></li>" >> "$tmp"
+		#elif [ "$d" = . ] || [ "$d" = contact ]; then
+			##echo 'contact skipped'
+			#true
+			##echo "<li><a href=\"/$d\">$d</a></li>" >> "$tmp"
+		#fi
+	#done
+	#echo "					<li class=\"right\"><a href=\"/contact/index.html\">contact</a></li>" >> "$tmp"
+	#h="$(cat $tmp)"
+#}
+#get_h
 
 top='<h1 class="title">&gt; osowoso.org</h1> <img src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="osowoso" width="128" />'
 
@@ -105,7 +123,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "static/${file}.html"
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

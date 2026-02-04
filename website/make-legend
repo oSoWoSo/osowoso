@@ -52,7 +52,7 @@ done
 
 legend=(
 	'$ curl osowoso.org/index.txt%Get this page'
-	'$ curl osowoso.org/episodes/index.txt%Get the list of episodes in the YSAP series'
+	'$ curl osowoso.org/ysap/index.txt%Get the list of episodes in the YSAP series'
 	'$ curl osowoso.org/json%Get the above in JSON format'
 	'$ curl osowoso.org/help%Get the full list of available endpoints'
 )
@@ -69,10 +69,10 @@ if $full; then
 		'$ curl style.osowoso.org%Bash Style Guide for writing safe scripts'
 	)
 
-	extras+=(
-		'$ curl xmas.osowoso.org | bash%Christmas tree animation'
-		'$ curl nightfall.osowoso.org | bash%Music Album TUI'
-	)
+	#extras+=(
+	#	'$ curl xmas.osowoso.org | bash%Christmas tree animation'
+	#	'$ curl nightfall.osowoso.org | bash%Music Album TUI'
+	#)
 fi
 
 format-box Legend "${legend[@]}"

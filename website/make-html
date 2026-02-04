@@ -11,30 +11,16 @@
 
 #TODO: Add episodes.html
 
-for f in index contact contrib episodes projects resources video void; do
-	echo "Creating $f.html"
-	file="${f}"
+f="$1"
+
+echo "$f.html"
+
+file="${f}"
+
+title="osowoso.org"
 
 # Differences
-	if [ "$file" = episodes ]; then
-		id='<br>
-
-			<table id="episodes-table" class="shadow">
-				<thead>
-					<tr>
-						<th>TITLE</th>
-						<th>DESCRIPTION</th>
-						<th>LINK</th>
-					</tr>
-				</thead>
-				<tbody id="episodes-tbody">
-				</tbody>
-			</table>
-'
-	elif [ "$file" = video ]; then
-		id='<pre class="footer"><code>'
-	else
-		id='<div id="socials">
+id='<div id="socials">
 				<div id="socials">
 					<a href="https://codeberg.org/oSoWoSo">Codeberg</a> |
 					<a href="https://github.com/oSoWoSo">GitHub</a> |
@@ -59,298 +45,18 @@ for f in index contact contrib episodes projects resources video void; do
 					-->
 				</div>
 			</div>'
-	fi
 
-	if [ "$file" = contact ]; then
-		title='contact | osowoso.org'
-		h='	<li><a href="/">home</a></li>
+h='	<li><a href="/">home</a></li>
 					<li><a href="/projects">projects</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact" class="active">contact</a></li>'
-		top='<h1 class="title">&gt; contact</h1>
-			<img src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />'
-		body='	You can track our gits below and join the SimpleX to chat with the community.
-				<br>
-				<br>
-				If you want to contact me directly please use the following email.
-				<br>
-				<br>
-				<a href="mailto:zen@duck.com">zen@duck.com</a>'
-		footer='			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-	</body>
-</html>'
-	fi
-
-	if [ "$file" = contrib ]; then
-		title='contributing | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing" class="active">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact""active">contact</a></li>'
-		top='<h1 class="title">&gt; contributing</h1>
-			<!--<img
-				src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />-->'
-		body='	Contributing to projects.
-				<br><br>
-				<ul>
-					<li>- <a href="https://github.com/void-linux/void-packages">void-packages</a> - The Void source packages collection</li>
-					<li>- <a href="https://codeberg.org/mobinmob/xut">xut</a> - xtra user templates - Build and install packages for Void Linux, using templates from the abyss-packages unofficial repo</li>
-					<li>- <a href="https://codeberg.org/mobinmob/abyss-packages">abyss-packages</a> - Unofficial repo of extra (packaging) templates for voidlinux</li>
-					<li>- <a href="https://github.com/lucky7xz/drako">drako</a> - Grid-based, customizable and extendable TUI-Deck launcher </li>
-					<li>- <a href="https://github.com/tvrzna/emptty">emptty</a> - Dead simple CLI Display Manager on TTY</li>
-					<li>- <a href="https://github.com/quickemu-project/quickemu">quickemu</a> - Quickly create and run optimised Windows, macOS and Linux desktop virtual machines</li>
-					<!--
-					<li>- <a href=""></a> - </li>
-					-->
-				</ul>
-				<br><br>
-
-				<h2 class="title">Merged PRs</h2><br>
-				Merged pull requests
-				<br><br>
-				<ul>
-					<li>- <a href="https://github.com/void-linux/void-packages/pulls?q=sort%3Aupdated-desc+is%3Apr+author%3Azen0bit+is%3Amerged">PRs</a> - In <code class="highlight">void-packages</code></li>
-					<li>- <a href="https://codeberg.org/mobinmob/abyss-packages/pulls?q=&type=all&sort=relevance&state=closed&labels=&milestone=0&project=0&assignee=0&poster=29282&archived=false">PRs</a> - In <code class="highlight">abyss-packages</code></li>
-					<li>- <a href="https://github.com/quickemu-project/quickemu/pulls?q=sort%3Aupdated-desc+is%3Apr+author%3Azen0bit+is%3Amerged">PRs</a> - In <code class="highlight">quickemu</code></li>
-					<!--
-					<li>- <a href="https://github.com/"></a> - </li>
-					<li>- <a href=""></a> - In <code class=""></code></li>
-					-->
-					<li>- <a href="https://github.com/ivan-hc/AM/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Amerged+author%3Azen0bit">PRs</a> - In <code class="highlight">AM</code></li>
-					<li>- <a href="https://github.com/tvrzna/emptty/pull/148">emptty</a> - Add IndentSelection</li>
-				</ul>
-				<br><br>
-
-				<h2 class="title">Waiting PRs</h2><br>
-				Not yet merged pull requests
-				<br><br>
-				<ul>
-					<li>- <a href="https://github.com/void-linux/void-packages/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aopen+author%3Azen0bit">PRs</a> - In <code class="highlight">void-packages</code></li>
-					<!--
-					<li>- <a href=""></a> - In <code class=""></code></li>
-					-->
-					<li>- <a href="https://github.com/lucky7xz/drako/pull/3">drako</a> - change row numbers to 1-9</li>
-				</ul>
-				<br><br>
-
-				<h2 class="title">Translations</h2><br>
-				Improving translations in this projects.
-				<br><br>
-				<ul>
-					<li>- <a href="https://github.com/simplex-chat/simplex-chat">SimpleX Chat</a> - First messaging network operating without user identifiers of any kind - 100% private by design!</li>
-					<li>- <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> - Get Android app updates straight from the source</li>
-					<li>- <a href="https://github.com/kando-menu/kando">Kando</a> - Do things with utmost efficiency</li>
-					<!--
-					<li>- <a href="https://github.com/"></a> - </li>
-					-->
-					<li>'
-		footer='			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-	</body>
-</html>'
-	fi
-
-	if [ "$file" = episodes ]; then
-		title='episodes | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap">ysap</a></li>
 					<li class="right"><a href="/contact">contact</a></li>'
-		top='<h1 class="title">&gt; episodes</h1>
-			<img src="/static/osowoso.png" class="logo hide-mobile" alt="osowoso" height="75" />'
-		body='	<span class="highlight">You Suck at
-					Programming</span> is the series that
-				kickstarted my content creation journey!<br><br>
 
-				This series
-				features 2-5 minute videos that cover cool
-				Unix/Bash facts or gotchas, offering insights
-				that are either useful or, at the very least,
-					  interesting.
-				<br>
-				<br>
-				There is also a compilation of the first 50
-				episodes <a
-				href="https://www.youtube.com/watch?v=KwRow9DdFJ0">available
-				on YouTube</a>.
-				<br>
-				<br>
-				<span class="highlight">$ curl</span> osowoso.org/episodes
-				<br>'
-		footer=$(cat <<EOF
-<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-		<script src="/static/episodes.js"></script>
-		<script>
-			var tbody = document.getElementById('episodes-tbody');
-			const episodeCount = EPISODES.episodes.length;
+top="<h1 class=\"title\" id=\"video-title\">[object Object]</h1>"
 
-			EPISODES.episodes.forEach(function (episode) {
-				let num = episode.num;
-
-				let numFormatted = num.toString();
-				for (let i = numFormatted.length; i < episodeCount.toString().length; i++) {
-					numFormatted = '0' + numFormatted;
-				}
-
-				let tr = document.createElement('tr');
-				let td, span;
-
-				td = document.createElement('td');
-				span = document.createElement('span');
-				span.classList.add('number');
-				span.innerHTML = numFormatted + '. ';
-				td.appendChild(span);
-				span = document.createElement('span');
-				span.classList.add('name');
-				span.textContent = episode.title;
-				td.appendChild(span);
-				td.classList.add('title');
-				tr.appendChild(td);
-
-				td = document.createElement('td');
-				let i = 0;
-				let s = '';
-				episode.desc.split('').forEach(function (c) {
-					switch (c) {
-						case '&': c = '&amp;'; break;
-						case '<': c = '&lt;'; break;
-						case '>': c = '&gt;'; break;
-						case '"': c = '&quot;'; break;
-						case "'": c = '&#39;'; break;
-						case '/': c = '&#47;'; break;
-EOF
-)
-	fi
-
-	if [ "$file" = index ]; then
-		title=osowoso.org
-		h='	<li><a href="/" class="active">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact">contact</a></li>'
-		top='<h1 class="title">&gt; osowoso.org</h1> <img src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="osowoso" width="128" />'
-		body=$(cat << EOF
-	What's up everyone? I am zenobit from open Source World Society
-				<br>
-				<br>
-				This is the site for <span class="highlight">oSoWoSo</span> projects,
-				where We try to make world more open source.
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<pre class="terminal shadow" id="main-terminal"><code></code></pre>
-				<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-				</code></pre>
-EOF
-)
-		footer='		<script src="/static/commands.js"></script>
-		<script src="/static/terminal.js"></script>
-	</body>
-</html>'
-	fi
-
-	if [ "$file" = projects ]; then
-		title='projects | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects" class="active">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact""active">contact</a></li>'
-		top='<h1 class="title">&gt; projects</h1>
-			<!--<img
-				src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />-->'
-		body='	A collection of projects and tools that Ive created that you all may find useful.
-				<br><br>
-				<ul>
-				<!--
-				<li>- <a href="https://course.osowoso.org">The Complete Bash Course</a> - The official YSAP Bash course</li>
-				<li>- <a href="https://style.osowoso.org">Bash Style Guide</a> - The official YSAP style guide</li>
-				-->
-				</ul>
-				<br><br>'
-		footer='			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-	</body>
-</html>'
-	fi
-
-	if [ "$file" = resources ]; then
-		title='resources | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources" class="active">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact""active">contact</a></li>'
-		top='<h1 class="title">&gt; resources</h1>
-			<!--<img
-				src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />-->'
-		body='	Excellent open source software We cannot live without.
-				<br><br>
-				<ul>
-					<li>- <a href="https://www.kernel.org/">Linux kernel</a> - Linux is a clone of the operating system Unix, written from scratch by Linus Torvalds with assistance from a loosely-knit team of hackers across the Net. It aims towards POSIX and Single UNIX Specification compliance.</li>
-					<li>- <a href="https://voidlinux.org">Void Linux</a> - Void is a general purpose operating system, based on the monolithic Linux kernel. Its package system allows you to quickly install, update and remove software; software is provided in binary packages or can be built directly from sources with the help of the XBPS source packages collection.</li>
-					<!--
-					<li>- <a href=""></a> - </li>
-					-->
-				</ul>
-				<br><br>'
-		footer='			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-	</body>
-</html>'
-	fi
-
-	if [ "$file" = video ]; then
-		title='video | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact">contact</a></li>'
-		top='<h1 class="title" id="video-title">[object Object]</h1>'
-		body='	<span id="video-description">nothing here yet bud</span>
+body='	<span id="video-description">nothing here yet bud</span>
 
 
 				<br>
@@ -381,12 +87,14 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 										<li>- <a id="video-instagram-link" href="#">Watch on Instagram</a></li>
 										<li>- <a id="video-tiktok-link" href="#">Watch on TikTok</a></li>
 								</ul>'
-		footer=$(cat << EOF
+
+footer=$(cat << EOF
+			<pre class="footer"><code>
 source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
 &copy; zenobit - osowoso <script>document.write(new Date().getFullYear())</script>
 			</code></pre>
 		</div>
-		<script src="/static/episodes.js"></script>
+		<script src="/static/ysap.js"></script>
 		<script>
 			function isFirstEpisode(currentNum) {
 				return currentNum === 1;
@@ -405,7 +113,7 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 				console.log('looking up %s', path);
 
 				let m, num;
-				if ((m = path.match(/^\/v\/([0-9]+)$/))) {
+				if ((m = path.match(/^\/y\/([0-9]+)$/))) {
 					num = m[1];
 				} else {
 					throw 'unrecoginzed url';
@@ -423,7 +131,7 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 				let nextNum = getCurrentEpisodeNum() + 1;
 				let nextEpisode = EPISODES.episodes[nextNum - 1];
 				if (nextEpisode) {
-					globalThis.location.href = '/v/' + nextNum;
+					globalThis.location.href = '/y/' + nextNum;
 				}
 			}
 
@@ -431,7 +139,7 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 				let prevNum = getCurrentEpisodeNum() - 1;
 				let prevEpisode = EPISODES.episodes[prevNum - 1];
 				if (prevEpisode) {
-					globalThis.location.href = '/v/' + prevNum;
+					globalThis.location.href = '/y/' + prevNum;
 				}
 			}
 
@@ -456,7 +164,10 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 
 			// set youtube iframe
 			let yt = episode.external.youtube;
-			if ((m = yt.match(/v=(.*)$/))) {
+			// Trying to fix v->y issues
+			//if ((m = yt.match(/v=(.*)$/))) {
+			//
+			if ((m = yt.match(/y=(.*)$/))) {
 				ytVideoElem.src = 'https://www.youtube.com/embed/' + m[1];
 			} else {
 				throw 'invalid youtube link: ' + yt;
@@ -480,38 +191,9 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 </html>
 EOF
 )
-	fi
 
-	if [ "$file" = void ]; then
-		title='Awesome Void Linux | osowoso.org'
-		h='	<li><a href="/">home</a></li>
-					<li><a href="/projects">projects</a></li>
-					<li><a href="/contributing">contributing</a></li>
-					<li><a href="/void" class="active">void</a></li>
-					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
-					<li class="right"><a href="/contact""active">contact</a></li>'
-		top='<h1 class="title">&gt; void</h1>
-			<!--<img
-				src="https://secure.gravatar.com/avatar/abfe8049a00a6dadca4c4c7b5bf19ed833d33393e42ed9501979201488c12494?s=128" class="logo self-portrait" alt="ysap" width="128" />-->'
-		body='	A collection of void and tools that Ive created that you all may find useful.
-				<br><br>
-				<ul>
-					<li>- <a href="https://codeberg.org/mobinmob/xut">xut</a> - xtra user templates - Build and install packages for Void Linux, using templates from the abyss-packages unofficial repo</li>
-				<br><br>'
-		footer='			<pre class="footer"><code>
-source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoWoSo/osowoso</a>
-&copy; zenobit - oSoWoSo <script>document.write(new Date().getFullYear())</script>
-			</code></pre>
-		</div>
-	</body>
-</html>'
-
-	fi
-
-	# shellcheck disable=SC2090
-
-	giscus=$(
+# shellcheck disable=SC2090
+giscus=$(
 		GISCUS_REPO="${GISCUS_REPO:-osowoso/osowoso}"
 		GISCUS_REPO_ID="${GISCUS_REPO_ID:-R_kgDOPwu1wg}"
 		GISCUS_CATEGORY_ID="${GISCUS_CATEGORY_ID:-DIC_kwDOPwu1ws4C1qTI}"
@@ -539,11 +221,10 @@ source: <a class="alt" href="https://github.com/oSoWoSo/osowoso">github.com/oSoW
 			</div>
 			<!-- End GitHub Discussions Widget -->
 EOF
-			)
+)
 
-	export title h top body giscus footer
-
-	cat << EOF> "static/${file}.html"
+export title h top body giscus footer
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>
@@ -578,4 +259,3 @@ ${footer}
 EOF
 
 	unset title h top body footer
-done

@@ -8,7 +8,7 @@
 # License: MIT
 #
 
-echo "Creating resources.html"
+echo "resources.html"
 
 file=resources
 
@@ -45,7 +45,7 @@ h='	<li><a href="/">home</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources" class="active">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap">ysap</a></li>
 					<li class="right"><a href="/contact""active">contact</a></li>'
 
 top='<h1 class="title">&gt; resources</h1>
@@ -106,7 +106,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "static/${file}.html"
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

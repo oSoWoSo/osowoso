@@ -8,7 +8,7 @@
 # License: MIT
 #
 
-echo "Creating projects.html"
+echo "projects.html"
 
 file=projects
 
@@ -45,7 +45,7 @@ h='	<li><a href="/">home</a></li>
 					<li><a href="/contributing">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap">ysap</a></li>
 					<li class="right"><a href="/contact""active">contact</a></li>'
 
 top='<h1 class="title">&gt; projects</h1>
@@ -58,16 +58,16 @@ body='	A collection of projects and tools that you may find useful.
 				<li>- <a href="https://github.com/zen0bit/awesome-stars">awesome-stars</a> - My Awesome List </li>
 				<li>- <a href="https://github.com/oSoWoSo/awesome-void-linux">awesome-void-linux</a> - List of awesome applications, software, tools and other materials for Void Linux</li>
 				<li>- <a href="https://github.com/oSoWoSo/cayman-vb-dark">cayman-vb-dark</a> - Dark mode adaptation of Cayman jekyll theme</li>
-				<li>- <a href="https://github.com/oSoWoSo/DistroHopper">DistroHopper</a> - Quickly download, create and run VM of any#TODO operating system</li>
+				<li>- <a href="https://osowoso.org/dh">DistroHopper</a> - Quickly download, create and run VM of any#TODO operating system</li>
 				<li>- <a href="https://github.com/oSoWoSo/distro-svg">distro-svg</a> - Collection of distro icons in svg format</li>
 				<li>- <a href="https://github.com/oSoWoSo/dotbot-xi">dotbot-xi</a> - Dotbot xi plugin (Use xi from xtools) </li>
-				<li>- <a href="https://github.com/oSoWoSo/gumak">gumak</a> - Gumák and other usefull TUIs </li>
+				<li>- <a href="https://osowoso.org/gumak/">gumak</a> - Gumák and other usefull TUIs </li>
 				<li>- <a href="https://github.com/oSoWoSo/passthrough_helper_void">passthrough_helper_void</a> - GPU passthrough helper</li>
 				<li>- <a href="https://github.com/oSoWoSo/piu">piu</a> - Cross platform package manager wrapper</li>
 				<li>- <a href="https://github.com/oSoWoSo/quickemu-font-and-logos">quickemu-font-and-logos</a> - Icon font containing logos of popular Operating Systems</li>
 				<li>- <a href="https://github.com/oSoWoSo/SimpleX-Themes">SimpleX-Themes</a> - Repository for SimpleX Chat themes</li>
 				<li>- <a href="https://github.com/oSoWoSo/vbm">vbm</a> - XBPS package management helper for VoidLinux</li>
-				<li>- <a href="https://github.com/oSoWoSo/void-artwork">void-artwork</a> - Collection of artworks for Void linux</li>
+				<li>- <a href="https://osowoso.org/void-artwork">void-artwork</a> - Collection of artworks for Void linux</li>
 				<li>- <a href="https://github.com/oSoWoSo/void-helper">void-helper</a> - Configuration script for Void Linux that guides you through several steps with questions</li>
 				<li>- <a href="https://github.com/oSoWoSo/Void-In-Termux">Void-In-Termux</a> - This intends to allow a proot from Termux to Void Linux rootfs</li>
 				<li>- <a href="https://github.com/oSoWoSo/VUR">VUR</a> - Void User Repository templates collection</li>
@@ -119,7 +119,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "static/${file}.html"
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

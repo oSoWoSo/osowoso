@@ -12,16 +12,12 @@
 # Contributors: zenobit <zen@duck.com>
 
 num_re='^[0-9]+$'
-
-echo 'making video pages in _site/v/...'
-
 i=0
 while IFS=$'\t' read -r num _; do
 	# sanity
 	[[ $num =~ $num_re ]] || exit
-	mkdir -p "_site/v/$num"
-	cat static/video.html > "_site/v/$num/index.html"
+	mkdir -p "_site/y/$num"
+	cat _site/y.html > "_site/y/$num/index.html"
 	((i++))
 done < <(./make-list)
-
-echo "made pages for $i videos"
+echo "$i videos"

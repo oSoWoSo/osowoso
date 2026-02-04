@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Convert the list of episodes into JSON format - pass an argument to make it
+# Convert the list of YSAP episodes into JSON format - pass an argument to make it
 # JSONP instead.
 #
 # Author: Dave Eddy <dave@daveeddy.com>
@@ -50,7 +50,7 @@ output=$(printf '%s\n' "${objects[@]}" | jq -n \
 	--argjson date "$now" \
 	--arg link "$baselink" \
 	'{
-		"name": "open Source World Society",
+		"name": "YSAP",
 		"site": $link,
 		"generated": $date,
 		"episodes": [inputs]

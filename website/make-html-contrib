@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2089
 #
-# Make contrib.html file
+# Make contributing.html file
 #
 # Author: zenobit <zen@duck.com>
 # Date: February 03, 2026
 # License: MIT
 #
 
-echo "Creating contrib.html"
+echo "contributing.html"
 
-file=contrib
+file=contributing
 
 title='contributing | osowoso.org'
 
@@ -45,7 +45,7 @@ h='	<li><a href="/">home</a></li>
 					<li><a href="/contributing" class="active">contributing</a></li>
 					<li><a href="/void">void</a></li>
 					<li><a href="/resources">resources</a></li>
-					<li><a href="/episodes">episodes</a></li>
+					<li><a href="/ysap">ysap</a></li>
 					<li class="right"><a href="/contact""active">contact</a></li>'
 
 top='	<h1 class="title">&gt; contributing</h1>
@@ -157,7 +157,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "static/${file}.html"
+cat << EOF> "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

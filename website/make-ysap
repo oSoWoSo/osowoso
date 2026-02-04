@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Generate the page as seen by `curl osowoso.org/episodes`
+# Generate the page as seen by `curl osowoso.org/ysap`
 #
 # Author: Dave Eddy <dave@daveeddy.com>
 # Date: January 30, 2026

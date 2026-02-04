@@ -33,11 +33,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      #- name: dependencies
-        #run: |
-          #sudo apt update
+      - name: dependencies
+        run: |
+          sudo apt update
           #sudo apt upgrade
-          #sudo apt install gum
+          sudo apt install pandoc
       - name: make site
         run: |
           mkdir -p docs

@@ -66,7 +66,7 @@ body {
 }
 
 body, code {
-	font-family: "Fira Mono", monospace;
+	font-family: "Nerd Fira Mono", monospace;
 	font-weight: 400;
 	font-style: normal;
 }
@@ -80,7 +80,7 @@ b, strong, h1, h2, h3, h4, h5, h6 {
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10px;
-	max-width: 800px;
+	max-width: 1080px;
 	padding: 0 6px;
 }
 
@@ -141,7 +141,7 @@ h1.title {
 }
 
 p.content {
-	max-width: 620px;
+	max-width: 1920px;
 }
 
 #socials {
