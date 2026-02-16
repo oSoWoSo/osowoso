@@ -123,7 +123,7 @@ EOF
 
 export title h top body giscus footer
 
-cat << EOF> "_site/${file}.html"
+cat << EOF > "_site/${file}.html"
 <!doctype html>
 <html>
 	<head>

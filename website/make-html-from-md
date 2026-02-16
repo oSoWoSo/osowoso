@@ -2,11 +2,10 @@
 #
 # Make the body of the index page for osowoso.org
 #
-# Author: Dave Eddy <dave@daveeddy.com>
+# Author: zenobit <zen@duck.com>
 # Date: January 30, 2026
 # License: MIT
 #
-# Contributors: zenobit <zen@duck.com>
 
 m="$1"
 file="${m%.md}"
@@ -221,5 +220,3 @@ cat << EOF> "_site/${file}.html"
 ${giscus}
 ${footer}
 EOF
-
-unset title h top body footer
