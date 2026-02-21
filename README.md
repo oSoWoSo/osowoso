@@ -107,3 +107,5 @@ All code licensed under the MIT License
 
 remade by [zenobit](https://codeberg.org/zenobit)
 
+
+We got a :star: from [@zen0bit](https://github.com/zen0bit)
