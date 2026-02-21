@@ -2,7 +2,7 @@ name: Build GitHub Pages from md files
 on:
   push:
     branches:
-      - new-website
+      - osowoso
     paths:
       - '*.md'
       - 'docs/*.css'
@@ -29,7 +29,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 2
-          branch: new-website
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
