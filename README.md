@@ -1,4 +1,4 @@
-![oSoWoSo.org Banner](artwork/osowoso.png)
+![oSoWoSo.org Banner](https://osowoso.org/favicon.jpg)
 ---
 Our world is in our hands...
 ---
@@ -95,6 +95,3 @@ All code licensed under the MIT License
   Thanks Dave
 
 remade by [zenobit](https://codeberg.org/zenobit)
-
-
-We got a :star: from [@zen0bit](https://github.com/zen0bit)
