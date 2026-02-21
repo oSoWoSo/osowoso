@@ -50,7 +50,7 @@ jobs:
           fi
 
       - name: Upload artifact
-        if: steps.diff.outputs.changed == 'true'
+        #if: steps.diff.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: 'docs/'
