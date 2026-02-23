@@ -1,0 +1,11 @@
+output/*
+static/*
+drafts/*
+backup/*
+Markdown.pl
+config.sh.local
+.bssg_cache
+TODO.md
+CHANGELOG.md
+TOCHECK.md
+example/
