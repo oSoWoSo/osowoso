@@ -1,7 +1,7 @@
 ---
 title: SimpleX-Themes
 date: 2026-02-23 12:04:51 +0100
-lastmod: 2026-02-23 22:22:19 +0100
+lastmod: 2026-02-24 00:16:19 +0100
 tags: simplex, simplex-chat, chat, themes
 slug: simplex-themes
 secondary: true

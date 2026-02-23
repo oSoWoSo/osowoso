@@ -1,7 +1,7 @@
 ---
 title: oSoWoSo
-date: 2026-02-23 22:22:19 +0100
-lastmod: 2026-02-23 22:22:19 +0100
+date: 2026-02-24 00:16:19 +0100
+lastmod: 2026-02-24 00:16:19 +0100
 tags: osowoso
 slug: index
 secondary: false
