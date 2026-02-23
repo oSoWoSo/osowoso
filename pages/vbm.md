@@ -1,7 +1,7 @@
 ---
 title: vbm
 date: 2026-02-23 12:05:18 +0100
-lastmod: 2026-02-23 13:05:56 +0100
+lastmod: 2026-02-23 22:22:19 +0100
 tags: vbm, xbps, package, void
 slug: vbm
 secondary: true

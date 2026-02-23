@@ -1,7 +1,7 @@
 ---
 title: bssg
 date: 2026-02-23 12:57:17 +0100
-lastmod: 2026-02-23 12:57:17 +0100
+lastmod: 2026-02-23 22:22:19 +0100
 tags: bssg, static, site, website, generator, ssg
 slug: bssg
 secondary: true
