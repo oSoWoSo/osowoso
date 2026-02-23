@@ -6,7 +6,7 @@ tags: osowoso
 slug: index
 secondary: false
 ---
-![oSoWoSo.org Banner](artwork/osowoso.png)
+![oSoWoSo.org Banner](osowoso.png)
 ---
 Our world is in our hands...
 ---
