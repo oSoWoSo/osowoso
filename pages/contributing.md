@@ -1,10 +1,11 @@
 ---
 title: Contributing
-date: 2026-02-07 00:54:06 +0100
-lastmod: 2026-02-07 00:54:06 +0100
+date: 2026-02-06 23:54:00 +0100
+lastmod: 2026-02-06 23:54:00 +0100
+tags: project, contrib, void, abyss, xut, drako, emptty, quickemu, pr, mr, codeberg, github, repo, alovoa, kando, obtainium, simplex, simplex-chat, translate, translation
 slug: contributing
-secondary: false
 ---
+
 # Contributed to projects
 - [void-packages](https://github.com/void-linux/void-packages) - The Void source packages collection
 
