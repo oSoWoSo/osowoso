@@ -1,7 +1,7 @@
 ---
 title: vut
 date: 2026-02-23 12:05:34 +0100
-lastmod: 2026-02-23 13:05:56 +0100
+lastmod: 2026-02-23 22:22:19 +0100
 tags: vut, void, template, xbps-src, xbps
 slug: vut
 secondary: true
