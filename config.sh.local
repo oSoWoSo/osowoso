@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# Local configuration for BSSG site
+#
+# Refer to the main 'config.sh' file in your BSSG installation
+# for a complete list of available configuration options.
+#
+
+# Resolve the directory of this config file so paths work in any environment
+_SITE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# --- Content Directories ---
+SRC_DIR="${_SITE_DIR}/src"
+PAGES_DIR="${_SITE_DIR}/pages"
+DRAFTS_DIR="${_SITE_DIR}/drafts"
+STATIC_DIR="${_SITE_DIR}/static"
+OUTPUT_DIR="${_SITE_DIR}/output"
+
+# --- Build Specific Overrides ---
+CACHE_DIR="${_SITE_DIR}/.bssg_cache"
+
+# --- Site Specific Overrides ---
+SITE_TITLE="oSoWoSo"
+SITE_URL="https://osowoso.org"
+SITE_DESCRIPTION="open Source World Society"
+THEME="osowoso"

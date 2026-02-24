@@ -3,7 +3,7 @@
 drafts/*
 backup/*
 Markdown.pl
-config.sh.local
+#config.sh.local
 .bssg_cache
 TODO.md
 CHANGELOG.md
