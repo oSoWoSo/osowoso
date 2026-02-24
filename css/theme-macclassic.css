@@ -1,0 +1,1147 @@
+/* 
+ * Mac Classic Theme for BSSG
+ * Styled after the nostalgic MacOS 9 look
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic Mac Classic aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable hover transforms */
+    .site-title a:hover,
+    nav a:hover,
+    .mac-button:hover {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Mac Classic color scheme - improved */
+    --bg-color: #dedede;
+    --window-bg: #ffffff;
+    --text-color: #000000;
+    --link-color: #0000ee;
+    --link-visited: #660099;
+    --header-color: #000000;
+    --border-color: #888888;
+    --accent-color: #b8b8b8;
+    --title-bar: linear-gradient(to bottom, #cccccc, #999999);
+    --button-face: linear-gradient(to bottom, #ffffff, #dedede);
+    --scrollbar-bg: #cccccc;
+    --menu-bar-bg: #eeeeee;
+    --active-window: #000000;
+    --inactive-window: #888888;
+    --selection-bg: #3875d7;
+    --selection-text: #ffffff;
+    --highlight-yellow: #ffffcc;
+    --tooltip-bg: #ffffdc;
+    --tooltip-border: #000000;
+    
+    /* Title gradient for macOS classic style */
+    --title-gradient-start: #000000;
+    --title-gradient-end: #333333;
+    
+    /* Typography - Enhanced font fallbacks for Mac Classic look */
+    --font-main: 'Lucida Grande', 'Geneva', 'Verdana', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-headings: 'Lucida Grande', 'Geneva', 'Verdana', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-mono: 'Monaco', 'Menlo', 'Consolas', 'Courier New', 'Liberation Mono', monospace;
+    
+    /* Sizing - increased width for better usage of screen space */
+    --content-width: 85%;
+    --max-content-width: 960px;
+}
+
+
+
+/* Base elements */
+html {
+    font-size: 14px; /* Increased from 12px for better readability */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAE0lEQVQImWP4z8Dwn+E/I8NTBgYAxcAKYRVmZ/AAAAAASUVORK5CYII=");
+    background-repeat: repeat;
+    color: var(--text-color);
+    margin: 0;
+    padding: 15px;
+    line-height: 1.3;
+}
+
+::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+.container {
+    max-width: var(--max-content-width);
+    width: var(--content-width);
+    margin: 20px auto;
+    background-color: var(--window-bg);
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* Title bar like Mac OS 9 window */
+header {
+    background: var(--title-bar);
+    padding: 3px 10px;
+    margin: 0;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    text-align: center;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Close/minimize buttons */
+header::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* TEXT BROWSER FALLBACK: Simple window controls */
+@supports not (position: absolute) {
+    header::before {
+        content: "[X]";
+        position: static;
+        background: none;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        width: auto;
+        height: auto;
+        transform: none;
+        color: var(--text-color);
+        font-size: 10px;
+    }
+}
+
+/* Add zoom button */
+header::after {
+    content: "";
+    position: absolute;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* TEXT BROWSER FALLBACK: Simple zoom control */
+@supports not (position: absolute) {
+    header::after {
+        content: "[+]";
+        position: static;
+        background: none;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        width: auto;
+        height: auto;
+        transform: none;
+        color: var(--text-color);
+        font-size: 10px;
+    }
+}
+
+/* Site title with Mac Classic style */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 15px; /* Increased from 13px */
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
+
+.site-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background: var(--title-bar);
+    display: inline-block;
+    padding: 1px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.2s ease;
+}
+
+.site-title a:hover {
+    background: linear-gradient(to bottom, #999999, #777777);
+    color: #ffffff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+    border-color: #555555;
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background: linear-gradient(to bottom, #999999, #777777);
+    color: #ffffff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+    border-color: #555555;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 15px; /* Increased from 13px */
+    font-weight: bold;
+    text-align: center;
+    color: var(--text-color);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    flex: 1;
+}
+
+header p {
+    display: none; /* Hide description in header for this theme */
+}
+
+/* Menu bar */
+nav {
+    background-color: transparent;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    height: 100%;
+    align-items: center;
+}
+
+nav::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M15 1H1c-.6 0-1 .4-1 1v12c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm-1 12H2V3h12v10z' fill='%23000'/%3E%3Cpath d='M8 4l-4 4h3v4h2V8h3z' fill='%23000'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    display: none; /* Hidden by default, can be enabled if desired */
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 2px 10px; /* Increased padding */
+    margin: 0 1px;
+    font-size: 13px; /* Increased from 12px */
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    border: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-bottom: none;
+}
+
+nav a:hover {
+    background-color: #000000;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: #000000;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+nav a.active {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Content area */
+main {
+    padding: 15px;
+    overflow: auto;
+    background-color: var(--window-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 20px; /* Increased from 18px */
+}
+
+h2 {
+    font-size: 18px; /* Increased from 16px */
+}
+
+h3 {
+    font-size: 16px; /* Increased from 14px */
+}
+
+h4 {
+    font-size: 14px; /* Increased from 12px */
+}
+
+article h1 {
+    font-size: 20px; /* Increased from 18px */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-color);
+    transition: background-color 0.2s ease;
+}
+
+a:visited {
+    color: var(--link-visited);
+    border-bottom-color: var(--link-visited);
+}
+
+a:hover {
+    text-decoration: none;
+    background-color: var(--highlight-yellow);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    text-decoration: none;
+    background-color: var(--highlight-yellow);
+}
+
+/* Classic Mac button style */
+.mac-button {
+    display: inline-block;
+    padding: 3px 15px;
+    background: var(--button-face);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    text-align: center;
+    font-family: var(--font-main);
+    font-size: 12px;
+    margin-right: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s ease;
+}
+
+.mac-button:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.mac-button:active {
+    background: var(--accent-color);
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* ACCESSIBILITY: Focus states for Mac buttons */
+.mac-button:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.mac-button.primary {
+    border-width: 2px;
+    font-weight: bold;
+}
+
+/* Article styling */
+article {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+article:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+article .meta {
+    color: var(--text-color);
+    font-size: 11px;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.reading-time {
+    font-style: normal;
+    background-color: var(--accent-color);
+    padding: 1px 5px;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Use Mac Classic style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+/* Tags */
+.tags {
+    margin-top: 1rem;
+}
+
+.tags a {
+    display: inline-block;
+    background: var(--button-face);
+    padding: 2px 10px;
+    margin: 2px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 11px;
+    color: var(--text-color);
+}
+
+.tags a:hover {
+    background-color: var(--accent-color);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+}
+
+.tags-list {
+    margin: 1rem 0;
+}
+
+.tag-count {
+    color: #666666;
+    font-size: 10px;
+}
+
+/* Code blocks */
+code {
+    font-family: var(--font-mono);
+    background-color: #f8f8f8;
+    border: 1px solid var(--border-color);
+    padding: 1px 4px;
+    font-size: 11px;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: #f8f8f8;
+    padding: 10px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    margin: 1rem 0;
+    border-radius: 3px;
+}
+
+pre code {
+    border: none;
+    padding: 0;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    padding: 3px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    background: var(--title-bar);
+    padding: 5px 10px;
+    border-top: 1px solid var(--border-color);
+    font-size: 11px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+::-webkit-scrollbar-button {
+    background: var(--button-face);
+    border: 1px solid var(--border-color);
+    display: block;
+    height: 16px;
+    width: 16px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+::-webkit-scrollbar-button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Date header for index */
+.date-header {
+    font-family: var(--font-headings);
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 3px;
+}
+
+/* Posts list */
+.posts-list article {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background-color: var(--window-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.summary {
+    margin-top: 5px;
+    border-top: 1px dotted var(--border-color);
+    padding-top: 5px;
+}
+
+/* Blockquote styling */
+blockquote {
+    margin: 1em 0;
+    padding: 8px 12px;
+    border-left: 3px solid var(--border-color);
+    background-color: #f8f8f8;
+    font-style: italic;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    background-color: var(--window-bg);
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    text-align: left;
+}
+
+th {
+    background: var(--title-bar);
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Mac-style horizontal rule */
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 20px 0;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Mac-style dialog box */
+.mac-dialog {
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    background-color: var(--window-bg);
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.mac-dialog::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.mac-dialog-title {
+    background: var(--title-bar);
+    padding: 5px 10px;
+    margin: -10px -10px 10px -10px;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.mac-dialog-content {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.mac-dialog-buttons {
+    text-align: center;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    background-color: var(--tooltip-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 5px 10px;
+    border: 1px solid var(--tooltip-border);
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Pagination classic style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 5px;
+}
+
+.pagination a, .pagination span {
+    padding: 3px 8px;
+    border: 1px solid var(--border-color);
+    background: var(--button-face);
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.pagination a:hover {
+    background-color: var(--accent-color);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+}
+
+.pagination .current {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+    border-color: var(--selection-bg);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 700px) {
+    .container {
+        width: 95%;
+        max-width: 100%;
+    }
+    
+    main {
+        padding: 10px;
+    }
+    
+    /* Improved header layout for mobile */
+    header {
+        height: auto;
+        flex-direction: column;
+        padding: 3px 10px 8px;
+    }
+    
+    header h1 {
+        padding-top: 5px;
+    }
+    
+    /* Move buttons to top, so they don't get hidden */
+    header::before, header::after {
+        top: 10px;
+        transform: none;
+    }
+    
+    /* Make nav go below title for mobile */
+    nav {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        justify-content: center;
+        margin-top: 5px;
+        flex-wrap: wrap;
+    }
+    
+    nav a {
+        margin: 2px 3px;
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .featured-image,
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: 10px 0;
+    }
+    
+    .mac-dialog {
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+/* Additional breakpoint for small screens */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    header h1 {
+        font-size: 12px;
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    nav a {
+        margin: 2px;
+        padding: 2px 5px;
+    }
+    
+    .tags {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .tags a {
+        margin: 0;
+        padding: 2px 5px;
+        font-size: 10px;
+    }
+    
+    .mac-button {
+        min-width: 60px;
+        height: 18px;
+        line-height: 16px;
+        font-size: 10px;
+    }
+    
+    h1 {
+        font-size: 16px;
+    }
+    
+    h2 {
+        font-size: 14px;
+    }
+    
+    h3 {
+        font-size: 13px;
+    }
+    
+    article {
+        margin-bottom: 15px;
+    }
+    
+    blockquote {
+        padding: 8px;
+    }
+    
+    pre {
+        padding: 8px;
+        font-size: 11px;
+    }
+    
+    .tag-count {
+        padding: 1px 3px;
+        font-size: 9px;
+    }
+    
+    .reading-time {
+        font-size: 10px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    nav a {
+        width: 100%;
+        text-align: center;
+        margin: 2px 0;
+    }
+    
+    header {
+        padding: 3px 5px 8px;
+    }
+    
+    main {
+        padding: 5px;
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        font-size: 10px;
+        height: 16px;
+        line-height: 16px;
+    }
+    
+    .featured-image img,
+    .index-image img,
+    .tag-image img,
+    .archive-image img {
+        margin-top: 16px;
+    }
+    
+    .featured-image::after {
+        width: 8px;
+        height: 8px;
+        left: 5px;
+        top: 8px;
+    }
+}
+
+/* Dark mode support (if enabled by user) */
+@media (prefers-color-scheme: dark) {
+    :root.allow-dark-mode {
+        --bg-color: #333333;
+        --window-bg: #222222;
+        --text-color: #dddddd;
+        --link-color: #5c9aff;
+        --link-visited: #ba89ff;
+        --header-color: #ffffff;
+        --border-color: #666666;
+        --accent-color: #555555;
+        --title-bar: linear-gradient(to bottom, #666666, #444444);
+        --button-face: linear-gradient(to bottom, #555555, #444444);
+        --scrollbar-bg: #444444;
+        --menu-bar-bg: #3a3a3a;
+        --highlight-yellow: #555500;
+    }
+    
+    :root.allow-dark-mode img {
+        opacity: 0.8;
+    }
+    
+    :root.allow-dark-mode code,
+    :root.allow-dark-mode pre {
+        background-color: #2a2a2a;
+    }
+    
+    :root.allow-dark-mode blockquote {
+        background-color: #2a2a2a;
+    }
+}
+
+/* Mac OS 9 window-style featured image */
+.featured-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    background-color: var(--window-bg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for featured image */
+.featured-image::before {
+    content: "Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* Close button for featured image */
+.featured-image::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 9px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 18px; /* Space for the title bar */
+    border-top: 1px solid var(--border-color);
+}
+
+.featured-image .image-caption {
+    padding: 5px 8px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-size: 11px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    font-family: var(--font-main);
+}
+
+.index-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    background-color: var(--window-bg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for index image */
+.index-image::before {
+    content: "Preview";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.index-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 18px; /* Space for the title bar */
+    border-top: 1px solid var(--border-color);
+}
+
+.tag-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    background-color: var(--window-bg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for tag image */
+.tag-image::before {
+    content: "Tag Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.tag-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 18px; /* Space for the title bar */
+    border-top: 1px solid var(--border-color);
+}
+
+.archive-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 5px 5px 0 0;
+    background-color: var(--window-bg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for archive image */
+.archive-image::before {
+    content: "Archive";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.archive-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 18px; /* Space for the title bar */
+    border-top: 1px solid var(--border-color);
+} 

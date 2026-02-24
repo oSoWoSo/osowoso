@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ -f /dev/null ]]; then
-	echo 'dev null is a file'
-else
-	echo 'dev null is not a file??'
-fi

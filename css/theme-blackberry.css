@@ -1,0 +1,1204 @@
+/* 
+ * BlackBerry Theme for BSSG
+ * Inspired by classic BlackBerry mobile interface
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Added text browser fallbacks for gradient text
+ * - Optimized font loading with better fallbacks
+ * - Enhanced performance while maintaining BlackBerry aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    article {
+        animation: none !important;
+    }
+}
+
+:root {
+    /* BlackBerry inspired color scheme */
+    --bg-color: #000914;
+    --text-color: #d8e1e9;
+    --link-color: #57a9ff;
+    --link-hover-color: #6ebfff;
+    --header-color: #ffffff;
+    --border-color: #1b3047;
+    --accent-color: #002147;
+    --accent-secondary: #00376e;
+    --tag-bg: #003366;
+    --tag-text: #a3d4ff;
+    --quote-bg: #001d3d;
+    --date-color: #7e99b7;
+    --highlight-color: #00376e;
+    --nav-bg: #001428;
+    --nav-hover: #003366;
+    --status-bar-bg: #001428;
+    --status-bar-text: #57a9ff;
+    --keyboard-bg: #111a26;
+    --keyboard-key: #1b3047;
+    --keyboard-text: #ffffff;
+    --trackpad-bg: #00376e;
+    --title-color-start: #57a9ff;
+    --title-color-end: #004080;
+    
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-headings: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-mono: 'Consolas', 'Liberation Mono', 'Menlo', 'Courier New', 'Courier', monospace;
+    
+    /* Spacing and sizing */
+    --radius: 4px;
+    --content-width: 720px;
+    --transition: 0.2s ease;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 17px;
+    -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background-color: var(--accent-secondary);
+    color: var(--header-color);
+}
+
+/* BlackBerry status bar */
+.status-bar {
+    background-color: var(--status-bar-bg);
+    color: var(--status-bar-text);
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.status-bar .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-bar .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-bar .signal {
+    display: flex;
+    gap: 2px;
+}
+
+.status-bar .signal-bar {
+    width: 3px;
+    background-color: var(--status-bar-text);
+    border-radius: 1px;
+}
+
+.status-bar .signal-bar:nth-child(1) {
+    height: 4px;
+}
+
+.status-bar .signal-bar:nth-child(2) {
+    height: 6px;
+}
+
+.status-bar .signal-bar:nth-child(3) {
+    height: 8px;
+}
+
+.status-bar .signal-bar:nth-child(4) {
+    height: 10px;
+}
+
+.status-bar .battery {
+    position: relative;
+    width: 16px;
+    height: 8px;
+    border: 1px solid var(--status-bar-text);
+    padding: 1px;
+}
+
+.status-bar .battery::before {
+    content: "";
+    position: absolute;
+    right: -3px;
+    top: 2px;
+    width: 2px;
+    height: 4px;
+    background-color: var(--status-bar-text);
+}
+
+.status-bar .battery-level {
+    width: 60%;
+    height: 100%;
+    background-color: var(--status-bar-text);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 0 2rem 0;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+}
+
+header {
+    background-color: var(--nav-bg);
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+    position: relative;
+    border-bottom: 3px solid var(--accent-secondary);
+}
+
+header h1 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    color: var(--header-color);
+    margin: 0;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    padding: 0 1.5rem;
+}
+
+header p {
+    color: var(--date-color);
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    padding: 0 1.5rem;
+}
+
+nav {
+    margin: 1.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+}
+
+nav a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius);
+    background-color: var(--accent-color);
+    transition: background-color var(--transition), color var(--transition);
+    /* BlackBerry style buttons */
+    border: 1px solid var(--border-color);
+    position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+nav a:hover {
+    background-color: var(--nav-hover);
+    color: var(--link-hover-color);
+}
+
+nav a:active {
+    box-shadow: 0 0 0 rgba(0,0,0,0.3);
+    transform: translateY(2px);
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--nav-hover);
+    color: var(--link-hover-color);
+}
+
+main {
+    margin-bottom: 3rem;
+    padding: 0 1.5rem;
+}
+
+article {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+article:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    line-height: 1.3;
+    margin: 2rem 0 1rem;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+article h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.date-header {
+    color: var(--date-color);
+    background-color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 2.5rem 0 1.5rem;
+    display: inline-block;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+article .meta {
+    font-size: 0.9rem;
+    color: var(--date-color);
+    margin-bottom: 1.5rem;
+    font-family: var(--font-headings);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.reading-time {
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--accent-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+.summary {
+    margin-bottom: 1.2rem;
+}
+
+article .tags {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+article .tags a {
+    display: inline-block;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 500;
+    transition: transform var(--transition), background-color var(--transition);
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    position: relative;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+article .tags a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+article .tags a:hover {
+    background-color: var(--accent-secondary);
+    transform: translateY(-1px);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+article .tags a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--accent-secondary);
+    transform: translateY(-1px);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition);
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+}
+
+p {
+    margin: 0 0 1.5rem;
+}
+
+strong, b {
+    font-weight: 600;
+    color: var(--header-color);
+}
+
+em, i {
+    font-style: italic;
+}
+
+mark {
+    background-color: var(--highlight-color);
+    color: var(--header-color);
+    padding: 0.1rem 0.3rem;
+    border-radius: var(--radius);
+}
+
+ul, ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    background-color: var(--nav-bg);
+    padding: 2rem 1.5rem;
+    margin-top: 4rem;
+    color: var(--date-color);
+    font-size: 0.9rem;
+    border-top: 3px solid var(--accent-secondary);
+}
+
+footer a {
+    color: var(--link-color);
+}
+
+footer a:hover {
+    color: var(--link-hover-color);
+}
+
+/* ACCESSIBILITY: Focus states for footer links */
+footer a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+}
+
+blockquote {
+    border-left: 4px solid var(--accent-secondary);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background-color: var(--quote-bg);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--text-color);
+}
+
+code {
+    background-color: var(--accent-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+pre {
+    background-color: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-left: 3px solid var(--accent-secondary);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    display: block;
+    margin: 2rem auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    font-family: var(--font-headings);
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.pagination a {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    border-radius: var(--radius);
+    transition: background-color var(--transition);
+    border: 1px solid var(--border-color);
+    position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.pagination a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.pagination a:hover {
+    background-color: var(--accent-secondary);
+}
+
+.pagination a:active {
+    box-shadow: 0 0 0 rgba(0,0,0,0.3);
+    transform: translateY(2px);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--accent-secondary);
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+}
+
+.tags-list a {
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 500;
+    transition: background-color var(--transition);
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    position: relative;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.tags-list a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.tags-list a:hover {
+    background-color: var(--accent-secondary);
+}
+
+/* ACCESSIBILITY: Focus states for tags list */
+.tags-list a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--accent-secondary);
+}
+
+.tag-count {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius);
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.posts-list article {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.posts-list h2, .posts-list h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Archive styles */
+.archives-list {
+    margin: 2rem 0;
+}
+
+.archives-list h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.archives-list h2:first-child {
+    margin-top: 1rem;
+}
+
+.month-list {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.month-list li {
+    margin-bottom: 0.5rem;
+}
+
+.post-count {
+    color: var(--date-color);
+    background-color: var(--accent-color);
+    font-weight: normal;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.archives-nav {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.archives-nav a {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--accent-color);
+    color: var(--link-color);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    border-radius: var(--radius);
+    transition: background-color var(--transition);
+    border: 1px solid var(--border-color);
+    position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+}
+
+.archives-nav a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.archives-nav a:hover {
+    background-color: var(--accent-secondary);
+}
+
+.archives-nav a:active {
+    box-shadow: 0 0 0 rgba(0,0,0,0.3);
+    transform: translateY(2px);
+}
+
+/* BlackBerry keyboard */
+.keyboard {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--keyboard-bg);
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 2px solid var(--border-color);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.container:focus-within .keyboard {
+    transform: translateY(0);
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.key {
+    width: 28px;
+    height: 28px;
+    background-color: var(--keyboard-key);
+    color: var(--keyboard-text);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.key::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: 3px 3px 0 0;
+}
+
+.key.space {
+    width: 100px;
+}
+
+.key.shift, .key.alt {
+    width: 40px;
+}
+
+.key.symbol {
+    width: 40px;
+}
+
+.key.enter {
+    width: 50px;
+}
+
+.key.delete {
+    width: 50px;
+}
+
+.trackpad {
+    width: 80px;
+    height: 30px;
+    background-color: var(--trackpad-bg);
+    border-radius: 15px;
+    margin: 5px auto;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* BlackBerry-style site title with gradient */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    margin: 0;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    display: inline-block;
+}
+
+.site-title a {
+    text-decoration: none;
+    background: linear-gradient(to bottom, var(--title-color-start), var(--title-color-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all var(--transition);
+}
+
+.site-title a:hover {
+    background: linear-gradient(to bottom, var(--link-hover-color), var(--title-color-start));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 8px rgba(0, 9, 20, 0.4);
+    transform: translateY(-1px);
+}
+
+/* BlackBerry-style image viewing interface */
+.featured-image {
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.featured-image::before {
+    content: "Featured Image";
+    display: block;
+    background-color: var(--status-bar-bg);
+    color: var(--status-bar-text);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.featured-image .image-caption {
+    background-color: var(--status-bar-bg);
+    color: var(--date-color);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.index-image {
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.index-image::before {
+    content: "Index Image";
+    display: block;
+    background-color: var(--status-bar-bg);
+    color: var(--status-bar-text);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.tag-image {
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.tag-image::before {
+    content: "Tag Image";
+    display: block;
+    background-color: var(--status-bar-bg);
+    color: var(--status-bar-text);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tag-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.archive-image {
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.archive-image::before {
+    content: "Archive Image";
+    display: block;
+    background-color: var(--status-bar-bg);
+    color: var(--status-bar-text);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    .container {
+        padding: 0 0 1.5rem 0;
+        width: 100%;
+        border-left: none;
+        border-right: none;
+    }
+    
+    header, footer {
+        padding: 1.5rem;
+    }
+    
+    main {
+        padding: 0 1rem;
+    }
+    
+    .status-bar {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+    
+    .status-bar .signal-bar {
+        width: 2px;
+    }
+    
+    .status-bar .battery {
+        width: 12px;
+        height: 6px;
+    }
+    
+    .status-bar .battery::before {
+        right: -2px;
+        top: 1px;
+        width: 1px;
+        height: 4px;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .featured-image,
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: 1.5rem 0;
+    }
+    
+    .pagination {
+        gap: 1rem;
+    }
+    
+    .keyboard {
+        padding: 10px 5px;
+    }
+}
+
+@media (max-width: 600px) {
+    header, footer {
+        padding: 1.2rem;
+    }
+    
+    main {
+        padding: 0 0.8rem;
+    }
+    
+    article {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+    }
+    
+    nav {
+        gap: 0.4rem;
+    }
+    
+    nav a {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .keyboard-row {
+        gap: 4px;
+        margin-bottom: 4px;
+    }
+    
+    .key {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    nav a {
+        display: block;
+        text-align: center;
+        margin-bottom: 0.3rem;
+    }
+    
+    blockquote {
+        padding: 1rem;
+    }
+    
+    pre {
+        padding: 1rem;
+    }
+    
+    .key {
+        width: 24px;
+        height: 24px;
+        font-size: 0.6rem;
+    }
+    
+    .key.space {
+        width: 80px;
+    }
+    
+    .key.shift, .key.alt, .key.symbol {
+        width: 35px;
+    }
+    
+    .key.enter, .key.delete {
+        width: 40px;
+    }
+    
+    .status-bar .left, 
+    .status-bar .right {
+        gap: 5px;
+    }
+    
+    .tags-list {
+        gap: 0.5rem;
+    }
+    
+    .tags-list a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    article .tags a {
+        margin-bottom: 0.3rem;
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 0 0 1rem 0;
+    }
+    
+    header, footer {
+        padding: 1rem;
+    }
+    
+    main {
+        padding: 0 0.7rem;
+    }
+    
+    .keyboard {
+        padding: 5px 3px;
+    }
+    
+    .keyboard-row {
+        gap: 3px;
+        margin-bottom: 3px;
+    }
+    
+    .key {
+        width: 20px;
+        height: 20px;
+        font-size: 0.5rem;
+    }
+    
+    .key.space {
+        width: 60px;
+    }
+    
+    .key.shift, .key.alt, .key.symbol {
+        width: 28px;
+    }
+    
+    .key.enter, .key.delete {
+        width: 30px;
+    }
+    
+    .status-bar {
+        padding: 3px 6px;
+        font-size: 0.6rem;
+    }
+} 

@@ -1,0 +1,929 @@
+/* 
+ * Mid-Century Modern Theme for BSSG
+ * Inspired by 1950s-60s design aesthetic with clean lines, 
+ * organic shapes, and distinctive color palette
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic mid-century modern aesthetics
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable hover transforms and skew effects */
+    .site-title::before {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Mid-century color scheme */
+    --teak: #B27C4C;
+    --avocado: #8A8B4A;
+    --burnt-orange: #D35F29;
+    --mustard: #D8B74C;
+    --turquoise: #46A8A8;
+    --slate: #767E86;
+    --cream: #F3EEE2;
+    --charcoal: #333333;
+    
+    /* Semantic color assignments */
+    --bg-color: var(--cream);
+    --text-color: var(--charcoal);
+    --accent-color: var(--burnt-orange);
+    --secondary-accent: var(--turquoise);
+    --tertiary-accent: var(--mustard);
+    --link-color: var(--teak);
+    --link-hover: var(--burnt-orange);
+    --link-visited: var(--slate);
+    --header-bg: var(--cream);
+    --header-text: var(--charcoal);
+    --nav-bg: var(--teak);
+    --nav-text: var(--cream);
+    --nav-hover-bg: var(--burnt-orange);
+    --nav-hover-text: var(--cream);
+    --footer-bg: var(--charcoal);
+    --footer-text: var(--cream);
+    --border-color: var(--teak);
+    
+    /* Typography - Enhanced font fallbacks for mid-century modern look */
+    --font-main: 'Avenir Next', 'Avenir', 'Trebuchet MS', 'Segoe UI', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-headings: 'Avenir Next', 'Avenir', 'Century Gothic', 'Gill Sans', 'Futura', 'Trebuchet MS', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', 'Courier New', 'Liberation Mono', monospace;
+    
+    /* Sizing */
+    --content-width: 90%;
+    --max-content-width: 1200px;
+    --border-radius: 3px;
+    --content-padding: 2rem;
+}
+
+/* Base elements */
+html {
+    font-size: 16px;
+}
+
+/* Add universal box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: 2rem auto;
+    padding: 0;
+    background-color: var(--bg-color);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Header with atomic-era design elements */
+header {
+    padding: 2rem;
+    position: relative;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    border-bottom: 2px solid var(--accent-color);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Site title */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+/* Boomerang shape behind site title */
+.site-title::before {
+    content: "";
+    position: absolute;
+    background-color: var(--tertiary-accent);
+    width: 80px;
+    height: 30px;
+    left: -10px;
+    bottom: 5px;
+    transform: skew(-20deg);
+    z-index: -1;
+}
+
+/* TEXT BROWSER FALLBACK: Simple decoration for site title */
+@supports not (position: absolute) {
+    .site-title::before {
+        content: "◆ ";
+        position: static;
+        background: none;
+        color: var(--tertiary-accent);
+        width: auto;
+        height: auto;
+        transform: none;
+        z-index: auto;
+        font-size: 1rem;
+    }
+}
+
+.site-title a {
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+.site-title a:hover {
+    color: var(--accent-color);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--accent-color);
+}
+
+/* Site description */
+header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Navigation - horizontal bar */
+nav {
+    background-color: var(--nav-bg);
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    position: relative;
+    justify-content: center;
+}
+
+nav a {
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: var(--nav-hover-text);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover, 
+nav a.active {
+    background-color: var(--nav-hover-bg);
+}
+
+nav a:hover::after,
+nav a.active::after {
+    width: 50%;
+}
+
+nav a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--nav-hover-bg);
+}
+
+nav a:focus::after {
+    width: 50%;
+}
+
+/* Content area */
+main {
+    padding: var(--content-padding);
+    min-height: 70vh;
+    text-align: left;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin: 2rem 0 1rem;
+    line-height: 1.2;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    position: relative;
+    display: inline-block;
+}
+
+/* Mid-century starburst decoration */
+h1::after {
+    content: "★";
+    position: absolute;
+    top: -10px;
+    right: -25px;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+
+/* TEXT BROWSER FALLBACK: Simple star for h1 */
+@supports not (position: absolute) {
+    h1::after {
+        content: " *";
+        position: static;
+        color: var(--accent-color);
+        font-size: 1rem;
+    }
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+h3 {
+    font-size: 1.6rem;
+    color: var(--secondary-accent);
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom: 2px solid var(--link-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom: 2px solid var(--link-hover);
+}
+
+/* Articles with mid-century styling */
+article {
+    margin-bottom: 4rem;
+    position: relative;
+    padding: 1.5rem 2rem 1.5rem calc(2rem + 5px);
+    background-color: var(--bg-color);
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Atomic-era boomerang shape */
+article::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 30px;
+    width: 40px;
+    height: 20px;
+    background-color: var(--tertiary-accent);
+    transform: skew(20deg);
+    z-index: 1;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: 2.2rem;
+}
+
+article .meta {
+    font-size: 0.95rem;
+    margin: 1rem 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    color: var(--slate);
+    justify-content: flex-start;
+}
+
+/* Reading time */
+.reading-time {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.reading-time::before {
+    content: "⏱";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* TEXT BROWSER FALLBACK: Simple "Time: " prefix for reading time */
+@supports not (position: absolute) {
+    .reading-time {
+        padding-left: 0;
+    }
+    
+    .reading-time::before {
+        content: "Time: ";
+        position: static;
+        transform: none;
+    }
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.tags a {
+    background-color: var(--tertiary-accent);
+    color: var(--charcoal);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: var(--border-radius);
+    border: none;
+}
+
+.tags a:hover {
+    background-color: var(--accent-color);
+    color: var(--cream);
+    border: none;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: var(--cream);
+    border: none;
+}
+
+/* Tags list page */
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: block;
+    background-color: var(--tertiary-accent);
+    color: var(--charcoal);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.tags-list a:hover {
+    background-color: var(--accent-color);
+    color: var(--cream);
+    border: none;
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: var(--cream);
+    border: none;
+}
+
+/* Footer */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+/* Mid-century atomic pattern in footer */
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--accent-color),
+        var(--accent-color) 20px,
+        var(--secondary-accent) 20px,
+        var(--secondary-accent) 40px,
+        var(--tertiary-accent) 40px,
+        var(--tertiary-accent) 60px
+    );
+}
+
+footer p {
+    margin: 0.5rem 0;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer a {
+    color: var(--tertiary-accent);
+    text-decoration: none;
+    border: none;
+}
+
+footer a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+    border: none;
+}
+
+footer a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--accent-color);
+    text-decoration: underline;
+    border: none;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0 1rem;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--teak);
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    border-radius: var(--border-radius);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+/* Add improved image handling */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Featured images */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.featured-image:hover img, 
+.index-image:hover img, 
+.tag-image:hover img, 
+.archive-image:hover img {
+    transform: scale(1.03);
+}
+
+/* Atomic-era decoration on featured images */
+.featured-image::after, 
+.index-image::after, 
+.tag-image::after, 
+.archive-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 40px 40px;
+    border-color: transparent transparent var(--accent-color) transparent;
+}
+
+/* Post list on index/tag/archive pages */
+.posts-list article {
+    margin-bottom: 3rem;
+    transition: transform 0.3s ease;
+    padding: 1.5rem 2rem 1.5rem calc(2rem + 5px);
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.posts-list article:hover {
+    transform: translateX(5px);
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+
+.posts-list p {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Add improved article content container */
+.article-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 1rem auto;
+        box-sizing: border-box;
+    }
+    
+    header,
+    main,
+    footer {
+        padding: 1.5rem 1rem;
+        box-sizing: border-box;
+        width: 100%;
+    }
+    
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.3rem;
+    }
+    
+    nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h1::after {
+        top: -5px;
+        right: -20px;
+        font-size: 1.2rem;
+    }
+    
+    h2 {
+        font-size: 1.7rem;
+    }
+    
+    h3 {
+        font-size: 1.4rem;
+    }
+    
+    article {
+        padding: 1rem 1rem 1rem calc(1rem + 5px);
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .featured-image::after, 
+    .index-image::after, 
+    .tag-image::after, 
+    .archive-image::after {
+        border-width: 0 0 25px 25px;
+    }
+    
+    .posts-list article {
+        padding: 1rem 1rem 1rem calc(1rem + 5px);
+        width: 100%;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .site-title {
+        font-size: 2.2rem;
+    }
+    
+    .site-title::before {
+        width: 25px;
+        height: 25px;
+        left: -35px;
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+/* Medium-small screens */
+@media (max-width: 600px) {
+    .container {
+        width: 98%;
+        margin: 0.75rem auto;
+        overflow: hidden;
+    }
+    
+    header,
+    main,
+    footer {
+        padding: 1.25rem 0.9rem;
+    }
+    
+    .site-title {
+        font-size: 1.9rem;
+    }
+    
+    .site-title::before {
+        width: 20px;
+        height: 20px;
+        left: -30px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h1::after {
+        top: -5px;
+        right: -15px;
+        font-size: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+    
+    footer::before {
+        margin-top: -25px;
+        height: 25px;
+    }
+    
+    .featured-image, 
+    .index-image, 
+    .tag-image, 
+    .archive-image {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    html {
+        font-size: 15px;
+    }
+    
+    .container {
+        width: 100%;
+        margin: 0.5rem auto;
+        overflow: hidden;
+    }
+    
+    header,
+    main,
+    footer {
+        padding: 1rem 0.8rem;
+    }
+    
+    .site-title {
+        font-size: 1.7rem;
+    }
+    
+    .site-title::before {
+        width: 18px;
+        height: 18px;
+        left: -25px;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    h1::after {
+        right: -12px;
+        font-size: 0.9rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    article::before {
+        border-width: 15px 0 0 15px;
+    }
+    
+    article {
+        padding: 0.9rem 0.9rem 0.9rem calc(0.9rem + 5px);
+        margin-bottom: 1.2rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .featured-image::after, 
+    .index-image::after, 
+    .tag-image::after, 
+    .archive-image::after {
+        border-width: 0 0 20px 20px;
+    }
+    
+    .tags {
+        flex-wrap: wrap;
+    }
+    
+    .tags a {
+        margin-bottom: 0.4rem;
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.6rem;
+    }
+    
+    .pagination a {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .site-title {
+        font-size: 1.5rem;
+    }
+    
+    .site-title::before {
+        width: 15px;
+        height: 15px;
+        left: -20px;
+    }
+    
+    nav a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+    }
+    
+    h1::after {
+        display: none;
+    }
+    
+    .tags-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pagination a {
+        width: 100%;
+        text-align: center;
+    }
+} 

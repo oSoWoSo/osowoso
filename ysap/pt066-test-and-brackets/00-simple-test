@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-if test -f foo.jpg; then
-	echo foo.jpg exists
-fi

@@ -1,0 +1,603 @@
+/* 
+ * Swiss Design Theme for BSSG
+ * Based on International Typographic Style with focus on grids,
+ * clean sans-serif typography, and strong visual hierarchy
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Added text browser fallbacks
+ * - Optimized performance while maintaining Swiss design principles
+ */
+
+:root {
+    /* Swiss design color scheme */
+    --white: #FFFFFF;
+    --black: #000000;
+    --light-gray: #F2F2F2;
+    --medium-gray: #DDDDDD;
+    --dark-gray: #555555;
+    --red: #E53935;
+    --blue: #2196F3;
+    --yellow: #FFEB3B;
+    
+    /* Semantic color assignments */
+    --bg-color: var(--white);
+    --text-color: var(--black);
+    --heading-color: var(--black);
+    --link-color: var(--red);
+    --link-hover: var(--dark-gray);
+    --border-color: var(--medium-gray);
+    
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-main: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-headings: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-mono: 'Courier New', 'Courier', monospace;
+    
+    /* Sizing */
+    --content-width: 90%;
+    --max-content-width: 1200px;
+    --grid-column-gap: 30px;
+    --grid-row-gap: 60px;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
+    --spacing-xl: 60px;
+    
+    /* Typographic scale */
+    --text-xs: 0.8rem;
+    --text-sm: 0.9rem;
+    --text-md: 1rem;
+    --text-lg: 1.1rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+    --text-3xl: 2.5rem;
+    --text-4xl: 3rem;
+    --text-5xl: 3.5rem;
+    
+    /* Line heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.6;
+    
+    /* Transitions - OPTIMIZED for performance */
+    --transition-fast: 0.15s;
+    --transition-base: 0.2s;
+}
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+/* Reset and base elements */
+html {
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+*, 
+*:before, 
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height-normal);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header with Swiss precision */
+header {
+    padding: var(--spacing-lg) 0 0;
+    position: relative;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+/* Site title - stark and bold */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: var(--text-3xl);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.site-title a {
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: color var(--transition-base) ease;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.site-title a:hover {
+    color: var(--red);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Site description - minimalist */
+header p {
+    margin: var(--spacing-xs) 0 0;
+    font-size: var(--text-md);
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Navigation - clean horizontal bar */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+    justify-content: center;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0 var(--spacing-md) 0 0;
+    margin-right: var(--spacing-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color var(--transition-base) ease;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+nav a:hover, 
+nav a.active {
+    color: var(--red);
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Content area with grid structure */
+main {
+    padding: 0 var(--spacing-md) var(--spacing-xl);
+    min-height: 60vh;
+}
+
+/* Clear typography with strong hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--heading-color);
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+    line-height: var(--line-height-tight);
+    font-weight: 700;
+}
+
+h1 {
+    font-size: var(--text-4xl);
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.5px;
+}
+
+h3 {
+    font-size: var(--text-xl);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Black links with red hover - classic Swiss style */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all var(--transition-fast) ease;
+    border-bottom: 1px solid transparent;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+a:visited {
+    color: var(--dark-gray);
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Swiss-style articles with strong structure */
+article {
+    margin-bottom: var(--grid-row-gap);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+article .meta {
+    font-size: var(--text-sm);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    color: var(--dark-gray);
+    border-bottom: 1px solid var(--medium-gray);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Reading time - minimal style with TEXT BROWSER FALLBACK */
+.reading-time {
+    position: relative;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+/* Tags with Swiss precision */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.tags a {
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    border: none;
+    transition: all var(--transition-fast) ease;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.tags a:hover {
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Tags list page - strong grid */
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: block;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    padding: var(--spacing-md);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    transition: all var(--transition-fast) ease;
+    text-align: center;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.tags-list a:hover {
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+}
+
+/* ACCESSIBILITY: Focus states for tags list */
+.tags-list a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Footer - clean and minimal */
+footer {
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--medium-gray);
+}
+
+footer p {
+    margin: var(--spacing-xs) 0;
+    font-size: var(--text-sm);
+}
+
+footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all var(--transition-base) ease;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+footer a:hover {
+    border-bottom: 1px solid var(--link-hover);
+    color: var(--link-hover);
+}
+
+/* ACCESSIBILITY: Focus states for footer links */
+footer a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Pagination - Swiss precision */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-xl) 0 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: var(--text-xs);
+    border: none;
+    transition: all var(--transition-fast) ease;
+    /* ACCESSIBILITY: Focus outline */
+    outline: none;
+}
+
+.pagination a:hover {
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Featured images - clean presentation */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    text-align: center;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Post list with grid structure */
+.posts-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--grid-row-gap);
+}
+
+.posts-list article {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--medium-gray);
+    padding-bottom: var(--grid-row-gap);
+}
+
+.posts-list article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: var(--text-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ACCESSIBILITY: Focus states for post list links */
+.posts-list a:focus {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
+
+/* Grid-based layout for larger screens */
+@media (min-width: 768px) {
+    .posts-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: var(--grid-column-gap) var(--grid-row-gap);
+    }
+    
+    .posts-list article {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    /* Two column article layout for featured/archive pages */
+    article.with-image {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+    
+    article.with-image .content {
+        grid-column: 1;
+    }
+    
+    article.with-image .featured-image,
+    article.with-image .index-image,
+    article.with-image .tag-image,
+    article.with-image .archive-image {
+        grid-column: 2;
+        margin-top: var(--spacing-lg);
+    }
+}
+
+/* Enhanced typography for larger screens */
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-lg);
+    }
+    
+    h1 {
+        font-size: var(--text-5xl);
+    }
+    
+    h2 {
+        font-size: var(--text-3xl);
+    }
+    
+    h3 {
+        font-size: var(--text-xl);
+    }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 767px) {
+    header {
+        padding: var(--spacing-md) 0 0;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .site-title {
+        font-size: var(--text-2xl);
+    }
+    
+    nav {
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-sm) 0;
+    }
+    
+    nav a {
+        padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-xs) 0;
+        margin-right: var(--spacing-sm);
+    }
+    
+    main {
+        padding-bottom: var(--spacing-lg);
+    }
+    
+    h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    h2 {
+        font-size: var(--text-xl);
+    }
+    
+    h3 {
+        font-size: var(--text-lg);
+    }
+    
+    .pagination {
+        margin-top: var(--spacing-lg);
+    }
+    
+    .container {
+        width: 95%;
+        margin: var(--spacing-sm) auto;
+    }
+} 

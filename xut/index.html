@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xut | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="xut">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://osowoso.org//xut/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="xut">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="https://osowoso.org/selector.css">
+    <link rel="stylesheet" href="https://osowoso.org/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://osowoso.org/rss.xml">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "xut",
+  "url": "https://osowoso.org/xut/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "https://osowoso.org"
+  }
+}
+</script>
+    <link rel="stylesheet" href="https://osowoso.org/selector.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="https://osowoso.org/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <div class="theme-selector">
+                <label for="theme-select">theme:</label>
+                <select id='theme-select' onchange='changeTheme()'>
+                                <option value='amiga500'>amiga500</option>
+                <option value='apple2'>apple2</option>
+                <option value='art-deco'>art-deco</option>
+                <option value='atarist'>atarist</option>
+                <option value='bauhaus'>bauhaus</option>
+                <option value='bbs'>bbs</option>
+                <option value='beos'>beos</option>
+                <option value='blackberry'>blackberry</option>
+                <option value='braun'>braun</option>
+                <option value='brutalist'>brutalist</option>
+                <option value='cyber-dark'>cyber-dark</option>
+                <option value='c64'>c64</option>
+                <option value='dark'>dark</option>
+                <option value='default'>default</option>
+                <option value='diary'>diary</option>
+                <option value='docs'>docs</option>
+                <option value='flat'>flat</option>
+                <option value='gameboy'>gameboy</option>
+                <option value='glassmorphism'>glassmorphism</option>
+                <option value='ios'>ios</option>
+                <option value='italy'>italy</option>
+                <option value='longform'>longform</option>
+                <option value='macclassic'>macclassic</option>
+                <option value='macos9'>macos9</option>
+                <option value='mario'>mario</option>
+                <option value='material'>material</option>
+                <option value='mid-century'>mid-century</option>
+                <option value='minimal'>minimal</option>
+                <option value='mondrian'>mondrian</option>
+                <option value='msdos'>msdos</option>
+                <option value='nes'>nes</option>
+                <option value='newspaper'>newspaper</option>
+                <option value='nextstep'>nextstep</option>
+                <option value='nordic-clean'>nordic-clean</option>
+                <option value='osowoso'>osowoso</option>
+                <option value='osx'>osx</option>
+                <option value='reader-mode'>reader-mode</option>
+                <option value='skeuomorphic'>skeuomorphic</option>
+                <option value='stefano'>stefano</option>
+                <option value='swiss-design'>swiss-design</option>
+                <option value='terminal'>terminal</option>
+                <option value='text-only'>text-only</option>
+                <option value='thoughtful'>thoughtful</option>
+                <option value='tty'>tty</option>
+                <option value='vaporwave'>vaporwave</option>
+                <option value='web1'>web1</option>
+                <option value='web2'>web2</option>
+                <option value='winxp'>winxp</option>
+                <option value='win311'>win311</option>
+                <option value='win7'>win7</option>
+                <option value='win95'>win95</option>
+                <option value='y2k'>y2k</option>
+                <option value='zxspectrum'>zxspectrum</option>
+
+                </select>
+                <link id='theme-style' rel='stylesheet' href=''>
+            </div>
+            <nav>
+                <div class="nav-left">
+                    <a href="https://osowoso.org/">Home</a> <a href="https://osowoso.org/contributing/">Contributing</a> <a href="https://osowoso.org/projects/">Projects</a> <a href="https://osowoso.org/resources/">Resources</a> <a href="https://osowoso.org/void/">Void</a> <a href="https://osowoso.org/pages.html">Pages</a> <a href="https://osowoso.org/archives/">Archives</a> <a href="https://osowoso.org/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://osowoso.discourse.group/">forum</a>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="https://osowoso.org/theme-switcher.js" defer></script>
+            <script src="https://osowoso.org/hamburger.js" defer></script>
+        </header>
+        <main><article class="page">
+  <h1>xut</h1>
+  <div class="page-content">
+<h2 id="xut-xtra-user-templates">xut : xtra user templates</h2>
+<p>Installs and updates unofficial packages for Void Linux.</p>
+<p><em>Created and tested for/with the <a
+href="https://codeberg.org/mobinmob/abyss-packages">abyss-packages
+repo</a>.</em> <em>Working with other unofficial repos is supported
+partially. Code contributions, testing and general coordination is
+highly appreciated!</em></p>
+<p><strong>This script is in the alpha stage.</strong></p>
+<h3 id="why-and-how">Why and how</h3>
+<p>The <code>xbps-src</code> package builder for voidlinux is a really
+powerful tool, but it only works with a single repository, the
+void-packages repo. The only straightforward way to add software to repo
+provide it in an accessible way to the users is to send PRs and be
+accepted. That created a well-maintained and curated repository by the
+distribution developers but impedes the inclusion of software that the
+same maintainers decide - for entirely valid reasons - to not
+accept.</p>
+<p><code>xut</code> tries to provide a solution for users that need more
+packages that cannot be provided in the official repos. It clones the
+void-packages, the <a
+href="https://codeberg.org/mobinmob/abyss-packages">abyss-packages
+repository</a> and possibly other third party repos, merges the
+templates from unofficial repos to the clone of void-packages and
+installs or updates sw <strong>with a single command.</strong></p>
+<h3 id="install-and-setup">Install and setup</h3>
+<ol type="1">
+<li>Clone this repo, run the <code>xut</code> command directly from the
+clone or install using the Makefile.</li>
+<li>Use the xutconf.sample if you want to modify configuration.</li>
+<li>The script depends on:
+<ul>
+<li><code>sh</code> and the posix userland **(*)**,</li>
+<li><code>xbps &gt;= 0.60</code>,</li>
+<li><code>git</code>,</li>
+<li><code>mktemp</code>,</li>
+<li>the <code>xi</code> tool from the <em>xtools</em> package which
+requires a working <code>sudo</code> configuration, (for
+installation/update).</li>
+<li>the <code>tput</code> tool from <em>ncurses</em> (optional).</li>
+</ul></li>
+</ol>
+<blockquote>
+<p>Note that <code>xut</code> <em>will run in other distributions</em>
+that have the above tools available, but installing (-i) and upgrading
+(-u) packages is disabled. In this case, <code>xi</code> is not
+needed.</p>
+</blockquote>
+<blockquote>
+<p>**(*)** <code>xut</code> uses posix sh and tries to use only the
+posix userland utilities. The <code>local</code> keyword may be used in
+the future, but effort is being made to use only the extensions that are
+supported in gnu coreutils, busybox and the bsd userland (additional
+arguments).</p>
+</blockquote>
+<h3 id="todo">Todo</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Deal with shlibs in order to package
+more complex sw or modified packages from the upstream
+repos.</label></li>
+<li><label><input type="checkbox" checked="" />Implement a way to handle
+package updates gracefully. [<strong>-u argument</strong>]</label></li>
+<li><label><input type="checkbox" checked="" />Search for a practical
+way to enable more than one unofficial repos (Inteligent merging by
+<span class="citation" data-cites="zenobit">@zenobit</span> available
+from 0.4.1).</label></li>
+<li><label><input type="checkbox" />… (suggestions are welcome, working
+code even more welcome)</label></li>
+</ul>
+<h3 id="usage">Usage</h3>
+<pre class="shell"><code>xut [options]</code></pre>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr>
+<th>OPTIONS</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-s</td>
+<td>Sync the repos</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>Keep a log file (5 most recent log files remain)</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>Display this usage information.</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>Enable debugging and logging output.</td>
+</tr>
+<tr>
+<td>-b &lt;package1,package2&gt;</td>
+<td>Build a (comma-separated) list of packages.</td>
+</tr>
+<tr>
+<td>-i &lt;package1,package2&gt;</td>
+<td>Build and install a (comma-separated) list of packages.</td>
+</tr>
+<tr>
+<td>-x <command></td>
+<td>Give xbps-src commands.</td>
+</tr>
+<tr>
+<td>-q <query></td>
+<td>Search for <query> in available templates.</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>Update packages.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Build packages (without installing them):</li>
+</ul>
+<pre class="shell"><code>xut -b package1,package2</code></pre>
+<ul>
+<li>Sync repos and install packages:</li>
+</ul>
+<pre class="shell"><code>xut -si package1,package2</code></pre>
+<ul>
+<li>Use the above command with logging enabled:</li>
+</ul>
+<pre class="shell"><code>xut -sli package1,package2</code></pre>
+<ul>
+<li>Execute an xbps-command in the merged repo:</li>
+</ul>
+<pre class="shell"><code>xut -x &lt;command&gt;</code></pre>
+<ul>
+<li>Update packages after syncing repos:</li>
+</ul>
+<pre class="shell"><code>xut -su</code></pre>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="https://osowoso.org/">Home</a> &middot; <a href="https://osowoso.org/contributing/">Contributing</a> &middot; <a href="https://osowoso.org/projects/">Projects</a> &middot; <a href="https://osowoso.org/resources/">Resources</a> &middot; <a href="https://osowoso.org/void/">Void</a> &middot; <a href="https://osowoso.org/pages.html">Pages</a> &middot; <a href="https://osowoso.org/archives/">Archives</a> &middot; <a href="https://osowoso.org/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 

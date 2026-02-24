@@ -1,0 +1,652 @@
+/* 
+ * Braun Theme for BSSG
+ * Inspired by iconic Braun design principles:
+ * Minimalism, functionality, elegance, and precision
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+:root {
+    /* Braun-inspired color scheme */
+    --white: #FFFFFF;
+    --light-gray: #F2F2F2;
+    --medium-gray: #D8D8D8;
+    --dark-gray: #333333;
+    --black: #000000;
+    --yellow: #FFDA1A;
+    --orange: #FF5C00;
+    --red: #FF0000;
+    
+    /* Semantic color assignments */
+    --bg-color: var(--white);
+    --text-color: var(--dark-gray);
+    --accent-color: var(--yellow);
+    --secondary-accent: var(--orange);
+    --link-color: var(--dark-gray);
+    --link-hover: var(--black);
+    --link-visited: var(--dark-gray);
+    --header-bg: var(--white);
+    --header-text: var(--black);
+    --nav-bg: var(--white);
+    --nav-text: var(--dark-gray);
+    --nav-hover-text: var(--black);
+    --nav-active-text: var(--black);
+    --nav-active-bg: var(--accent-color);
+    --footer-bg: var(--light-gray);
+    --footer-text: var(--dark-gray);
+    --border-color: var(--medium-gray);
+    
+    /* Typography */
+    --font-main: 'Helvetica Neue', Arial, sans-serif;
+    --font-headings: 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 960px;
+    --grid-size: 8px;
+    --border-radius: 0;
+}
+
+/* Base elements */
+html {
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+*, 
+*:before, 
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--grid-size) * 3);
+}
+
+/* Clean, minimal header */
+header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: calc(var(--grid-size) * 6);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: calc(var(--grid-size) * 3);
+}
+
+/* Site title - stark and bold like Braun logo */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.site-title a {
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+.site-title a:hover {
+    color: var(--header-text);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--header-text);
+}
+
+/* Site description - minimal and precise */
+header p {
+    margin: calc(var(--grid-size)) 0 0;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    max-width: 600px;
+}
+
+/* Navigation - precise horizontal layout */
+nav {
+    margin: calc(var(--grid-size) * 3) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: calc(var(--grid-size)) calc(var(--grid-size) * 1.5);
+    margin-right: calc(var(--grid-size) * 1.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+}
+
+nav a:hover {
+    color: var(--nav-hover-text);
+}
+
+nav a.active {
+    color: var(--nav-active-text);
+    background-color: var(--nav-active-bg);
+    font-weight: 500;
+}
+
+nav a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--nav-hover-text);
+}
+
+/* Content area with grid precision */
+main {
+    min-height: 70vh;
+}
+
+/* Typography with strong hierarchy and precision */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--black);
+    margin: calc(var(--grid-size) * 4) 0 calc(var(--grid-size) * 2);
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.25rem;
+    margin-top: 0;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 1.75rem;
+    letter-spacing: -0.3px;
+}
+
+h3 {
+    font-size: 1.4rem;
+}
+
+p {
+    margin-bottom: calc(var(--grid-size) * 3);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Links - minimal style */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+/* Articles with precise spacing and clean borders */
+article {
+    margin-bottom: calc(var(--grid-size) * 8);
+    position: relative;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: 2rem;
+}
+
+article .meta {
+    font-size: 0.85rem;
+    margin: calc(var(--grid-size) * 2) 0 calc(var(--grid-size) * 4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--grid-size) * 2);
+    color: var(--text-color);
+}
+
+/* Reading time */
+.reading-time {
+    position: relative;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+/* Tags with Braun-inspired geometric precision */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--grid-size));
+}
+
+.tags a {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    padding: calc(var(--grid-size) * 0.5) calc(var(--grid-size) * 1);
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: none;
+}
+
+.tags a:hover {
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--secondary-accent);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+/* Tags list page - grid layout */
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: calc(var(--grid-size) * 2);
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: block;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    padding: calc(var(--grid-size) * 1.5);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.tags-list a:hover {
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--secondary-accent);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+/* Footer - clean and precise */
+footer {
+    margin-top: calc(var(--grid-size) * 6);
+    padding-top: calc(var(--grid-size) * 3);
+    border-top: 1px solid var(--border-color);
+    color: var(--footer-text);
+}
+
+footer p {
+    margin: calc(var(--grid-size)) 0;
+    font-size: 0.85rem;
+}
+
+footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: none;
+}
+
+footer a:hover {
+    color: var(--link-hover);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+footer a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+/* Pagination - clean and precise */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: calc(var(--grid-size) * 2);
+    margin: calc(var(--grid-size) * 6) 0 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: calc(var(--grid-size) * 1) calc(var(--grid-size) * 2);
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--secondary-accent);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: var(--black);
+    border: none;
+}
+
+/* Featured images - clean and precise presentation */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin-bottom: calc(var(--grid-size) * 3);
+    position: relative;
+    text-align: center;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Braun-style indicator element */
+.featured-image::after, 
+.index-image::after, 
+.tag-image::after, 
+.archive-image::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--grid-size) * -1);
+    left: 0;
+    width: calc(var(--grid-size) * 3);
+    height: calc(var(--grid-size) * 0.5);
+    background-color: var(--accent-color);
+}
+
+/* Post list with grid layout */
+.posts-list article {
+    margin-bottom: calc(var(--grid-size) * 6);
+    padding-bottom: calc(var(--grid-size) * 6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.posts-list article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: calc(var(--grid-size) * 1);
+}
+
+/* Blockquote styling */
+blockquote {
+    margin: calc(var(--grid-size) * 3) 0;
+    padding: calc(var(--grid-size) * 2) calc(var(--grid-size) * 3);
+    border-left: calc(var(--grid-size) * 0.5) solid var(--accent-color);
+    background-color: var(--light-gray);
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+    background-color: var(--light-gray);
+}
+
+code {
+    padding: 0.2em 0.4em;
+    font-size: 0.9em;
+}
+
+pre {
+    padding: calc(var(--grid-size) * 2);
+    overflow-x: auto;
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+/* Horizontal rule */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: calc(var(--grid-size) * 4) 0;
+}
+
+/* Braun-inspired tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: calc(var(--grid-size) * 3) 0;
+}
+
+th {
+    text-align: left;
+    padding: calc(var(--grid-size) * 1) calc(var(--grid-size) * 2);
+    border-bottom: 2px solid var(--black);
+    font-weight: 600;
+}
+
+td {
+    padding: calc(var(--grid-size) * 1) calc(var(--grid-size) * 2);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: calc(var(--grid-size) * 2);
+    }
+    
+    header {
+        margin-bottom: calc(var(--grid-size) * 4);
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: calc(var(--grid-size));
+    }
+    
+    nav a {
+        padding: calc(var(--grid-size) * 0.5) calc(var(--grid-size) * 1);
+        margin-right: calc(var(--grid-size) * 1);
+        margin-bottom: calc(var(--grid-size) * 1);
+        flex: 0 1 auto;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        gap: calc(var(--grid-size) * 1);
+    }
+    
+    .posts-list article {
+        margin-bottom: calc(var(--grid-size) * 4);
+        padding-bottom: calc(var(--grid-size) * 4);
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: calc(var(--grid-size) * 2);
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .featured-image, 
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: calc(var(--grid-size) * 3) 0;
+    }
+    
+    .featured-image img, 
+    .index-image img,
+    .tag-image img,
+    .archive-image img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: calc(var(--grid-size) * 1.5);
+    }
+    
+    .site-title {
+        font-size: 1.5rem;
+    }
+    
+    header p {
+        font-size: 0.85rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: calc(var(--grid-size) * 0.5);
+        margin-top: calc(var(--grid-size) * 2);
+    }
+    
+    nav a {
+        margin-right: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: calc(var(--grid-size) * 0.75) calc(var(--grid-size) * 1.5);
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    p {
+        font-size: 0.95rem;
+    }
+    
+    article h1 {
+        font-size: 1.75rem;
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+    
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pagination a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .featured-image::after, 
+    .index-image::after,
+    .tag-image::after,
+    .archive-image::after {
+        font-size: 0.8rem;
+    }
+    
+    footer {
+        text-align: center;
+    }
+} 

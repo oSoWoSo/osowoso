@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-s="your name is $USER"
-echo "$s"

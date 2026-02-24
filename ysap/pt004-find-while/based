@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-i=0
-for file in files/*; do
-	echo "<$file>"
-	((i++))
-done
-echo "found $i files"

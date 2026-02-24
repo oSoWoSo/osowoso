@@ -1,0 +1,851 @@
+/* 
+ * Art Deco Theme for BSSG
+ * Inspired by 1920s-30s Art Deco style with geometric patterns,
+ * elegant fonts, and gold/black/silver/jewel color palettes
+ * IMPROVED: Better accessibility, performance, and text browser support
+ */
+
+/* Reduced motion support - CRITICAL for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Simplify decorative elements for reduced motion */
+    body, header {
+        background-image: none !important;
+        background-attachment: scroll !important;
+    }
+}
+
+:root {
+    /* Art Deco color scheme */
+    --gold: #D4AF37;
+    --black: #000000;
+    --silver: #C0C0C0;
+    --emerald: #50C878;
+    --ruby: #E0115F;
+    --sapphire: #0F52BA;
+    --cream: #FFFDD0;
+    --charcoal: #36454F;
+    
+    /* Semantic color assignments */
+    --bg-color: var(--cream);
+    --text-color: var(--charcoal);
+    --accent-color: var(--gold);
+    --secondary-accent: var(--emerald);
+    --tertiary-accent: var(--ruby);
+    --link-color: var(--sapphire);
+    --link-hover: var(--ruby);
+    --link-visited: var(--emerald);
+    --header-bg: var(--black);
+    --header-text: var(--gold);
+    --nav-bg: var(--black);
+    --nav-text: var(--gold);
+    --nav-hover-bg: var(--gold);
+    --nav-hover-text: var(--black);
+    --footer-bg: var(--black);
+    --footer-text: var(--silver);
+    --border-color: var(--gold);
+    
+    /* Typography - IMPROVED fallbacks for text browsers */
+    --font-main: Georgia, 'Times New Roman', Times, serif;
+    --font-headings: 'Copperplate Gothic Light', 'Copperplate', Garamond, Georgia, 'Times New Roman', serif;
+    --font-mono: 'Courier New', Courier, monospace;
+    
+    /* Sizing */
+    --content-width: 900px;
+    --content-padding: 2rem;
+}
+
+/* Base elements - OPTIMIZED performance */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    /* OPTIMIZED: Simplified pattern for better performance */
+    background-image: 
+        linear-gradient(45deg, var(--gold) 25%, transparent 25%), 
+        linear-gradient(-45deg, var(--gold) 25%, transparent 25%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    /* REMOVED: background-attachment: fixed for better mobile performance */
+    background-repeat: repeat;
+    background-color: var(--cream);
+    /* OPTIMIZED: Reduced blend mode complexity */
+    background-blend-mode: multiply;
+    opacity: 0.95;
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 2rem auto;
+    padding: 0;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Art Deco border pattern - OPTIMIZED */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--gold),
+        var(--gold) 15px,
+        var(--black) 15px,
+        var(--black) 30px
+    );
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--gold),
+        var(--gold) 15px,
+        var(--black) 15px,
+        var(--black) 30px
+    );
+}
+
+/* Header - OPTIMIZED performance */
+header {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 2rem var(--content-padding) 1rem;
+    position: relative;
+    text-align: center;
+    /* OPTIMIZED: Simplified background pattern */
+    background-image: 
+        linear-gradient(45deg, var(--gold) 25%, transparent 25%), 
+        linear-gradient(-45deg, var(--gold) 25%, transparent 25%);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+    /* REMOVED: background-attachment: fixed for better mobile performance */
+    background-repeat: repeat;
+    background-color: var(--black);
+    /* OPTIMIZED: Reduced blend mode complexity */
+    background-blend-mode: overlay;
+    opacity: 0.95;
+}
+
+/* Decorative header element - IMPROVED text browser support */
+header::before {
+    content: "★ ★ ★";
+    display: block;
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2rem;
+    padding-left: 2rem;
+}
+
+/* FALLBACK: Text browser support for decorative elements */
+@supports not (content: "★") {
+    header::before {
+        content: "* * *";
+    }
+}
+
+header::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1rem auto 0;
+}
+
+/* Site title - IMPROVED accessibility */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: normal;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.site-title a {
+    color: var(--header-text);
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.site-title a::before, 
+.site-title a::after {
+    content: "◆";
+    position: relative;
+    color: var(--gold);
+    margin: 0 1rem;
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+/* FALLBACK: Text browser support for decorative elements */
+@supports not (content: "◆") {
+    .site-title a::before, 
+    .site-title a::after {
+        content: "*";
+    }
+}
+
+.site-title a:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+/* Site description */
+header p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--silver);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Navigation - IMPROVED accessibility */
+nav {
+    background-color: var(--nav-bg);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+    position: relative;
+}
+
+nav::before,
+nav::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--gold);
+}
+
+nav::before {
+    top: 0;
+}
+
+nav::after {
+    bottom: 0;
+}
+
+nav a {
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.2s ease; /* Reduced transition time for better performance */
+}
+
+nav a:hover, 
+nav a.active {
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-text);
+    transform: translateY(-1px);
+}
+
+nav a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-text);
+    transform: translateY(-1px);
+}
+
+/* Content area */
+main {
+    padding: 3rem var(--content-padding);
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin: 2rem 0 1rem;
+    line-height: 1.2;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-top: 0;
+    color: var(--charcoal);
+    text-align: center;
+    position: relative;
+}
+
+h1::before, 
+h1::after {
+    content: "";
+    display: inline-block;
+    height: 1px;
+    background-color: var(--gold);
+    width: 50px;
+    vertical-align: middle;
+    margin: 0 1rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: var(--charcoal);
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--charcoal);
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* First paragraph special styling */
+article > p:first-of-type::first-letter {
+    font-size: 3.5rem;
+    float: left;
+    line-height: 1;
+    margin-right: 0.5rem;
+    color: var(--gold);
+    font-family: var(--font-headings);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--link-color);
+    transition: all 0.2s ease;
+}
+
+a:visited {
+    color: var(--link-visited);
+    border-bottom-color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* Articles */
+article {
+    margin-bottom: 4rem;
+    position: relative;
+    padding: 2rem;
+    border: 1px solid var(--gold);
+    background-color: rgba(255, 253, 208, 0.7);
+}
+
+article::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+article .meta {
+    font-size: 0.9rem;
+    margin: 1rem 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: var(--charcoal);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 1rem;
+}
+
+/* Reading time */
+.reading-time {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.reading-time::before {
+    content: "⏱";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tags a {
+    background-color: var(--gold);
+    color: var(--black);
+    padding: 0.2rem 0.8rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-headings);
+    border: none;
+    border-radius: 0;
+    position: relative;
+}
+
+.tags a::before,
+.tags a::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: var(--bg-color);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tags a::before {
+    left: 5px;
+}
+
+.tags a::after {
+    right: 5px;
+}
+
+.tags a:hover {
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+/* Tags list page */
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: block;
+    background-color: var(--gold);
+    color: var(--black);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: var(--font-headings);
+    text-decoration: none;
+    border: none;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.tags-list a:hover {
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+/* Footer */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 2rem var(--content-padding);
+    text-align: center;
+    position: relative;
+    background-image: 
+        linear-gradient(45deg, var(--gold) 25%, transparent 25%), 
+        linear-gradient(-45deg, var(--gold) 25%, transparent 25%);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+    background-attachment: fixed;
+    background-repeat: repeat;
+    background-color: var(--black);
+    background-blend-mode: overlay;
+}
+
+footer::before {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 auto 1.5rem;
+}
+
+footer p {
+    margin: 0.5rem 0;
+    font-style: italic;
+}
+
+footer a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: none;
+}
+
+footer a:hover {
+    color: var(--silver);
+    text-decoration: underline;
+}
+
+footer a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    color: var(--silver);
+    text-decoration: underline;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0 1rem;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--gold);
+    color: var(--black);
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-family: var(--font-headings);
+    border: none;
+    position: relative;
+}
+
+.pagination a:hover {
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    background-color: var(--black);
+    color: var(--gold);
+    border: none;
+}
+
+/* Featured images */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 10px;
+    background-color: var(--black);
+    text-align: center;
+}
+
+.featured-image::before,
+.index-image::before,
+.tag-image::before,
+.archive-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--gold);
+    margin: 5px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 0;
+    margin: 0 auto;
+}
+
+/* Image caption styling for better contrast */
+figcaption {
+    color: var(--black);
+    background-color: rgba(255, 253, 208, 0.9);
+    padding: 0.5rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    text-align: center;
+    border: 1px solid var(--gold);
+    font-weight: bold;
+}
+
+/* Post list on index/tag/archive pages */
+.posts-list article {
+    margin-bottom: 3rem;
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+/* IMPROVED: Responsive styles with mobile optimizations */
+@media (max-width: 768px) {
+    body {
+        /* OPTIMIZED: Remove complex background patterns on mobile */
+        background-image: none;
+        background-color: var(--cream);
+    }
+    
+    header {
+        /* OPTIMIZED: Simplified header background on mobile */
+        background-image: none;
+        background-color: var(--black);
+    }
+    
+    .container {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    header, 
+    main, 
+    footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    header::before {
+        letter-spacing: 1rem;
+        padding-left: 1rem;
+    }
+    
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    .site-title a::before, 
+    .site-title a::after {
+        margin: 0 0.5rem;
+    }
+    
+    h1::before, 
+    h1::after {
+        width: 30px;
+        margin: 0 0.5rem;
+    }
+    
+    nav {
+        justify-content: center;
+    }
+    
+    nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.8rem;
+        text-align: center;
+        /* OPTIMIZED: Simplified transitions on mobile */
+        transition: background-color 0.2s ease;
+    }
+    
+    article {
+        padding: 1rem;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .featured-image, 
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: 1.5rem 0;
+        /* OPTIMIZED: Simplified decorative elements on mobile */
+        padding: 5px;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .site-title {
+        font-size: 1.7rem;
+        letter-spacing: 2px; /* Reduced letter spacing for small screens */
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    header::before {
+        letter-spacing: 0.5rem;
+        padding-left: 0.5rem;
+    }
+    
+    .site-title a::before, 
+    .site-title a::after {
+        margin: 0 0.3rem;
+    }
+    
+    nav {
+        flex-direction: column;
+    }
+    
+    nav a {
+        width: 100%;
+        box-sizing: border-box;
+        border-bottom: 1px solid var(--gold);
+        /* OPTIMIZED: Remove transforms on small mobile */
+        transform: none !important;
+    }
+    
+    nav a:last-child {
+        border-bottom: none;
+    }
+    
+    .tags {
+        justify-content: center;
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        font-size: 0.9rem;
+    }
+    
+    /* OPTIMIZED: Simplified decorative elements on very small screens */
+    .featured-image, 
+    .index-image,
+    .tag-image,
+    .archive-image {
+        padding: 2px;
+    }
+    
+    footer {
+        text-align: center;
+    }
+} 

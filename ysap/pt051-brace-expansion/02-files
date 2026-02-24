@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-echo my-file.{txt,jpg,mov}

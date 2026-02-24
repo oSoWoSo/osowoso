@@ -1,0 +1,998 @@
+/* 
+ * Longform Theme for BSSG
+ * Optimized for reading long articles with highly readable typography,
+ * contained text width, minimal distractions, and reading progress bar
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining longform reading aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable progress bar animation */
+    .progress-bar {
+        transition: none !important;
+    }
+}
+
+:root {
+    /* Color scheme */
+    --background-color: #ffffff;
+    --text-color: #2d3748;
+    --heading-color: #1a202c;
+    --link-color: #3182ce;
+    --link-hover: #2c5282;
+    --link-visited: #805ad5;
+    --muted-color: #718096;
+    --border-color: #e2e8f0;
+    --accent-color: #4299e1;
+    --progress-color: #3182ce;
+    --code-bg: #f7fafc;
+    --blockquote-bg: #f7fafc;
+    --blockquote-border: #cbd5e1;
+    
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-serif: Georgia, 'Times New Roman', Times, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, Arial, sans-serif;
+    --font-mono: 'Menlo', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 90%;
+    --max-content-width: 1200px;
+    --article-width: 65ch; /* Character-based width for optimal reading */
+    --line-height: 1.8;
+    --content-padding: 2rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+/* Base elements */
+html {
+    font-size: 18px; /* Slightly larger base font size for reading */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-serif);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--muted-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+/* Reading progress bar */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    z-index: 1000;
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--progress-color);
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+/* Header - minimalistic and centered */
+header {
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Site title */
+.site-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.site-title a {
+    color: var(--heading-color);
+    text-decoration: none;
+}
+
+.site-title a:hover {
+    color: var(--link-color);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-color);
+}
+
+/* Site description */
+header p {
+    margin: var(--spacing-xs) 0 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--muted-color);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Navigation - minimal, centered */
+nav {
+    font-family: var(--font-sans);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) 0;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--link-color);
+    transition: width 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--link-color);
+}
+
+nav a:hover::after,
+nav a.active::after {
+    width: 100%;
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-color);
+}
+
+nav a:focus::after {
+    width: 100%;
+}
+
+/* Content area - centered with improved alignment */
+main {
+    padding: 0 var(--content-padding) var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main > * {
+    width: 100%;
+    max-width: var(--article-width);
+}
+
+/* Typography - improved alignment */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    color: var(--heading-color);
+    line-height: 1.3;
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: var(--spacing-xl);
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+p {
+    margin: var(--spacing-md) 0;
+    hyphens: auto;
+}
+
+/* Drop cap for the first paragraph in articles */
+article .article-content > p:first-of-type:first-letter {
+    float: left;
+    font-size: 3em;
+    line-height: 0.8;
+    padding-right: 0.1em;
+    padding-top: 0.1em;
+    color: var(--heading-color);
+    font-weight: 700;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* Lists */
+ul, ol {
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Blockquote */
+blockquote {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--blockquote-bg);
+    border-left: 4px solid var(--blockquote-border);
+    font-style: italic;
+}
+
+blockquote p:first-child {
+    margin-top: 0;
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote cite {
+    display: block;
+    margin-top: var(--spacing-sm);
+    font-size: 0.9em;
+    color: var(--muted-color);
+    font-style: normal;
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+    background-color: var(--code-bg);
+}
+
+code {
+    padding: 0.2em 0.4em;
+    font-size: 0.85em;
+    border-radius: 3px;
+}
+
+pre {
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    border-radius: 3px;
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+/* Horizontal rule */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: var(--spacing-xl) auto;
+    width: 50%;
+}
+
+/* Articles with improved alignment */
+article {
+    margin-bottom: 4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+article .meta {
+    font-size: 0.9rem;
+    margin: 1rem 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Also center the page-meta div with date and reading time */
+.page-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--muted-color);
+    margin: 1rem 0 2rem 0;
+    text-align: center;
+    width: 100%;
+}
+
+article .article-content {
+    width: 100%;
+}
+
+/* Reading time */
+.reading-time {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+    font-size: 1.1em;
+}
+
+/* Use icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱";
+    }
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    font-family: var(--font-sans);
+}
+
+.tags a {
+    color: var(--muted-color);
+    text-decoration: none;
+    padding: 0.2em 0.6em;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    background-color: var(--code-bg);
+    transition: all 0.2s ease;
+}
+
+.tags a:hover {
+    color: var(--link-color);
+    background-color: var(--blockquote-bg);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-color);
+    background-color: var(--blockquote-bg);
+}
+
+/* Tags list page */
+.tags-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    font-family: var(--font-sans);
+    max-width: var(--article-width);
+    margin: 0 auto var(--spacing-lg);
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: inline-block;
+    padding: 0.3em 0.8em;
+    color: var(--text-color);
+    background-color: var(--code-bg);
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.tags-list a:hover {
+    color: var(--background-color);
+    background-color: var(--link-color);
+}
+
+/* Featured images */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin: var(--spacing-lg) auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 3px;
+}
+
+/* Image caption */
+figcaption {
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--muted-color);
+    margin-top: var(--spacing-xs);
+    font-style: italic;
+}
+
+/* Pull quote */
+.pull-quote {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--heading-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Post list on index/tag/archive pages */
+.posts-list {
+    max-width: var(--article-width);
+    margin: 0 auto;
+}
+
+/* Center the Latest Posts heading */
+main > h1 {
+    text-align: center;
+}
+
+.posts-list article {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.posts-list article:last-child {
+    border-bottom: none;
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+
+.posts-list h3 a {
+    color: var(--heading-color);
+    text-decoration: none;
+}
+
+.posts-list h3 a:hover {
+    color: var(--link-color);
+}
+
+/* Footer - centered and improved alignment */
+footer {
+    margin-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--muted-color);
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer a {
+    color: var(--text-color);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+}
+
+footer a:hover {
+    color: var(--link-color);
+}
+
+/* Pagination - minimalist design */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--spacing-xl) auto;
+    max-width: var(--article-width);
+    font-family: var(--font-sans);
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0.5em 1em;
+    color: var(--text-color);
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--link-color);
+    color: var(--background-color);
+    border-color: var(--link-color);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-color);
+    color: var(--background-color);
+    border-color: var(--link-color);
+}
+
+/* Utilities */
+.text-center {
+    text-align: center;
+}
+
+.footnotes {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+}
+
+.footnotes ol {
+    padding-left: var(--spacing-lg);
+}
+
+.footnote-backref {
+    text-decoration: none;
+    margin-left: 0.3em;
+}
+
+/* Article series navigation */
+.series-nav {
+    background-color: var(--code-bg);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border-radius: 3px;
+    font-family: var(--font-sans);
+}
+
+.series-nav h4 {
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+.series-nav ol {
+    margin-bottom: 0;
+}
+
+.series-nav li.current {
+    font-weight: bold;
+}
+
+/* Table of contents */
+.table-of-contents {
+    background-color: var(--code-bg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    border-radius: 3px;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.table-of-contents h4 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+}
+
+.table-of-contents ul {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+}
+
+.table-of-contents li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1a202c;
+        --text-color: #e2e8f0;
+        --heading-color: #f7fafc;
+        --link-color: #63b3ed;
+        --link-hover: #4299e1;
+        --link-visited: #b794f4;
+        --muted-color: #a0aec0;
+        --border-color: #2d3748;
+        --accent-color: #4299e1;
+        --code-bg: #2d3748;
+        --blockquote-bg: #2d3748;
+        --blockquote-border: #4a5568;
+    }
+    
+    img {
+        opacity: 0.8;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+    
+    .container {
+        width: 95%;
+    }
+    
+    main {
+        padding: 0 var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .pull-quote {
+        font-size: 1.25rem;
+    }
+    
+    nav {
+        gap: var(--spacing-sm);
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: center;
+    }
+    
+    .pagination a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .featured-image, 
+    .article-image, 
+    .tag-image {
+        margin: var(--spacing-md) 0;
+    }
+    
+    .table-of-contents {
+        padding: var(--spacing-sm);
+    }
+}
+
+/* Medium-small screens */
+@media (max-width: 600px) {
+    html {
+        font-size: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    header {
+        padding: var(--spacing-md) 0;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .site-title {
+        font-size: 1.8rem;
+    }
+    
+    article .article-content > p:first-of-type:first-letter {
+        font-size: 2.5em;
+    }
+    
+    .tags {
+        flex-wrap: wrap;
+    }
+    
+    .tags a {
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    :root {
+        --content-padding: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+    }
+    
+    .container {
+        width: 100%;
+    }
+    
+    header {
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .site-title {
+        font-size: 1.6rem;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    h3 {
+        font-size: 1.1rem;
+    }
+    
+    main {
+        padding: 0 var(--spacing-xs) var(--spacing-md);
+    }
+    
+    blockquote {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+    }
+    
+    article .article-content > p:first-of-type:first-letter {
+        font-size: 2.2em;
+    }
+    
+    pre, code {
+        font-size: 0.85rem;
+    }
+    
+    pre {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+    }
+    
+    .tags-list {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+    
+    .pull-quote {
+        font-size: 1.1rem;
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    html {
+        font-size: 13px;
+    }
+    
+    .site-title {
+        font-size: 1.4rem;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+    
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .tags-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Print styles */
+@media print {
+    :root {
+        --font-serif: Georgia, 'Times New Roman', serif;
+        --font-sans: Arial, Helvetica, sans-serif;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.6;
+        color: #000;
+        background: #fff;
+    }
+    
+    .progress-container, 
+    nav, 
+    .tags, 
+    .pagination,
+    footer,
+    .series-nav {
+        display: none;
+    }
+    
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 90%;
+        color: #333;
+    }
+    
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+        content: "";
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    
+    img {
+        page-break-inside: avoid;
+        max-width: 100% !important;
+    }
+    
+    article {
+        page-break-before: always;
+    }
+    
+    blockquote {
+        border-left: 2pt solid #ccc;
+        padding: 0.5cm;
+        page-break-inside: avoid;
+    }
+    
+    @page {
+        margin: 2cm;
+    }
+} 

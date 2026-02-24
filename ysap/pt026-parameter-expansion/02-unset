@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-one='hello'
-two=''
-
-echo "${one:-foo}"
-echo "${two:-bar}"

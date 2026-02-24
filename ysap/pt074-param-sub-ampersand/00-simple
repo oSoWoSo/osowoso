@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-foo='hello world'
-bar=${foo/hello/goodbye}
-
-echo "$foo"
-echo "$bar"

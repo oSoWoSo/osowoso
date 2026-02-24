@@ -1,0 +1,1079 @@
+/* 
+ * Amiga 500 Workbench Theme for BSSG
+ * Inspired by the classic Amiga Workbench interface
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Added text browser fallbacks
+ * - Optimized font loading while maintaining authentic look
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Amiga 500 Workbench inspired color scheme */
+    --bg-color: #0055aa;
+    --text-color: #ffffff;
+    --link-color: #ff8800;
+    --link-hover-color: #ffaa22;
+    --header-color: #ffffff;
+    --border-color: #000000;
+    --accent-color: #0055aa;
+    --accent-secondary: #003366;
+    --tag-bg: #006699;
+    --tag-text: #ffffff;
+    --quote-bg: #004488;
+    --date-color: #aaccee;
+    --highlight-color: #ff8800;
+    --window-border: #000000;
+    --window-title-bg: #ff8800;
+    --window-title-text: #000000;
+    --window-body-bg: #0055aa;
+    --window-shadow: rgba(0, 0, 0, 0.4);
+    --checkered-color1: #0055aa;
+    --checkered-color2: #0066bb;
+    
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-main: 'Topaz', 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+    --font-headings: 'Topaz', 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+    --font-mono: 'Topaz', 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+    
+    /* Spacing and sizing */
+    --radius: 0; /* Amiga didn't have rounded corners */
+    --content-width: 720px;
+    --transition: 0.2s ease;
+}
+
+/* OPTIMIZED font loading with better fallbacks */
+@font-face {
+    font-family: 'Topaz';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Topaz'),
+         url('/fonts/topaz.woff2') format('woff2');
+    font-display: swap;
+}
+
+/* TEXT BROWSER FALLBACK: Provide fallback when custom fonts aren't supported */
+@supports not (font-display: swap) {
+    :root {
+        --font-main: 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+        --font-headings: 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+        --font-mono: 'Lucida Console', Monaco, 'Courier New', 'Courier', monospace;
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    font-smooth: never;
+}
+
+/* Checkered background pattern like Workbench - OPTIMIZED for performance */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(45deg, var(--checkered-color2) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--checkered-color2) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--checkered-color2) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--checkered-color2) 75%);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* TEXT BROWSER FALLBACK: Disable complex background when not supported */
+@supports not (background-clip: text) {
+    body::before {
+        display: none;
+    }
+    
+    body {
+        background-color: var(--bg-color);
+    }
+}
+
+::selection {
+    background-color: var(--link-color);
+    color: var(--window-title-text);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 30px auto;
+    background-color: var(--bg-color);
+    position: relative;
+    border: 2px solid var(--window-border);
+    box-shadow: 6px 6px 0 var(--window-shadow);
+}
+
+/* Amiga window title bar */
+header {
+    position: relative;
+    margin-bottom: 20px;
+    background-color: var(--window-body-bg);
+    padding: 0;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+}
+
+/* Window drag gadget (right side) */
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+/* Site title with Amiga workbench style */
+.site-title {
+    margin: 0;
+    padding: 4px 0 0 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    max-width: calc(100% - 20px); /* Keep the title within the header */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    z-index: 5;
+    font-family: var(--font-headings);
+    /* Use orange colors to match window title bars */
+    background: linear-gradient(90deg, var(--window-title-bg) 0%, var(--link-hover-color) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* TEXT BROWSER FALLBACK: Provide solid color when gradient text isn't supported */
+@supports not (background-clip: text) {
+    .site-title {
+        color: var(--window-title-bg);
+        background: none;
+    }
+    
+    .site-title a {
+        color: var(--window-title-bg);
+        background: none;
+    }
+    
+    .site-title a:hover,
+    .site-title a:focus {
+        color: var(--link-hover-color);
+        background: none;
+    }
+}
+
+.site-title a {
+    text-decoration: none;
+    display: inline-block;
+    /* Use orange colors to match window title bars */
+    background: linear-gradient(90deg, var(--window-title-bg) 0%, var(--link-hover-color) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.site-title a:hover {
+    text-decoration: none;
+    transform: translateX(2px);
+    background: linear-gradient(90deg, var(--link-hover-color) 0%, var(--window-title-bg) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    text-decoration: none;
+    transform: translateX(2px);
+    background: linear-gradient(90deg, var(--link-hover-color) 0%, var(--window-title-bg) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+header h1 {
+    font-family: var(--font-headings);
+    font-weight: 400;
+    color: var(--window-title-text);
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0;
+    position: absolute;
+    top: 0;
+    left: 4px;
+    height: 20px;
+    line-height: 20px;
+    z-index: 10;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 30px);
+}
+
+header p {
+    color: var(--text-color);
+    margin: 0;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+nav {
+    padding: 0 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+nav a {
+    color: var(--window-title-text);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 400;
+    font-size: 0.85rem;
+    padding: 2px 10px;
+    background-color: var(--window-title-bg);
+    transition: background-color var(--transition), color var(--transition);
+    position: relative;
+    border: 2px solid var(--window-border);
+}
+
+nav a:hover {
+    background-color: var(--link-hover-color);
+    color: var(--window-title-text);
+}
+
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-hover-color);
+    color: var(--window-title-text);
+}
+
+main {
+    padding: 0 15px;
+    margin-bottom: 1.5rem;
+}
+
+/* Window style for articles */
+article {
+    margin-bottom: 30px;
+    border: 2px solid var(--window-border);
+    background-color: var(--window-body-bg);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--window-shadow);
+    overflow: hidden;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+/* Article title bar */
+article::before {
+    content: "";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+}
+
+article::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+article .content {
+    padding: 15px;
+}
+
+article h3, article .meta, article .summary {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Featured image styles in Amiga Workbench style */
+.featured-image {
+    margin: 15px;
+    border: 2px solid var(--window-border);
+    background-color: var(--window-body-bg);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--window-shadow);
+    overflow: hidden;
+    max-width: calc(100% - 30px);
+}
+
+.featured-image::before {
+    content: "PICTURE";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+    color: var(--window-title-text);
+    font-family: var(--font-headings);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-left: 4px;
+    line-height: 20px;
+}
+
+.featured-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+.featured-image img {
+    display: block;
+    max-width: 100%;
+    border: none;
+    padding: 0;
+    background: none;
+    margin: 0;
+    image-rendering: pixelated;
+}
+
+.featured-image .image-caption {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    color: var(--date-color);
+    border-top: 1px solid var(--window-border);
+    background-color: var(--window-body-bg);
+}
+
+.index-image {
+    margin: 15px;
+    border: 2px solid var(--window-border);
+    background-color: var(--window-body-bg);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--window-shadow);
+    overflow: hidden;
+    max-width: calc(100% - 30px);
+}
+
+.index-image::before {
+    content: "INDEX";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+    color: var(--window-title-text);
+    font-family: var(--font-headings);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-left: 4px;
+    line-height: 20px;
+}
+
+.index-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+.index-image img {
+    display: block;
+    max-width: 100%;
+    border: none;
+    padding: 0;
+    background: none;
+    margin: 0;
+    image-rendering: pixelated;
+}
+
+.tag-image {
+    margin: 15px;
+    border: 2px solid var(--window-border);
+    background-color: var(--window-body-bg);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--window-shadow);
+    overflow: hidden;
+    max-width: calc(100% - 30px);
+}
+
+.tag-image::before {
+    content: "TAG";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+    color: var(--window-title-text);
+    font-family: var(--font-headings);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-left: 4px;
+    line-height: 20px;
+}
+
+.tag-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+.tag-image img {
+    display: block;
+    max-width: 100%;
+    border: none;
+    padding: 0;
+    background: none;
+    margin: 0;
+    image-rendering: pixelated;
+}
+
+.archive-image {
+    margin: 15px;
+    border: 2px solid var(--window-border);
+    background-color: var(--window-body-bg);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--window-shadow);
+    overflow: hidden;
+    max-width: calc(100% - 30px);
+}
+
+.archive-image::before {
+    content: "ARCHIVE";
+    display: block;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-bottom: 2px solid var(--window-border);
+    color: var(--window-title-text);
+    font-family: var(--font-headings);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-left: 4px;
+    line-height: 20px;
+}
+
+.archive-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--window-title-bg);
+    border-left: 2px solid var(--window-border);
+    border-bottom: 2px solid var(--window-border);
+}
+
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    border: none;
+    padding: 0;
+    background: none;
+    margin: 0;
+    image-rendering: pixelated;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin: 1.5rem 0 1rem;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1.1rem;
+}
+
+article h1 {
+    font-family: var(--font-headings);
+    font-weight: 400;
+    color: var(--window-title-text);
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0;
+    position: absolute;
+    top: 0;
+    left: 4px;
+    height: 20px;
+    line-height: 20px;
+    z-index: 10;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 30px);
+}
+
+.date-header {
+    font-size: 0.8rem;
+    color: var(--date-color);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-headings);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+article .meta {
+    font-size: 0.8rem;
+    color: var(--date-color);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Reading time - TEXT BROWSER FALLBACK */
+.reading-time {
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--accent-color);
+    padding: 0 0.5rem;
+    border: 1px solid var(--date-color);
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+article .summary {
+    margin-bottom: 1.2rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0 15px;
+}
+
+article .summary p, 
+article .summary ul, 
+article .summary ol,
+article .summary li,
+article .summary h2,
+article .summary h3 {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    box-sizing: border-box;
+}
+
+article .summary h2 {
+    font-size: 1.1rem;
+}
+
+article .summary h3 {
+    font-size: 1rem;
+}
+
+article .summary ol,
+article .summary ul {
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+article .summary li {
+    padding-right: 10px;
+}
+
+article .tags {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+article .tags a, article .tags .tag, article .tags a.tag {
+    display: inline-block;
+    background-color: var(--window-title-bg);
+    color: var(--window-title-text);
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 400;
+    transition: transform var(--transition), background-color var(--transition);
+    border: 1px solid var(--window-border);
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+article .tags a:hover, article .tags .tag:hover, article .tags a.tag:hover {
+    background-color: var(--link-hover-color);
+    transform: translateY(-1px);
+}
+
+article .tags a:focus, article .tags .tag:focus, article .tags a.tag:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-hover-color);
+    transform: translateY(-1px);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+}
+
+p {
+    margin: 0 0 1.5rem;
+}
+
+strong, b {
+    font-weight: 400;
+    color: var(--link-color);
+}
+
+em, i {
+    font-style: normal;
+    text-decoration: underline;
+}
+
+mark {
+    background-color: var(--link-color);
+    color: var(--window-title-text);
+    padding: 0.1rem 0.3rem;
+}
+
+ul, ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    padding: 15px;
+    margin-top: 2rem;
+    color: var(--date-color);
+    font-size: 0.85rem;
+    border-top: 2px solid var(--window-border);
+}
+
+footer a {
+    color: var(--link-color);
+}
+
+footer a:hover {
+    color: var(--link-hover-color);
+}
+
+footer a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+}
+
+blockquote {
+    border-left: 4px solid var(--link-color);
+    padding: 0.5rem 1rem;
+    margin: 2rem 0;
+    background-color: var(--quote-bg);
+}
+
+code {
+    background-color: var(--accent-secondary);
+    padding: 0.2rem 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+pre {
+    background-color: var(--accent-secondary);
+    padding: 1rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 2px solid var(--window-border);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border: 2px solid var(--window-border);
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem 15px;
+    border-top: 2px solid var(--window-border);
+}
+
+.pagination a {
+    padding: 2px 10px;
+    background-color: var(--window-title-bg);
+    color: var(--window-title-text);
+    border: 2px solid var(--window-border);
+    transition: background-color var(--transition);
+}
+
+.pagination a:hover {
+    background-color: var(--link-hover-color);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-hover-color);
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+}
+
+.tags-list a {
+    background-color: var(--window-title-bg);
+    color: var(--window-title-text);
+    padding: 2px 10px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-weight: 400;
+    transition: background-color var(--transition);
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid var(--window-border);
+}
+
+.tags-list a:hover {
+    background-color: var(--link-hover-color);
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-hover-color);
+}
+
+.tag-count {
+    background-color: var(--accent-secondary);
+    color: var(--text-color);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius);
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.posts-list article {
+    margin-bottom: 20px;
+}
+
+.posts-list h2, .posts-list h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Archive styles */
+.archives-list {
+    margin: 2rem 0;
+}
+
+.archives-list h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding: 2px 10px;
+    color: var(--window-title-text);
+    background-color: var(--window-title-bg);
+    display: inline-block;
+    border: 2px solid var(--window-border);
+}
+
+.archives-list h2 a {
+    color: var(--window-title-text);
+    text-decoration: none;
+}
+
+.archives-list h2:first-child {
+    margin-top: 1rem;
+}
+
+.month-list {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.month-list li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.month-list li::before {
+    content: "•";
+    position: absolute;
+    left: -1rem;
+    color: var(--link-color);
+}
+
+/* Fix for the year display in archives */
+.archives-list > article > h2 {
+    color: var(--window-title-text) !important;
+    font-weight: bold;
+}
+
+.post-count {
+    color: var(--window-title-text);
+    background-color: var(--window-title-bg);
+    font-weight: 400;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--window-border);
+}
+
+.archives-nav {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--window-border);
+}
+
+.archives-nav a {
+    display: inline-block;
+    padding: 2px 10px;
+    background-color: var(--window-title-bg);
+    color: var(--window-title-text);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-size: 0.85rem;
+    transition: background-color var(--transition);
+    border: 2px solid var(--window-border);
+    margin-right: 5px;
+}
+
+.archives-nav a:hover {
+    background-color: var(--link-hover-color);
+}
+
+.archives-nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--link-hover-color);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+    }
+
+    .container {
+        margin: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.2rem;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    nav a {
+        display: block;
+        text-align: center;
+    }
+    
+    blockquote {
+        padding: 0.5rem;
+    }
+    
+    pre {
+        padding: 0.7rem;
+    }
+    
+    .tags-list, article .tags {
+        gap: 0.5rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    article .content,
+    article h3,
+    article .meta,
+    article .summary {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Fix for single post page tag layout */
+.post-header + p, .post-header ~ p, .post-header ~ h2, .post-header ~ h3, .post-header ~ ul, .post-header ~ ol, .post-header ~ blockquote {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* Fix specifically for tag display in post pages */
+div.tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    margin-top: 1.5rem !important;
+}
+
+div.tags a, div.tags .tag, div.tags a.tag {
+    display: inline-block !important;
+    margin: 0 0.5rem 0.5rem 0 !important;
+} 

@@ -1,0 +1,2904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSSG Post Editor</title>
+    <style>
+        /* CSS Variables for theming */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #64748b;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-hover: #f1f5f9;
+            --border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --border: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Layout */
+        .editor-container {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile */
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile header toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 0.25rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            white-space: nowrap;
+            min-height: 44px; /* Better touch target */
+            min-width: 44px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* Main content area */
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            background: var(--background);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+            min-height: 44px; /* Better touch target */
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 4rem;
+        }
+
+        .form-help {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Editor area */
+        .editor-area {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .editor-toolbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .editor-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .editor-content.split-view {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .editor-pane {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .editor-pane-header {
+            background: var(--surface);
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: none; /* Hidden by default on desktop */
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .settings-toggle:hover {
+            background: var(--primary-hover);
+        }
+
+        .editor-textarea {
+            flex: 1;
+            border: none;
+            padding: 1.5rem;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            background: var(--background);
+            color: var(--text-primary);
+            resize: none;
+            outline: none;
+        }
+
+        .editor-pane.preview-pane {
+            flex: 1;
+            padding: 0;
+            overflow-y: auto;
+            background: var(--background);
+            border-left: 1px solid var(--border);
+            display: none;
+        }
+
+        .split-view .editor-pane.preview-pane {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        /* Preview content styling */
+        .preview-content h1,
+        .preview-content h2,
+        .preview-content h3,
+        .preview-content h4,
+        .preview-content h5,
+        .preview-content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .preview-content h1 { font-size: 2rem; }
+        .preview-content h2 { font-size: 1.5rem; }
+        .preview-content h3 { font-size: 1.25rem; }
+        .preview-content h4 { font-size: 1.125rem; }
+
+        .preview-content p {
+            margin-bottom: 1rem;
+        }
+
+        .preview-content ul,
+        .preview-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .preview-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        .preview-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .preview-content code {
+            background: var(--surface);
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.875em;
+        }
+
+        .preview-content pre {
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .preview-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* Status bar */
+        .status-bar {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            gap: 1rem;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-right {
+            white-space: nowrap;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--background);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            max-width: calc(100vw - 2rem);
+            max-height: calc(100vh - 2rem);
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Unsplash image grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .image-item {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .image-item:hover {
+            transform: scale(1.02);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .image-attribution {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        /* Tag input styling */
+        .tag-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            background: var(--background);
+            min-height: 44px;
+            align-items: center;
+        }
+
+        .tag-input-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+        }
+
+        .tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0;
+            width: 1rem;
+            height: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .tag-remove:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            flex: 1;
+            min-width: 100px;
+            color: var(--text-primary);
+        }
+
+        /* Article list styles */
+        .article-item {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--background);
+            min-height: 44px;
+        }
+
+        .article-item:hover {
+            background: var(--surface-hover);
+            border-color: var(--primary-color);
+        }
+
+        .article-item.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .article-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .article-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-item.selected .article-meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .article-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .article-item.selected .article-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .no-articles {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Preview mobile toggle */
+        .preview-mobile-toggle {
+            display: none;
+        }
+
+        /* Focus mode */
+        .focus-mode .sidebar {
+            display: none;
+        }
+
+        .focus-mode .main-content {
+            grid-template-columns: 1fr;
+        }
+
+        .focus-mode .editor-content {
+            grid-template-columns: 1fr;
+        }
+
+        .focus-mode .editor-pane.preview-pane {
+            display: none;
+        }
+
+        .focus-mode .editor-toolbar {
+            display: none;
+        }
+
+        .focus-mode .header {
+            display: none;
+        }
+
+        .focus-mode .status-bar {
+            display: none;
+        }
+
+        .focus-mode .editor-container {
+            grid-template-rows: 1fr;
+        }
+
+        .focus-mode .editor-area {
+            grid-template-rows: 1fr;
+        }
+
+        .focus-mode .editor-textarea {
+            padding: 3rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Focus mode exit button */
+        .focus-exit {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            font-size: 1.25rem;
+        }
+
+        .focus-mode .focus-exit {
+            display: flex;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile and tablet responsive design */
+        @media (max-width: 1024px) {
+            .header-actions {
+                gap: 0.25rem;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.25rem;
+                flex: 1;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .header-actions {
+                display: none;
+                width: 100%;
+                background: var(--surface);
+                padding: 0.75rem;
+                border-top: 1px solid var(--border);
+                margin: 0 -1rem -0.75rem;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .header-actions.active {
+                display: flex;
+            }
+
+            .btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+                flex: 1;
+                min-width: auto;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                position: relative;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                max-height: 80vh;
+                transform: translateX(-100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 320px;
+                max-width: 85vw;
+                z-index: 200;
+                box-shadow: var(--shadow-lg);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .sidebar::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 100%;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+
+            .sidebar.mobile-open::before {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            #sidebarClose {
+                display: block !important;
+            }
+
+            .settings-toggle {
+                display: flex !important;
+                background: var(--primary-color);
+                color: white;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .editor-content {
+                height: calc(100vh - 120px);
+                height: calc(100dvh - 120px);
+            }
+
+            .editor-content.split-view {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
+            }
+
+            .split-view .editor-pane.preview-pane {
+                display: flex;
+                border-left: none;
+                border-top: 1px solid var(--border);
+                height: 50vh;
+                max-height: none;
+            }
+
+            .editor-toolbar {
+                padding: 0.4rem 0.5rem;
+                gap: 0.3rem;
+                position: sticky;
+                top: 0;
+                z-index: 15;
+                background: var(--surface);
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                overflow: visible;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .toolbar-group {
+                display: flex;
+                gap: 0.2rem;
+                align-items: center;
+                flex-wrap: nowrap;
+                pointer-events: auto;
+            }
+
+            .toolbar-group .btn {
+                pointer-events: auto;
+                cursor: pointer;
+                position: relative;
+                z-index: 1;
+            }
+
+            .editor-toolbar .btn {
+                padding: 0.4rem;
+                min-width: 34px;
+                font-size: 0.75rem;
+                flex-shrink: 0;
+                height: 34px;
+                border-radius: 0.25rem;
+                pointer-events: auto;
+                cursor: pointer;
+            }
+
+            .editor-toolbar > div {
+                display: flex;
+                gap: 0.2rem;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+
+            .editor-textarea {
+                padding: 1rem;
+                font-size: 0.9rem;
+                padding-top: 0.5rem; /* Reduced since toolbar is sticky */
+            }
+
+            .preview-mobile-toggle {
+                display: block;
+                color: var(--text-secondary);
+                cursor: pointer;
+                padding: 0.25rem;
+            }
+
+            .status-bar {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+                flex-wrap: wrap;
+                position: sticky;
+                bottom: 0;
+                background: var(--surface);
+                border-top: 1px solid var(--border);
+                z-index: 10;
+            }
+
+            .status-left {
+                gap: 0.5rem;
+            }
+
+            /* Modal adjustments */
+            .modal {
+                padding: 0.5rem;
+            }
+
+            .modal-content {
+                max-width: 100vw;
+                max-height: 100vh;
+                border-radius: 0.25rem;
+            }
+
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: 1rem;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .form-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            /* Focus mode adjustments */
+            .focus-mode .editor-textarea {
+                padding: 1.5rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            .focus-mode .editor-toolbar {
+                display: none;
+            }
+
+            .focus-mode .status-bar {
+                display: none;
+            }
+
+            /* Improved hint for first-time users */
+            .editor-pane-header::after {
+                content: '👈 Tap for post metadata';
+                position: absolute;
+                right: 10px;
+                top: -30px;
+                background: var(--primary-color);
+                color: white;
+                padding: 0.4rem 0.6rem;
+                border-radius: 0.375rem;
+                font-size: 0.7rem;
+                opacity: 0;
+                animation: fadeInOut 4s ease-in-out;
+                pointer-events: none;
+                white-space: nowrap;
+                box-shadow: var(--shadow);
+            }
+
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; transform: translateY(10px); }
+                25%, 75% { opacity: 1; transform: translateY(0); }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .sidebar {
+                padding: 1rem;
+            }
+
+            .editor-textarea {
+                padding: 0.75rem;
+            }
+
+            .preview-content {
+                padding: 1rem;
+            }
+
+            .status-bar {
+                padding: 0.4rem 0.75rem;
+            }
+
+            .btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        /* Landscape phone adjustments */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .sidebar.mobile-open {
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+
+            .split-view .editor-pane.preview-pane {
+                height: 40vh;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .editor-textarea,
+            .preview-content {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>BSSG Post Editor</h1>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+            <div class="header-actions" id="headerActions">
+                <button class="btn btn-ghost" id="themeToggle" title="Toggle theme">
+                    🌙
+                </button>
+                <button class="btn btn-secondary" id="newBtn" title="New Article (Ctrl+N)">
+                    📄 New
+                </button>
+                <button class="btn btn-secondary" id="saveBtn" title="Save Article (Ctrl+S)">
+                    💾 Save
+                </button>
+                <button class="btn btn-secondary" id="loadBtn" title="Load Article (Ctrl+O)">
+                    📂 Load
+                </button>
+                <button class="btn btn-secondary" id="importBtn">
+                    📁 Import
+                </button>
+                <button class="btn btn-secondary" id="copyBtn">
+                    📋 Copy
+                </button>
+                <button class="btn btn-primary" id="exportBtn">
+                    💾 Export
+                </button>
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <!-- Sidebar with frontmatter -->
+            <aside class="sidebar" id="sidebar">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="margin: 0;">Post Settings</h2>
+                    <button class="btn btn-ghost" id="sidebarClose" title="Close Settings" style="display: none; padding: 0.5rem;">
+                        ✕
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="title">Title *</label>
+                    <input type="text" id="title" class="form-input" placeholder="Enter post title" required>
+                    <div class="form-help">Used for filename generation and display</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="slug">Slug</label>
+                    <input type="text" id="slug" class="form-input" placeholder="auto-generated">
+                    <div class="form-help">URL-friendly identifier (auto-generated from title)</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="date">Date *</label>
+                    <input type="datetime-local" id="date" class="form-input" required>
+                    <div class="form-help">Publication date and time</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="lastmod">Last Modified</label>
+                    <input type="datetime-local" id="lastmod" class="form-input">
+                    <div class="form-help">Optional, defaults to publication date</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tags">Tags</label>
+                    <div class="tag-input-container" id="tagContainer">
+                        <input type="text" class="tag-input" id="tagInput" placeholder="Add tags...">
+                    </div>
+                    <div class="form-help">Press Enter to add tags</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea id="description" class="form-input form-textarea" placeholder="Brief summary for previews and SEO"></textarea>
+                    <div class="form-help">Auto-generated from content if empty</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="image">Featured Image</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="url" id="image" class="form-input" placeholder="Image URL" style="flex: 1;">
+                        <button type="button" class="btn btn-secondary" id="unsplashBtn">🖼️</button>
+                    </div>
+                    <div class="form-help">URL or path to featured image</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="imageCaption">Image Caption</label>
+                    <input type="text" id="imageCaption" class="form-input" placeholder="Optional caption">
+                    <div class="form-help">Caption for the featured image</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="authorName">Author Name</label>
+                    <input type="text" id="authorName" class="form-input" placeholder="Leave empty for default">
+                    <div class="form-help">Author name for this post (optional)</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="authorEmail">Author Email</label>
+                    <input type="email" id="authorEmail" class="form-input" placeholder="Leave empty for default">
+                    <div class="form-help">Author email for this post (optional)</div>
+                </div>
+
+                <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border);">
+                
+                <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Settings</h3>
+                
+                <div class="form-group">
+                    <label class="form-label" for="unsplashKey">Unsplash Access Key</label>
+                    <input type="password" id="unsplashKey" class="form-input" placeholder="Optional - for real Unsplash images">
+                    <div class="form-help">Get your free API key from <a href="https://unsplash.com/developers" target="_blank">Unsplash Developers</a></div>
+                </div>
+            </aside>
+
+            <!-- Editor area -->
+            <section class="editor-area">
+                <!-- Toolbar -->
+                <div class="editor-toolbar">
+                    <button class="btn btn-ghost" id="boldBtn" title="Bold (Ctrl+B)">
+                        <strong>B</strong>
+                    </button>
+                    <button class="btn btn-ghost" id="italicBtn" title="Italic (Ctrl+I)">
+                        <em>I</em>
+                    </button>
+                    <button class="btn btn-ghost" id="linkBtn" title="Link (Ctrl+K)">
+                        🔗
+                    </button>
+                    <button class="btn btn-ghost" id="imageBtn" title="Image">
+                        🖼️
+                    </button>
+                    <button class="btn btn-ghost" id="codeBtn" title="Inline Code (Ctrl+`)">
+                        &lt;/&gt;
+                    </button>
+                    <button class="btn btn-ghost" id="codeBlockBtn" title="Code Block">
+                        📄
+                    </button>
+                    <button class="btn btn-ghost" id="quoteBtn" title="Quote">
+                        💬
+                    </button>
+                    <button class="btn btn-ghost" id="listBtn" title="Unordered List">
+                        • 
+                    </button>
+                    <button class="btn btn-ghost" id="orderedListBtn" title="Ordered List">
+                        1.
+                    </button>
+                    <button class="btn btn-ghost" id="h1Btn" title="Heading 1">
+                        H1
+                    </button>
+                    <button class="btn btn-ghost" id="h2Btn" title="Heading 2">
+                        H2
+                    </button>
+                    <button class="btn btn-ghost" id="h3Btn" title="Heading 3">
+                        H3
+                    </button>
+                    <button class="btn btn-ghost" id="hrBtn" title="Horizontal Rule">
+                        ―
+                    </button>
+                    <div style="margin-left: auto; display: flex; gap: 0.25rem;">
+                        <button class="btn btn-ghost" id="previewBtn" title="Toggle Preview (Ctrl+P)">
+                            👁️
+                        </button>
+                        <button class="btn btn-ghost" id="focusBtn" title="Focus mode">
+                            🎯
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editor content -->
+                <div class="editor-content" id="editorContent">
+                    <div class="editor-pane">
+                        <div class="editor-pane-header">
+                            Markdown Editor
+                            <button class="settings-toggle" id="sidebarToggle" title="Post Frontmatter">
+                                📝 Frontmatter
+                            </button>
+                        </div>
+                        <textarea id="markdownEditor" class="editor-textarea" placeholder="Start writing your post..."></textarea>
+                    </div>
+                    <div class="editor-pane preview-pane">
+                        <div class="editor-pane-header">
+                            Live Preview
+                            <span class="preview-mobile-toggle" id="previewMobileToggle">✕</span>
+                        </div>
+                        <div class="preview-content" id="previewContent">
+                            <p style="color: var(--text-muted); font-style: italic;">Preview will appear here as you type...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="wordCount">0 words</span>
+                <span id="charCount">0 characters</span>
+                <span id="saveStatus">Draft saved</span>
+            </div>
+            <div class="status-right">
+                <span id="lastSaved">Never saved</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Unsplash Modal -->
+    <div class="modal" id="unsplashModal">
+        <div class="modal-content" style="width: 80vw; height: 80vh;">
+            <div class="modal-header">
+                <h3 class="modal-title">Choose Image from Unsplash</h3>
+                <button class="btn btn-ghost" id="closeUnsplashModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="unsplashSearch" class="form-input" placeholder="Search for images...">
+                </div>
+                <div id="unsplashStatus" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; display: none;">
+                </div>
+                <div id="unsplashResults" class="image-grid">
+                    <p style="color: var(--text-muted); text-align: center; grid-column: 1 / -1;">
+                        Enter a search term to find images
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelUnsplash">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Article Modal -->
+    <div class="modal" id="saveModal">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Save Article</h3>
+                <button class="btn btn-ghost" id="closeSaveModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="saveTitle">Article Title</label>
+                    <input type="text" id="saveTitle" class="form-input" placeholder="Enter article title">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="saveDescription">Description (optional)</label>
+                    <textarea id="saveDescription" class="form-input form-textarea" rows="3" placeholder="Brief description of the article"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSave">Cancel</button>
+                <button class="btn btn-primary" id="confirmSave">Save Article</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Article Modal -->
+    <div class="modal" id="loadModal">
+        <div class="modal-content" style="width: 600px; height: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Load Article</h3>
+                <button class="btn btn-ghost" id="closeLoadModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="searchArticles" class="form-input" placeholder="Search articles...">
+                </div>
+                <div id="articlesList" style="max-height: 300px; overflow-y: auto;">
+                    <!-- Articles will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelLoad">Cancel</button>
+                <button class="btn btn-secondary" id="deleteSelected" disabled>Delete Selected</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- File input for import -->
+    <input type="file" id="fileInput" accept=".md" style="display: none;">
+
+    <!-- Focus mode exit button -->
+    <button class="focus-exit" id="focusExit" title="Exit focus mode (Esc)">✕</button>
+
+    <script>
+        // Application state
+        const state = {
+            currentPost: {
+                title: '',
+                slug: '',
+                date: '',
+                lastmod: '',
+                tags: [],
+                description: '',
+                image: '',
+                imageCaption: '',
+                authorName: '',
+                authorEmail: '',
+                content: ''
+            },
+            isDirty: false,
+            lastSaved: null,
+            theme: localStorage.getItem('bssg-editor-theme') || 'light',
+            focusMode: false,
+            previewMode: false,
+            currentArticleId: null,
+            selectedArticleId: null,
+            lastWordCount: 0,
+            autoSaveTimeout: null,
+            lastActivity: null,
+            isMobile: window.innerWidth <= 768,
+            sidebarOpen: false
+        };
+
+        // DOM elements
+        const elements = {
+            title: document.getElementById('title'),
+            slug: document.getElementById('slug'),
+            date: document.getElementById('date'),
+            lastmod: document.getElementById('lastmod'),
+            tagInput: document.getElementById('tagInput'),
+            tagContainer: document.getElementById('tagContainer'),
+            description: document.getElementById('description'),
+            image: document.getElementById('image'),
+            imageCaption: document.getElementById('imageCaption'),
+            authorName: document.getElementById('authorName'),
+            authorEmail: document.getElementById('authorEmail'),
+            markdownEditor: document.getElementById('markdownEditor'),
+            previewContent: document.getElementById('previewContent'),
+            wordCount: document.getElementById('wordCount'),
+            charCount: document.getElementById('charCount'),
+            saveStatus: document.getElementById('saveStatus'),
+            lastSaved: document.getElementById('lastSaved'),
+            themeToggle: document.getElementById('themeToggle'),
+            newBtn: document.getElementById('newBtn'),
+            saveBtn: document.getElementById('saveBtn'),
+            loadBtn: document.getElementById('loadBtn'),
+            importBtn: document.getElementById('importBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            exportBtn: document.getElementById('exportBtn'),
+            fileInput: document.getElementById('fileInput'),
+            unsplashBtn: document.getElementById('unsplashBtn'),
+            unsplashModal: document.getElementById('unsplashModal'),
+            unsplashSearch: document.getElementById('unsplashSearch'),
+            unsplashResults: document.getElementById('unsplashResults'),
+            unsplashStatus: document.getElementById('unsplashStatus'),
+            closeUnsplashModal: document.getElementById('closeUnsplashModal'),
+            cancelUnsplash: document.getElementById('cancelUnsplash'),
+            boldBtn: document.getElementById('boldBtn'),
+            italicBtn: document.getElementById('italicBtn'),
+            linkBtn: document.getElementById('linkBtn'),
+            imageBtn: document.getElementById('imageBtn'),
+            codeBtn: document.getElementById('codeBtn'),
+            codeBlockBtn: document.getElementById('codeBlockBtn'),
+            quoteBtn: document.getElementById('quoteBtn'),
+            listBtn: document.getElementById('listBtn'),
+            orderedListBtn: document.getElementById('orderedListBtn'),
+            h1Btn: document.getElementById('h1Btn'),
+            h2Btn: document.getElementById('h2Btn'),
+            h3Btn: document.getElementById('h3Btn'),
+            hrBtn: document.getElementById('hrBtn'),
+            previewBtn: document.getElementById('previewBtn'),
+            focusBtn: document.getElementById('focusBtn'),
+            focusExit: document.getElementById('focusExit'),
+            unsplashKey: document.getElementById('unsplashKey'),
+            saveModal: document.getElementById('saveModal'),
+            saveTitle: document.getElementById('saveTitle'),
+            saveDescription: document.getElementById('saveDescription'),
+            closeSaveModal: document.getElementById('closeSaveModal'),
+            cancelSave: document.getElementById('cancelSave'),
+            confirmSave: document.getElementById('confirmSave'),
+            loadModal: document.getElementById('loadModal'),
+            searchArticles: document.getElementById('searchArticles'),
+            articlesList: document.getElementById('articlesList'),
+            closeLoadModal: document.getElementById('closeLoadModal'),
+            cancelLoad: document.getElementById('cancelLoad'),
+            deleteSelected: document.getElementById('deleteSelected'),
+            mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+            headerActions: document.getElementById('headerActions'),
+            sidebar: document.getElementById('sidebar'),
+            sidebarToggle: document.getElementById('sidebarToggle'),
+            sidebarClose: document.getElementById('sidebarClose'),
+            editorContent: document.getElementById('editorContent'),
+            previewMobileToggle: document.getElementById('previewMobileToggle')
+        };
+
+        // Utility functions
+        function generateSlug(title) {
+            if (!title) return '';
+            
+            let slug = title.toLowerCase().trim();
+            
+            // Transliterate common Unicode characters to ASCII equivalents
+            const transliterationMap = {
+                'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'æ': 'ae',
+                'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i',
+                'î': 'i', 'ï': 'i', 'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o',
+                'ö': 'o', 'ø': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y',
+                'ÿ': 'y', 'ß': 'ss', 'đ': 'd', 'ł': 'l', 'ń': 'n', 'ś': 's', 'ź': 'z',
+                'ż': 'z', 'č': 'c', 'ř': 'r', 'š': 's', 'ž': 'z', 'ą': 'a', 'ę': 'e',
+                'ć': 'c', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
+            };
+            
+            // Apply transliteration
+            for (const [unicode, ascii] of Object.entries(transliterationMap)) {
+                slug = slug.replace(new RegExp(unicode, 'g'), ascii);
+            }
+            
+            // Remove all non-alphanumeric characters except spaces and hyphens
+            slug = slug.replace(/[^a-z0-9\s-]/g, '');
+            
+            // Replace spaces with hyphens
+            slug = slug.replace(/\s+/g, '-');
+            
+            // Replace multiple hyphens with single hyphen
+            slug = slug.replace(/--+/g, '-');
+            
+            // Remove leading/trailing hyphens
+            slug = slug.replace(/^-+|-+$/g, '');
+            
+            // If slug is empty, return 'untitled'
+            return slug || 'untitled';
+        }
+
+        function formatDate(date) {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const seconds = String(d.getSeconds()).padStart(2, '0');
+            const offset = -d.getTimezoneOffset();
+            const offsetHours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0');
+            const offsetMinutes = String(Math.abs(offset) % 60).padStart(2, '0');
+            const offsetSign = offset >= 0 ? '+' : '-';
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${offsetSign}${offsetHours}${offsetMinutes}`;
+        }
+
+        function generateFilename() {
+            const title = state.currentPost.title || 'untitled';
+            const slug = state.currentPost.slug || generateSlug(title);
+            const date = state.currentPost.date ? new Date(state.currentPost.date) : new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            
+            return `${year}-${month}-${day}-${slug}.md`;
+        }
+
+        function generateFrontmatter() {
+            const post = state.currentPost;
+            let frontmatter = '---\n';
+            
+            frontmatter += `title: ${post.title || 'Untitled Post'}\n`;
+            frontmatter += `date: ${post.date ? formatDate(post.date) : formatDate(new Date())}\n`;
+            
+            if (post.lastmod) {
+                frontmatter += `lastmod: ${formatDate(post.lastmod)}\n`;
+            }
+            
+            if (post.tags.length > 0) {
+                frontmatter += `tags: ${post.tags.join(', ')}\n`;
+            }
+            
+            if (post.slug) {
+                frontmatter += `slug: ${post.slug}\n`;
+            }
+            
+            if (post.description) {
+                frontmatter += `description: ${post.description}\n`;
+            }
+            
+            if (post.image) {
+                frontmatter += `image: ${post.image}\n`;
+            }
+            
+            if (post.imageCaption) {
+                frontmatter += `image_caption: ${post.imageCaption}\n`;
+            }
+            
+            if (post.authorName) {
+                frontmatter += `author_name: ${post.authorName}\n`;
+            }
+            
+            if (post.authorEmail) {
+                frontmatter += `author_email: ${post.authorEmail}\n`;
+            }
+            
+            frontmatter += '---\n\n';
+            
+            return frontmatter;
+        }
+
+        function generateMarkdown() {
+            const content = state.currentPost.content || '';
+            // Ensure content ends with a newline for proper BSSG processing
+            const contentWithNewline = content.endsWith('\n') ? content : content + '\n';
+            return generateFrontmatter() + contentWithNewline;
+        }
+
+        // Enhanced markdown to HTML converter
+        function markdownToHtml(markdown) {
+            if (!markdown.trim()) return '';
+            
+            let html = markdown;
+            
+            // Code blocks (must be processed before inline code)
+            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            
+            // Headers
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            
+            // Horizontal rules
+            html = html.replace(/^---$/gm, '<hr>');
+            html = html.replace(/^\*\*\*$/gm, '<hr>');
+            
+            // Bold (must be before italic)
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+            
+            // Italic
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+            
+            // Inline code
+            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+            
+            // Images
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+            
+            // Links
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+            
+            // Lists - process line by line to maintain context
+            const listLines = html.split('\n');
+            let inList = false;
+            let listType = '';
+            
+            for (let i = 0; i < listLines.length; i++) {
+                const line = listLines[i];
+                const isUnorderedItem = /^[\*\-] (.+)$/.test(line);
+                const isOrderedItem = /^(\d+)\. (.+)$/.test(line);
+                
+                if (isUnorderedItem || isOrderedItem) {
+                    const content = line.replace(/^[\*\-\d\.] /, '');
+                    const currentListType = isOrderedItem ? 'ol' : 'ul';
+                    
+                    if (!inList) {
+                        listLines[i] = `<${currentListType}><li>${content}</li>`;
+                        inList = true;
+                        listType = currentListType;
+                    } else if (listType === currentListType) {
+                        listLines[i] = `<li>${content}</li>`;
+                    } else {
+                        listLines[i] = `</${listType}><${currentListType}><li>${content}</li>`;
+                        listType = currentListType;
+                    }
+                } else if (inList && line.trim() === '') {
+                    // Empty line continues the list
+                    continue;
+                } else if (inList) {
+                    // Close the list
+                    listLines[i-1] += `</${listType}>`;
+                    inList = false;
+                    listType = '';
+                }
+            }
+            
+            // Close list if we end with one
+            if (inList) {
+                listLines[listLines.length - 1] += `</${listType}>`;
+            }
+            
+            html = listLines.join('\n');
+            
+            // Blockquotes
+            html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+            
+            // Line breaks and paragraphs
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = html.replace(/\n/g, '<br>');
+            
+            // Wrap in paragraphs (but not headers, lists, blockquotes, etc.)
+            const paragraphLines = html.split('<br>');
+            const processedLines = paragraphLines.map(line => {
+                const trimmed = line.trim();
+                if (!trimmed || 
+                    trimmed.startsWith('<h') || 
+                    trimmed.startsWith('<ul') || 
+                    trimmed.startsWith('<ol') || 
+                    trimmed.startsWith('<li') || 
+                    trimmed.startsWith('<blockquote') || 
+                    trimmed.startsWith('<pre') || 
+                    trimmed.startsWith('<hr') ||
+                    trimmed.includes('</p><p>')) {
+                    return line;
+                }
+                return `<p>${line}</p>`;
+            });
+            html = processedLines.join('<br>');
+            
+            // Clean up
+            html = html.replace(/<p><\/p>/g, '');
+            html = html.replace(/<p><br><\/p>/g, '');
+            html = html.replace(/<br><p>/g, '<p>');
+            html = html.replace(/<\/p><br>/g, '</p>');
+            html = html.replace(/(<\/(?:ul|ol|blockquote|pre|h[1-6]|hr)>)<br>/g, '$1');
+            html = html.replace(/<br>(<(?:ul|ol|blockquote|pre|h[1-6]|hr))/g, '$1');
+            
+            return html;
+        }
+
+        function updatePreview() {
+            // Only update preview if it's visible
+            if (state.previewMode) {
+                const content = elements.markdownEditor.value;
+                const html = markdownToHtml(content);
+                elements.previewContent.innerHTML = html || '<p style="color: var(--text-muted); font-style: italic;">Preview will appear here as you type...</p>';
+            }
+        }
+
+        function updateWordCount() {
+            const content = elements.markdownEditor.value;
+            const words = content.trim() ? content.trim().split(/\s+/).length : 0;
+            const chars = content.length;
+            
+            elements.wordCount.textContent = `${words} words`;
+            elements.charCount.textContent = `${chars} characters`;
+            
+            // Auto-save every 10 words
+            if (Math.abs(words - state.lastWordCount) >= 10) {
+                state.lastWordCount = words;
+                if (state.isDirty) {
+                    updateStateFromForm();
+                    saveToLocalStorage();
+                    
+                    // If we have a current article, also auto-save it
+                    if (state.currentArticleId) {
+                        const articles = getStoredArticles();
+                        const currentArticle = articles[state.currentArticleId];
+                        if (currentArticle) {
+                            const articleData = {
+                                title: currentArticle.title,
+                                description: currentArticle.description,
+                                post: { ...state.currentPost }
+                            };
+                            saveArticle(state.currentArticleId, articleData);
+                        }
+                    }
+                }
+            }
+        }
+
+        function markDirty() {
+            if (!state.isDirty) {
+                state.isDirty = true;
+                elements.saveStatus.textContent = 'Unsaved changes';
+                elements.saveStatus.style.color = 'var(--warning)';
+            }
+            
+            // Schedule auto-save after 5 seconds of inactivity
+            scheduleAutoSave();
+        }
+        
+        function scheduleAutoSave() {
+            // Clear any existing timeout
+            if (state.autoSaveTimeout) {
+                clearTimeout(state.autoSaveTimeout);
+            }
+            
+            // Set new timeout for 5 seconds
+            state.autoSaveTimeout = setTimeout(() => {
+                if (state.isDirty) {
+                    updateStateFromForm();
+                    saveToLocalStorage();
+                    
+                    // If we have a current article, also auto-save it
+                    if (state.currentArticleId) {
+                        const articles = getStoredArticles();
+                        const currentArticle = articles[state.currentArticleId];
+                        if (currentArticle) {
+                            const articleData = {
+                                title: currentArticle.title,
+                                description: currentArticle.description,
+                                post: { ...state.currentPost }
+                            };
+                            saveArticle(state.currentArticleId, articleData);
+                        }
+                    }
+                }
+                state.autoSaveTimeout = null;
+            }, 5000);
+        }
+
+        function markClean() {
+            state.isDirty = false;
+            state.lastSaved = new Date();
+            elements.saveStatus.textContent = 'Draft saved';
+            elements.saveStatus.style.color = 'var(--success)';
+            elements.lastSaved.textContent = `Saved at ${state.lastSaved.toLocaleTimeString()}`;
+            
+            // Clear any pending auto-save since we just saved
+            if (state.autoSaveTimeout) {
+                clearTimeout(state.autoSaveTimeout);
+                state.autoSaveTimeout = null;
+            }
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('bssg-editor-draft', JSON.stringify(state.currentPost));
+                markClean();
+            } catch (error) {
+                console.error('Failed to save to localStorage:', error);
+                elements.saveStatus.textContent = 'Save failed';
+                elements.saveStatus.style.color = 'var(--error)';
+            }
+        }
+
+        // Article management functions
+        function generateArticleId() {
+            return 'article_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function getStoredArticles() {
+            try {
+                const articles = localStorage.getItem('bssg-editor-articles');
+                return articles ? JSON.parse(articles) : {};
+            } catch (error) {
+                console.error('Failed to load articles:', error);
+                return {};
+            }
+        }
+
+        function saveArticle(id, articleData) {
+            try {
+                const articles = getStoredArticles();
+                articles[id] = {
+                    ...articleData,
+                    id: id,
+                    lastModified: new Date().toISOString(),
+                    created: articles[id]?.created || new Date().toISOString()
+                };
+                localStorage.setItem('bssg-editor-articles', JSON.stringify(articles));
+                return true;
+            } catch (error) {
+                console.error('Failed to save article:', error);
+                return false;
+            }
+        }
+
+        function deleteArticle(id) {
+            try {
+                const articles = getStoredArticles();
+                delete articles[id];
+                localStorage.setItem('bssg-editor-articles', JSON.stringify(articles));
+                return true;
+            } catch (error) {
+                console.error('Failed to delete article:', error);
+                return false;
+            }
+        }
+
+        function newArticle() {
+            if (state.isDirty) {
+                const currentTitle = state.currentPost.title || 'Untitled';
+                const message = `You have unsaved changes to "${currentTitle}". Creating a new article will discard these changes.\n\nDo you want to continue?`;
+                if (!confirm(message)) {
+                    return;
+                }
+            }
+
+            // Reset to default state
+            state.currentPost = {
+                title: '',
+                slug: '',
+                date: new Date().toISOString().slice(0, 16),
+                lastmod: '',
+                tags: [],
+                description: '',
+                image: '',
+                imageCaption: '',
+                authorName: '',
+                authorEmail: '',
+                content: ''
+            };
+            state.currentArticleId = null;
+            state.isDirty = false;
+            state.lastWordCount = 0;
+            
+            // Clear any pending auto-save
+            if (state.autoSaveTimeout) {
+                clearTimeout(state.autoSaveTimeout);
+                state.autoSaveTimeout = null;
+            }
+
+            updateFormFromState();
+            elements.markdownEditor.focus();
+            
+            elements.saveStatus.textContent = 'New article';
+            elements.saveStatus.style.color = 'var(--text-muted)';
+            elements.lastSaved.textContent = 'Never saved';
+
+            // Close mobile menu if open
+            if (state.isMobile) {
+                closeMobileMenu();
+            }
+        }
+
+        function openSaveModal() {
+            updateStateFromForm();
+            elements.saveTitle.value = state.currentPost.title || '';
+            elements.saveDescription.value = state.currentPost.description || '';
+            elements.saveModal.classList.add('active');
+            elements.saveTitle.focus();
+        }
+
+        function saveCurrentArticle() {
+            const title = elements.saveTitle.value.trim();
+            if (!title) {
+                alert('Please enter a title for the article.');
+                return;
+            }
+
+            updateStateFromForm();
+            
+            const articleData = {
+                title: title,
+                description: elements.saveDescription.value.trim(),
+                post: { ...state.currentPost }
+            };
+
+            const id = state.currentArticleId || generateArticleId();
+            
+            if (saveArticle(id, articleData)) {
+                state.currentArticleId = id;
+                elements.saveModal.classList.remove('active');
+                markClean();
+                elements.saveStatus.textContent = 'Article saved';
+                elements.saveStatus.style.color = 'var(--success)';
+                elements.lastSaved.textContent = `Saved at ${new Date().toLocaleTimeString()}`;
+            } else {
+                alert('Failed to save article. Please try again.');
+            }
+        }
+
+        function openLoadModal() {
+            elements.loadModal.classList.add('active');
+            displayArticles();
+            elements.searchArticles.focus();
+        }
+
+        function displayArticles(searchTerm = '') {
+            const articles = getStoredArticles();
+            const articleIds = Object.keys(articles);
+            
+            if (articleIds.length === 0) {
+                elements.articlesList.innerHTML = '<div class="no-articles">No saved articles found.</div>';
+                return;
+            }
+
+            const filteredArticles = articleIds
+                .map(id => articles[id])
+                .filter(article => {
+                    if (!searchTerm) return true;
+                    const term = searchTerm.toLowerCase();
+                    return article.title.toLowerCase().includes(term) ||
+                           (article.description && article.description.toLowerCase().includes(term));
+                })
+                .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+
+            if (filteredArticles.length === 0) {
+                elements.articlesList.innerHTML = '<div class="no-articles">No articles match your search.</div>';
+                return;
+            }
+
+            elements.articlesList.innerHTML = filteredArticles.map(article => {
+                const lastModified = new Date(article.lastModified).toLocaleDateString();
+                const wordCount = article.post.content ? article.post.content.trim().split(/\s+/).length : 0;
+                
+                return `
+                    <div class="article-item" data-id="${article.id}">
+                        <div class="article-title">${article.title}</div>
+                        <div class="article-meta">
+                            Last modified: ${lastModified} • ${wordCount} words
+                        </div>
+                        ${article.description ? `<div class="article-description">${article.description}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Add click handlers
+            elements.articlesList.querySelectorAll('.article-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove previous selection
+                    elements.articlesList.querySelectorAll('.article-item').forEach(i => i.classList.remove('selected'));
+                    // Select current item
+                    item.classList.add('selected');
+                    state.selectedArticleId = item.dataset.id;
+                    elements.deleteSelected.disabled = false;
+                });
+
+                item.addEventListener('dblclick', () => {
+                    loadArticle(item.dataset.id);
+                });
+            });
+        }
+
+        function loadArticle(id) {
+            const articles = getStoredArticles();
+            const article = articles[id];
+            
+            if (!article) {
+                alert('Article not found.');
+                return;
+            }
+
+            if (state.isDirty) {
+                if (!confirm('You have unsaved changes. Are you sure you want to load this article?')) {
+                    return;
+                }
+            }
+
+            state.currentPost = { ...article.post };
+            state.currentArticleId = id;
+            state.isDirty = false;
+            state.lastWordCount = article.post.content ? article.post.content.trim().split(/\s+/).length : 0;
+            
+            // Clear any pending auto-save
+            if (state.autoSaveTimeout) {
+                clearTimeout(state.autoSaveTimeout);
+                state.autoSaveTimeout = null;
+            }
+
+            updateFormFromState();
+            elements.loadModal.classList.remove('active');
+            
+            elements.saveStatus.textContent = 'Article loaded';
+            elements.saveStatus.style.color = 'var(--success)';
+            elements.lastSaved.textContent = `Loaded: ${article.title}`;
+        }
+
+        function deleteSelectedArticle() {
+            if (!state.selectedArticleId) return;
+
+            const articles = getStoredArticles();
+            const article = articles[state.selectedArticleId];
+            
+            if (!article) return;
+
+            if (confirm(`Are you sure you want to delete "${article.title}"? This action cannot be undone.`)) {
+                if (deleteArticle(state.selectedArticleId)) {
+                    // If we're deleting the currently loaded article, reset
+                    if (state.currentArticleId === state.selectedArticleId) {
+                        state.currentArticleId = null;
+                        elements.saveStatus.textContent = 'Article deleted';
+                        elements.saveStatus.style.color = 'var(--warning)';
+                    }
+                    
+                    state.selectedArticleId = null;
+                    elements.deleteSelected.disabled = true;
+                    displayArticles(elements.searchArticles.value);
+                } else {
+                    alert('Failed to delete article. Please try again.');
+                }
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('bssg-editor-draft');
+                if (saved) {
+                    const post = JSON.parse(saved);
+                    state.currentPost = { ...state.currentPost, ...post };
+                    updateFormFromState();
+                }
+            } catch (error) {
+                console.error('Failed to load from localStorage:', error);
+            }
+        }
+
+        function updateStateFromForm() {
+            state.currentPost.title = elements.title.value;
+            state.currentPost.slug = elements.slug.value;
+            state.currentPost.date = elements.date.value;
+            state.currentPost.lastmod = elements.lastmod.value;
+            state.currentPost.description = elements.description.value;
+            state.currentPost.image = elements.image.value;
+            state.currentPost.imageCaption = elements.imageCaption.value;
+            state.currentPost.authorName = elements.authorName.value;
+            state.currentPost.authorEmail = elements.authorEmail.value;
+            state.currentPost.content = elements.markdownEditor.value;
+        }
+
+        function updateFormFromState() {
+            elements.title.value = state.currentPost.title || '';
+            elements.slug.value = state.currentPost.slug || '';
+            elements.date.value = state.currentPost.date || '';
+            elements.lastmod.value = state.currentPost.lastmod || '';
+            elements.description.value = state.currentPost.description || '';
+            elements.image.value = state.currentPost.image || '';
+            elements.imageCaption.value = state.currentPost.imageCaption || '';
+            elements.authorName.value = state.currentPost.authorName || '';
+            elements.authorEmail.value = state.currentPost.authorEmail || '';
+            elements.markdownEditor.value = state.currentPost.content || '';
+            
+            // Update tags
+            updateTagDisplay();
+            
+            // Update preview and word count
+            updatePreview();
+            updateWordCount();
+        }
+
+        function updateTagDisplay() {
+            // Clear existing tags
+            const existingTags = elements.tagContainer.querySelectorAll('.tag');
+            existingTags.forEach(tag => tag.remove());
+            
+            // Add current tags
+            state.currentPost.tags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    ${tag}
+                    <button type="button" class="tag-remove" data-tag="${tag}">×</button>
+                `;
+                elements.tagContainer.insertBefore(tagElement, elements.tagInput);
+            });
+        }
+
+        function addTag(tag) {
+            const trimmedTag = tag.trim();
+            if (trimmedTag && !state.currentPost.tags.includes(trimmedTag)) {
+                state.currentPost.tags.push(trimmedTag);
+                updateTagDisplay();
+                markDirty();
+            }
+        }
+
+        function removeTag(tag) {
+            const index = state.currentPost.tags.indexOf(tag);
+            if (index > -1) {
+                state.currentPost.tags.splice(index, 1);
+                updateTagDisplay();
+                markDirty();
+            }
+        }
+
+        function toggleTheme() {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            localStorage.setItem('bssg-editor-theme', state.theme);
+            elements.themeToggle.textContent = state.theme === 'light' ? '🌙' : '☀';
+        }
+
+        function toggleFocusMode() {
+            state.focusMode = !state.focusMode;
+            if (state.focusMode) {
+                document.body.classList.add('focus-mode');
+                elements.markdownEditor.focus();
+                // Close mobile menu and sidebar
+                closeMobileMenu();
+                closeSidebar();
+            } else {
+                document.body.classList.remove('focus-mode');
+            }
+        }
+
+        function togglePreview() {
+            state.previewMode = !state.previewMode;
+            const editorContent = elements.editorContent;
+            
+            if (state.previewMode) {
+                editorContent.classList.add('split-view');
+                elements.previewBtn.textContent = '📝';
+                elements.previewBtn.title = 'Hide Preview (Ctrl+P)';
+                updatePreview(); // Ensure preview is up to date
+            } else {
+                editorContent.classList.remove('split-view');
+                elements.previewBtn.textContent = '👁';
+                elements.previewBtn.title = 'Toggle Preview (Ctrl+P)';
+            }
+        }
+
+        // Mobile-specific functions
+        function toggleMobileMenu() {
+            const isOpen = elements.headerActions.classList.contains('active');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        function openMobileMenu() {
+            elements.headerActions.classList.add('active');
+            elements.mobileMenuToggle.textContent = '✕';
+        }
+
+        function closeMobileMenu() {
+            elements.headerActions.classList.remove('active');
+            elements.mobileMenuToggle.textContent = '☰';
+        }
+
+        function toggleSidebar() {
+            state.sidebarOpen = !state.sidebarOpen;
+            if (state.sidebarOpen) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+        }
+
+        function openSidebar() {
+            if (state.isMobile) {
+                elements.sidebar.classList.add('mobile-open');
+                state.sidebarOpen = true;
+            }
+        }
+
+        function closeSidebar() {
+            if (state.isMobile) {
+                elements.sidebar.classList.remove('mobile-open');
+                state.sidebarOpen = false;
+            }
+        }
+
+        function handleResize() {
+            const wasMobile = state.isMobile;
+            state.isMobile = window.innerWidth <= 768;
+            
+            // If switching from mobile to desktop, reset mobile states
+            if (wasMobile && !state.isMobile) {
+                closeMobileMenu();
+                closeSidebar();
+                elements.sidebar.classList.remove('mobile-open');
+                state.sidebarOpen = false; // Reset mobile sidebar state
+            }
+            
+            // If switching from desktop to mobile, ensure sidebar is properly hidden
+            if (!wasMobile && state.isMobile) {
+                elements.sidebar.classList.remove('mobile-open');
+                state.sidebarOpen = false;
+            }
+        }
+
+        function exportMarkdown() {
+            updateStateFromForm();
+            const markdown = generateMarkdown();
+            const filename = generateFilename();
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Close mobile menu
+            if (state.isMobile) {
+                closeMobileMenu();
+            }
+        }
+
+        function copyToClipboard() {
+            updateStateFromForm();
+            const markdown = generateMarkdown();
+            
+            navigator.clipboard.writeText(markdown).then(() => {
+                elements.copyBtn.textContent = '✅ Copied';
+                setTimeout(() => {
+                    elements.copyBtn.innerHTML = '📋 Copy';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = markdown;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                elements.copyBtn.textContent = '✅ Copied';
+                setTimeout(() => {
+                    elements.copyBtn.innerHTML = '📋 Copy';
+                }, 2000);
+            });
+
+            // Close mobile menu
+            if (state.isMobile) {
+                closeMobileMenu();
+            }
+        }
+
+        function importMarkdown(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                parseMarkdownFile(content);
+            };
+            reader.readAsText(file);
+        }
+
+        function parseMarkdownFile(content) {
+            const frontmatterRegex = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
+            const match = content.match(frontmatterRegex);
+            
+            if (match) {
+                const frontmatter = match[1];
+                const markdownContent = match[2] || '';
+                
+                // Parse frontmatter
+                const lines = frontmatter.split('\n');
+                const parsed = {};
+                
+                lines.forEach(line => {
+                    const colonIndex = line.indexOf(':');
+                    if (colonIndex > -1) {
+                        const key = line.substring(0, colonIndex).trim();
+                        const value = line.substring(colonIndex + 1).trim();
+                        parsed[key] = value;
+                    }
+                });
+                
+                // Update state
+                state.currentPost = {
+                    title: parsed.title || '',
+                    slug: parsed.slug || '',
+                    date: parsed.date ? new Date(parsed.date).toISOString().slice(0, 16) : '',
+                    lastmod: parsed.lastmod ? new Date(parsed.lastmod).toISOString().slice(0, 16) : '',
+                    tags: parsed.tags ? parsed.tags.split(',').map(tag => tag.trim()) : [],
+                    description: parsed.description || '',
+                    image: parsed.image || '',
+                    imageCaption: parsed.image_caption || '',
+                    authorName: parsed.author_name || '',
+                    authorEmail: parsed.author_email || '',
+                    content: markdownContent.trim()
+                };
+                
+                updateFormFromState();
+                markDirty();
+            } else {
+                // No frontmatter, treat as plain markdown
+                state.currentPost.content = content;
+                elements.markdownEditor.value = content;
+                updatePreview();
+                updateWordCount();
+                markDirty();
+            }
+        }
+
+        // Unsplash integration
+        async function searchUnsplash(query) {
+            // Try to use real Unsplash API first, fallback to demo service
+            const UNSPLASH_ACCESS_KEY = localStorage.getItem('unsplash-access-key');
+            
+            if (UNSPLASH_ACCESS_KEY) {
+                try {
+                    const response = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=12&orientation=landscape`, {
+                        headers: {
+                            'Authorization': `Client-ID ${UNSPLASH_ACCESS_KEY}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.results.map(photo => ({
+                            id: photo.id,
+                            urls: {
+                                small: photo.urls.small,
+                                regular: photo.urls.regular,
+                                full: photo.urls.full
+                            },
+                            user: {
+                                name: photo.user.name,
+                                username: photo.user.username
+                            },
+                            description: photo.description || photo.alt_description || 'Unsplash photo',
+                            links: {
+                                html: photo.links.html
+                            }
+                        }));
+                    }
+                } catch (error) {
+                    console.warn('Unsplash API failed, using demo service:', error);
+                }
+            }
+            
+            // Fallback to demo service (Lorem Picsum with better variety)
+            const categories = ['nature', 'city', 'technology', 'people', 'abstract', 'architecture'];
+            const results = [];
+            
+            for (let i = 0; i < 12; i++) {
+                const category = categories[i % categories.length];
+                const randomId = Math.floor(Math.random() * 1000) + 1;
+                results.push({
+                    id: `demo-${i}`,
+                    urls: {
+                        small: `https://picsum.photos/300/200?random=${randomId}`,
+                        regular: `https://picsum.photos/800/600?random=${randomId}`,
+                        full: `https://picsum.photos/1200/800?random=${randomId}`
+                    },
+                    user: {
+                        name: `Demo User ${i + 1}`,
+                        username: `demo_user_${i + 1}`
+                    },
+                    description: `${category} photo - demo image`,
+                    links: {
+                        html: 'https://unsplash.com'
+                    }
+                });
+            }
+            
+            return new Promise(resolve => {
+                setTimeout(() => resolve(results), 300);
+            });
+        }
+
+        function displayUnsplashResults(results) {
+            elements.unsplashResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                elements.unsplashResults.innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1 / -1;">No images found</p>';
+                return;
+            }
+            
+            results.forEach(image => {
+                const imageElement = document.createElement('div');
+                imageElement.className = 'image-item';
+                imageElement.innerHTML = `
+                    <img src="${image.urls.small}" alt="${image.description || 'Unsplash image'}">
+                    <div class="image-attribution">
+                        Photo by ${image.user.name}
+                    </div>
+                `;
+                
+                imageElement.addEventListener('click', () => {
+                    selectUnsplashImage(image);
+                });
+                
+                elements.unsplashResults.appendChild(imageElement);
+            });
+        }
+
+        function selectUnsplashImage(image) {
+            const imageUrl = image.urls.regular || image.urls.small;
+            let caption;
+            
+            if (image.id.startsWith('demo-')) {
+                caption = `${image.description} (Demo image)`;
+            } else {
+                caption = `Photo by ${image.user.name} on Unsplash`;
+            }
+            
+            elements.image.value = imageUrl;
+            elements.imageCaption.value = caption;
+            
+            state.currentPost.image = imageUrl;
+            state.currentPost.imageCaption = caption;
+            
+            elements.unsplashModal.classList.remove('active');
+            markDirty();
+        }
+
+        // Toolbar functions
+        function insertMarkdown(before, after = '', placeholder = '') {
+            const textarea = elements.markdownEditor;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            const replacement = before + (selectedText || placeholder) + after;
+            
+            textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+            
+            // Set cursor position
+            const newCursorPos = start + before.length + (selectedText || placeholder).length;
+            textarea.setSelectionRange(newCursorPos, newCursorPos);
+            textarea.focus();
+            
+            updatePreview();
+            updateWordCount();
+            markDirty();
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            elements.mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+
+            // Sidebar toggle
+            elements.sidebarToggle.addEventListener('click', toggleSidebar);
+            elements.sidebarClose.addEventListener('click', closeSidebar);
+
+            // Preview mobile toggle
+            elements.previewMobileToggle.addEventListener('click', () => {
+                togglePreview();
+            });
+
+            // Window resize
+            window.addEventListener('resize', handleResize);
+
+            // Form inputs
+            elements.title.addEventListener('input', (e) => {
+                const oldTitle = state.currentPost.title;
+                state.currentPost.title = e.target.value;
+                
+                // Auto-generate slug if it's empty or matches the old title's slug
+                const oldSlug = generateSlug(oldTitle);
+                const currentSlug = elements.slug.value;
+                
+                if (!currentSlug || currentSlug === oldSlug) {
+                    const newSlug = generateSlug(e.target.value);
+                    elements.slug.value = newSlug;
+                    state.currentPost.slug = newSlug;
+                }
+                markDirty();
+            });
+
+            elements.slug.addEventListener('input', (e) => {
+                state.currentPost.slug = e.target.value;
+                markDirty();
+            });
+
+            elements.date.addEventListener('change', (e) => {
+                state.currentPost.date = e.target.value;
+                if (!elements.lastmod.value) {
+                    elements.lastmod.value = e.target.value;
+                    state.currentPost.lastmod = e.target.value;
+                }
+                markDirty();
+            });
+
+            elements.lastmod.addEventListener('change', (e) => {
+                state.currentPost.lastmod = e.target.value;
+                markDirty();
+            });
+
+            elements.description.addEventListener('input', (e) => {
+                state.currentPost.description = e.target.value;
+                markDirty();
+            });
+
+            elements.image.addEventListener('input', (e) => {
+                state.currentPost.image = e.target.value;
+                markDirty();
+            });
+
+            elements.imageCaption.addEventListener('input', (e) => {
+                state.currentPost.imageCaption = e.target.value;
+                markDirty();
+            });
+
+            elements.authorName.addEventListener('input', (e) => {
+                state.currentPost.authorName = e.target.value;
+                markDirty();
+            });
+
+            elements.authorEmail.addEventListener('input', (e) => {
+                state.currentPost.authorEmail = e.target.value;
+                markDirty();
+            });
+
+            // Unsplash API key
+            elements.unsplashKey.addEventListener('input', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    localStorage.setItem('unsplash-access-key', key);
+                } else {
+                    localStorage.removeItem('unsplash-access-key');
+                }
+            });
+
+            // Tag input
+            elements.tagInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    const tag = e.target.value.trim();
+                    if (tag) {
+                        addTag(tag);
+                        e.target.value = '';
+                    }
+                }
+            });
+
+            // Tag removal
+            elements.tagContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tag-remove')) {
+                    const tag = e.target.getAttribute('data-tag');
+                    removeTag(tag);
+                }
+            });
+
+            // Markdown editor
+            elements.markdownEditor.addEventListener('input', (e) => {
+                state.currentPost.content = e.target.value;
+                updatePreview();
+                updateWordCount();
+                markDirty();
+            });
+
+            // Toolbar buttons - ensure all work properly
+            elements.boldBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('**', '**', 'bold text');
+            });
+            elements.italicBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('*', '*', 'italic text');
+            });
+            elements.linkBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = prompt('Enter URL:');
+                if (url) {
+                    insertMarkdown('[', `](${url})`, 'link text');
+                }
+            });
+            elements.imageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = prompt('Enter image URL:');
+                if (url) {
+                    const alt = prompt('Enter alt text (optional):') || 'image';
+                    insertMarkdown(`![${alt}](${url})`, '', '');
+                }
+            });
+            elements.codeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('`', '`', 'code');
+            });
+            elements.codeBlockBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('\n```\n', '\n```\n', 'code block');
+            });
+            elements.quoteBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('> ', '', 'quote');
+            });
+            elements.listBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('- ', '', 'list item');
+            });
+            elements.orderedListBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('1. ', '', 'list item');
+            });
+            elements.h1Btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('# ', '', 'Heading 1');
+            });
+            elements.h2Btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('## ', '', 'Heading 2');
+            });
+            elements.h3Btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('### ', '', 'Heading 3');
+            });
+            elements.hrBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                insertMarkdown('\n---\n', '', '');
+            });
+            elements.previewBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                togglePreview();
+            });
+            elements.focusBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleFocusMode();
+            });
+            elements.focusExit.addEventListener('click', toggleFocusMode);
+
+            // Header buttons
+            elements.themeToggle.addEventListener('click', toggleTheme);
+            elements.newBtn.addEventListener('click', newArticle);
+            elements.saveBtn.addEventListener('click', openSaveModal);
+            elements.loadBtn.addEventListener('click', openLoadModal);
+            elements.exportBtn.addEventListener('click', exportMarkdown);
+            elements.copyBtn.addEventListener('click', copyToClipboard);
+            
+            elements.importBtn.addEventListener('click', () => {
+                elements.fileInput.click();
+                closeMobileMenu();
+            });
+            
+            elements.fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    importMarkdown(file);
+                }
+            });
+
+            // Unsplash modal
+            elements.unsplashBtn.addEventListener('click', () => {
+                elements.unsplashModal.classList.add('active');
+            });
+
+            elements.closeUnsplashModal.addEventListener('click', () => {
+                elements.unsplashModal.classList.remove('active');
+            });
+
+            elements.cancelUnsplash.addEventListener('click', () => {
+                elements.unsplashModal.classList.remove('active');
+            });
+
+            elements.unsplashSearch.addEventListener('input', async (e) => {
+                const query = e.target.value.trim();
+                if (query.length > 2) {
+                    elements.unsplashResults.innerHTML = '<div style="text-align: center; grid-column: 1 / -1;"><div class="spinner"></div></div>';
+                    
+                    // Show status
+                    const hasApiKey = localStorage.getItem('unsplash-access-key');
+                    elements.unsplashStatus.style.display = 'block';
+                    if (hasApiKey) {
+                        elements.unsplashStatus.style.background = 'var(--success)';
+                        elements.unsplashStatus.style.color = 'white';
+                        elements.unsplashStatus.textContent = '✓ Using Unsplash API - Real photos';
+                    } else {
+                        elements.unsplashStatus.style.background = 'var(--warning)';
+                        elements.unsplashStatus.style.color = 'white';
+                        elements.unsplashStatus.textContent = '⚠ Using demo images - Add Unsplash API key in settings for real photos';
+                    }
+                    
+                    try {
+                        const results = await searchUnsplash(query);
+                        displayUnsplashResults(results);
+                    } catch (error) {
+                        console.error('Unsplash search failed:', error);
+                        elements.unsplashResults.innerHTML = '<p style="color: var(--error); text-align: center; grid-column: 1 / -1;">Search failed. Please try again.</p>';
+                    }
+                } else {
+                    elements.unsplashStatus.style.display = 'none';
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case 'b':
+                            e.preventDefault();
+                            insertMarkdown('**', '**', 'bold text');
+                            break;
+                        case 'i':
+                            e.preventDefault();
+                            insertMarkdown('*', '*', 'italic text');
+                            break;
+                        case 'k':
+                            e.preventDefault();
+                            insertMarkdown('[', '](url)', 'link text');
+                            break;
+                        case '`':
+                            e.preventDefault();
+                            insertMarkdown('`', '`', 'code');
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            openSaveModal();
+                            break;
+                        case 'p':
+                            e.preventDefault();
+                            togglePreview();
+                            break;
+                        case 'n':
+                            e.preventDefault();
+                            newArticle();
+                            break;
+                        case 'o':
+                            e.preventDefault();
+                            openLoadModal();
+                            break;
+                    }
+                }
+                
+                // Escape key to exit focus mode or close mobile elements
+                if (e.key === 'Escape') {
+                    if (state.focusMode) {
+                        e.preventDefault();
+                        toggleFocusMode();
+                    } else if (state.isMobile) {
+                        if (elements.headerActions.classList.contains('active')) {
+                            closeMobileMenu();
+                        }
+                        if (state.sidebarOpen) {
+                            closeSidebar();
+                        }
+                    }
+                }
+            });
+
+            // Save modal events
+            elements.closeSaveModal.addEventListener('click', () => {
+                elements.saveModal.classList.remove('active');
+            });
+            
+            elements.cancelSave.addEventListener('click', () => {
+                elements.saveModal.classList.remove('active');
+            });
+            
+            elements.confirmSave.addEventListener('click', saveCurrentArticle);
+            
+            elements.saveTitle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveCurrentArticle();
+                }
+            });
+
+            // Load modal events
+            elements.closeLoadModal.addEventListener('click', () => {
+                elements.loadModal.classList.remove('active');
+                state.selectedArticleId = null;
+                elements.deleteSelected.disabled = true;
+            });
+            
+            elements.cancelLoad.addEventListener('click', () => {
+                elements.loadModal.classList.remove('active');
+                state.selectedArticleId = null;
+                elements.deleteSelected.disabled = true;
+            });
+            
+            elements.deleteSelected.addEventListener('click', deleteSelectedArticle);
+            
+            elements.searchArticles.addEventListener('input', (e) => {
+                displayArticles(e.target.value);
+                state.selectedArticleId = null;
+                elements.deleteSelected.disabled = true;
+            });
+
+            // Close modals when clicking outside
+            elements.unsplashModal.addEventListener('click', (e) => {
+                if (e.target === elements.unsplashModal) {
+                    elements.unsplashModal.classList.remove('active');
+                }
+            });
+
+            elements.saveModal.addEventListener('click', (e) => {
+                if (e.target === elements.saveModal) {
+                    elements.saveModal.classList.remove('active');
+                }
+            });
+
+            elements.loadModal.addEventListener('click', (e) => {
+                if (e.target === elements.loadModal) {
+                    elements.loadModal.classList.remove('active');
+                    state.selectedArticleId = null;
+                    elements.deleteSelected.disabled = true;
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (state.isMobile && 
+                    elements.headerActions.classList.contains('active') &&
+                    !elements.headerActions.contains(e.target) &&
+                    !elements.mobileMenuToggle.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close sidebar when clicking backdrop on mobile
+            document.addEventListener('click', (e) => {
+                if (state.isMobile && 
+                    state.sidebarOpen &&
+                    !elements.sidebar.contains(e.target) &&
+                    !elements.sidebarToggle.contains(e.target)) {
+                    closeSidebar();
+                }
+            });
+
+            // Touch gestures for mobile (basic swipe to close sidebar)
+            let touchStartX = 0;
+            let touchStartY = 0;
+            
+            elements.sidebar.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            });
+            
+            elements.sidebar.addEventListener('touchmove', (e) => {
+                if (!state.isMobile || !state.sidebarOpen) return;
+                
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                const diffX = touchStartX - touchX;
+                const diffY = Math.abs(touchStartY - touchY);
+                
+                // If horizontal swipe is more significant than vertical
+                if (Math.abs(diffX) > diffY && diffX > 50) {
+                    closeSidebar();
+                }
+            });
+        }
+
+        // Initialize the application
+        function init() {
+            // Set initial date in local time
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+            elements.date.value = localDateTime.toISOString().slice(0, 16);
+            state.currentPost.date = elements.date.value;
+
+            // Apply saved theme
+            document.documentElement.setAttribute('data-theme', state.theme);
+            elements.themeToggle.textContent = state.theme === 'light' ? '🌙' : '☀';
+
+            // Load saved Unsplash key
+            const savedKey = localStorage.getItem('unsplash-access-key');
+            if (savedKey) {
+                elements.unsplashKey.value = savedKey;
+            }
+
+            // Check if mobile and set initial sidebar state
+            state.isMobile = window.innerWidth <= 768;
+            if (state.isMobile) {
+                // On mobile, sidebar starts hidden
+                state.sidebarOpen = false;
+                elements.sidebar.classList.remove('mobile-open');
+            } else {
+                // On desktop, sidebar is always visible (default CSS)
+                state.sidebarOpen = false; // Not using mobile open state
+            }
+
+            // Load saved draft
+            loadFromLocalStorage();
+
+            // Setup event listeners
+            setupEventListeners();
+
+            // Initial update
+            updateWordCount();
+
+            // Set initial viewport height for mobile
+            if (state.isMobile) {
+                const setVH = () => {
+                    const vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                };
+                setVH();
+                window.addEventListener('resize', setVH);
+                window.addEventListener('orientationchange', setVH);
+            }
+
+            // Prevent zoom on inputs for iOS
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', () => {
+                        input.style.fontSize = '16px';
+                    });
+                    input.addEventListener('blur', () => {
+                        input.style.fontSize = '';
+                    });
+                });
+            }
+
+            console.log('BSSG Post Editor initialized');
+        }
+
+        // Start the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
