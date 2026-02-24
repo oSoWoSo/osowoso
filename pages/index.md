@@ -1,12 +1,12 @@
 ---
 title: oSoWoSo
-date: 2026-02-24 13:16:57 +0100
-lastmod: 2026-02-24 13:16:57 +0100
+date: 2026-02-24 13:19:27 +0100
+lastmod: 2026-02-24 13:19:27 +0100
 tags: osowoso
 slug: index
 secondary: false
 ---
-![oSoWoSo.org Banner](/osowoso.png)
+![](/osowoso.png)
 
 # Our world is in our hands...
 

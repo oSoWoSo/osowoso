@@ -1,4 +1,4 @@
-![oSoWoSo.org Banner](/osowoso.png)
+![](/osowoso.png)
 
 # Our world is in our hands...
 
