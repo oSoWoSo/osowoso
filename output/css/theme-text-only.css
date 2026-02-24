@@ -1,0 +1,321 @@
+/* 
+ * Text-Only Theme for BSSG
+ * A step beyond minimalism - uses browser defaults with only 
+ * essential typography for readability. Lightning-fast loading.
+ * Enhanced with accessibility and compatibility improvements.
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* CSS Variables for consistency */
+:root {
+    /* Colors */
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-background: #fff;
+    --color-link: #0059b3;
+    --color-link-visited: #551a8b;
+    --color-border: #eee;
+    
+    /* Typography */
+    --font-family-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-family-mono: Consolas, Monaco, 'Andale Mono', monospace;
+    --font-size-small: 0.9em;
+    --font-size-normal: 1em;
+    --font-size-h3: 1.3em;
+    --font-size-h2: 1.5em;
+    --font-size-h1: 1.8em;
+    --line-height-normal: 1.6;
+    --line-height-tight: 1.2;
+    
+    /* Spacing */
+    --spacing-xs: 0.5em;
+    --spacing-sm: 1em;
+    --spacing-md: 1.5em;
+    --spacing-lg: 2em;
+    
+    /* Sizing */
+    --max-width: 65ch;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-text: #eee;
+        --color-text-light: #aaa;
+        --color-background: #222;
+        --color-link: #6ab0ff;
+        --color-link-visited: #b38adc;
+        --color-border: #444;
+    }
+}
+
+/* Base elements with minimal styling */
+body {
+    font-family: var(--font-family-system);
+    line-height: var(--line-height-normal);
+    margin: 0 auto;
+    padding: var(--spacing-sm);
+    max-width: var(--max-width); /* Optimal reading width */
+    color: var(--color-text);
+    background: var(--color-background);
+}
+
+/* Very simple container */
+.container {
+    margin: 0 auto;
+}
+
+/* Simple header without styling */
+header {
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+/* Simple site title */
+.site-title {
+    margin: 0;
+    font-size: var(--font-size-h2);
+}
+
+.site-title a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+/* Simple navigation */
+nav {
+    margin: var(--spacing-sm) 0;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 var(--spacing-xs);
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a:focus {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Simple content area */
+main {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Clean typography - minimal styling */
+h1, h2, h3, h4, h5, h6 {
+    margin: var(--spacing-md) 0 var(--spacing-xs);
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+p {
+    margin: var(--spacing-sm) 0;
+}
+
+/* Simple link styling */
+a {
+    color: var(--color-link);
+}
+
+a:visited {
+    color: var(--color-link-visited);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Ultra-minimal article styling */
+article {
+    margin-bottom: var(--spacing-lg);
+}
+
+article h1 {
+    margin-top: 0;
+}
+
+/* Article metadata with minimal styling */
+article .meta {
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Very simple tags */
+.tags {
+    display: inline;
+}
+
+.tags a {
+    margin-right: var(--spacing-xs);
+}
+
+/* Minimal image styling */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: var(--spacing-sm) auto;
+}
+
+/* Ultra-minimal footer */
+footer {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+    text-align: center;
+}
+
+/* Simple code blocks */
+pre, code {
+    font-family: var(--font-family-mono);
+    background: var(--color-border);
+    font-size: var(--font-size-small);
+}
+
+code {
+    padding: 0.1em 0.3em;
+}
+
+pre {
+    padding: var(--spacing-sm);
+    overflow-x: auto;
+}
+
+pre code {
+    padding: 0;
+}
+
+/* Ultra-minimal blockquote */
+blockquote {
+    border-left: 3px solid var(--color-border);
+    margin-left: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+    font-style: italic;
+}
+
+/* Simple horizontal rule */
+hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+}
+
+/* Ultra-minimal post list */
+.posts-list article {
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.posts-list h3 {
+    margin: 0;
+}
+
+/* Minimal pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-lg);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Bare minimum responsive adjustments */
+@media (max-width: 600px) {
+    body {
+        padding: var(--spacing-xs);
+    }
+    
+    .site-title {
+        font-size: var(--font-size-h3);
+    }
+    
+    h1 {
+        font-size: var(--font-size-h2);
+    }
+    
+    h2 {
+        font-size: var(--font-size-h3);
+    }
+    
+    h3 {
+        font-size: var(--font-size-normal);
+    }
+}
+
+/* Dark mode - minimal but essential for accessibility */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--color-background);
+        color: var(--color-text);
+    }
+    
+    .site-title a {
+        color: var(--color-text);
+    }
+    
+    a {
+        color: var(--color-link);
+    }
+    
+    a:visited {
+        color: var(--color-link-visited);
+    }
+    
+    pre, code {
+        background: #333;
+    }
+    
+    blockquote {
+        border-color: var(--color-border);
+    }
+    
+    hr, .posts-list article {
+        border-color: var(--color-border);
+    }
+    
+    article .meta, footer {
+        color: var(--color-text-light);
+    }
+} 

@@ -1,0 +1,842 @@
+/* 
+ * Web 2.0 Theme for BSSG
+ * Featuring glossy buttons, gradients, rounded corners, and reflections
+ * Inspired by the design trends of 2005-2010
+ * Enhanced with accessibility, performance, and compatibility improvements
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable background-attachment: fixed for reduced motion */
+    body {
+        background-attachment: scroll !important;
+    }
+}
+
+:root {
+    /* Web 2.0 color scheme */
+    --bg-color: #f0f0f0;
+    --window-bg: #ffffff;
+    --text-color: #333333;
+    --text-muted: #666666;
+    --link-color: #0066cc;
+    --link-visited: #004499;
+    --link-hover: #0088ff;
+    --header-color: #333333;
+    --header-gradient-start: #4c4c4c;
+    --header-gradient-end: #2d2d2d;
+    --button-gradient-start: #7db9e8;
+    --button-gradient-end: #1e5799;
+    --button-text: #ffffff;
+    --border-color: #dddddd;
+    --button-hover-start: #9ecffc;
+    --button-hover-end: #2175c7;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --tag-gradient-start: #f7f7f7;
+    --tag-gradient-end: #e5e5e5;
+    --footer-gradient-start: #666666;
+    --footer-gradient-end: #444444;
+    --highlight-color: #e5f2ff;
+    --accent-color: #0088ff;
+    --accent-secondary: #1e5799;
+    --quote-bg: #f9f9f9;
+    
+    /* Typography - enhanced system fonts for better compatibility */
+    --font-main: 'Lucida Grande', 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, 'Helvetica Neue', sans-serif;
+    --font-headings: 'Trebuchet MS', 'Lucida Grande', 'Segoe UI', Arial, 'Helvetica Neue', sans-serif;
+    --font-mono: 'Consolas', 'Courier New', 'Liberation Mono', 'Courier', monospace;
+    
+    /* Font Sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.85rem;
+    --text-base: 0.9rem;
+    --text-md: 1rem;
+    --text-lg: 1.1rem;
+    --text-xl: 1.4rem;
+    --text-2xl: 1.6rem;
+    --text-3xl: 1.8rem;
+    --text-4xl: 2rem;
+    
+    /* Spacing */
+    --spacing-xs: 0.3rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 0.8rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+    --spacing-3xl: 2.5rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Sizing */
+    --content-width: 960px;
+    --border-radius: 8px;
+    --small-radius: 4px;
+}
+
+/* Base elements - optimized for performance */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-xl);
+    line-height: 1.6;
+    font-size: var(--text-md);
+    background-image: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+    /* Removed background-attachment: fixed for better mobile performance */
+}
+
+/* Container with Web 2.0 styling */
+.container {
+    max-width: var(--content-width);
+    margin: var(--spacing-xl) auto;
+    background-color: var(--window-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 15px var(--shadow-color);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+/* Glossy header with gradient */
+header {
+    background: linear-gradient(to bottom, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+    color: white;
+    padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-3xl); /* Extra padding at bottom for tabs */
+    position: relative;
+    overflow: visible; /* Allow tabs to overflow */
+}
+
+/* Reflection effect for header */
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-3xl);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    position: relative;
+}
+
+/* Site title with Web 2.0 glossy gradient */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-4xl);
+    font-weight: bold;
+    font-family: var(--font-headings);
+    color: white;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.site-title a {
+    text-decoration: none;
+    color: white;
+    transition: all var(--transition-medium);
+}
+
+.site-title a:hover {
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    transform: translateY(-1px);
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) {
+    .site-title a {
+        background: linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    
+    .site-title a:hover {
+        color: transparent;
+    }
+}
+
+/* Navigation with glossy Web 2.0 tabs - directly integrated with header */
+nav {
+    background: none;
+    border-bottom: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-end;
+    position: relative;
+    margin-top: -28px; /* Pull tabs up into the header */
+    z-index: 10;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    margin: 0;
+    margin-right: 1px;
+    font-size: var(--text-sm);
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(to bottom, #e5e5e5 0%, #d5d5d5 100%);
+    border-radius: var(--small-radius) var(--small-radius) 0 0;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+}
+
+/* Active state with tab appearance */
+nav a.active {
+    background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+    padding-top: var(--spacing-md);
+    margin-top: -4px;
+    z-index: 1;
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Create the blue button styles separately for RSS and special nav items */
+nav a.special-nav, nav a:last-child {
+    background: linear-gradient(to bottom, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+    color: var(--button-text);
+    border-radius: var(--small-radius);
+    margin-left: var(--spacing-sm);
+    margin-right: var(--spacing-sm);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid #1a5294;
+}
+
+nav a.special-nav:hover, nav a:last-child:hover {
+    background: linear-gradient(to bottom, var(--button-hover-start) 0%, var(--button-hover-end) 100%);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+nav a.special-nav:active, nav a:last-child:active {
+    background: linear-gradient(to bottom, #1e5799 0%, #7db9e8 100%);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Accessibility: Focus outlines for all interactive elements */
+nav a:focus,
+.site-title a:focus,
+a:focus,
+.tags a:focus,
+.pagination a:focus,
+.web2-button:focus,
+.web2-search input:focus,
+.web2-search button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Content area */
+main {
+    padding: var(--spacing-xl);
+    background-color: var(--window-bg);
+    min-height: 300px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-weight: bold;
+}
+
+h1 {
+    font-size: var(--text-4xl);
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: var(--spacing-sm);
+}
+
+h2 {
+    font-size: var(--text-2xl);
+    color: #444;
+}
+
+h3 {
+    font-size: var(--text-xl);
+    color: #555;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* Web 2.0 button style */
+.web2-button {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--small-radius);
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1a5294;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.web2-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.web2-button:hover {
+    background: linear-gradient(to bottom, var(--button-hover-start) 0%, var(--button-hover-end) 100%);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.web2-button:active {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to bottom, #1e5799 0%, #7db9e8 100%);
+}
+
+/* Articles in Web 2.0 style */
+article {
+    margin-bottom: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+    border-radius: var(--small-radius);
+    box-shadow: 0 1px 4px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: var(--text-3xl);
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+article .meta {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid #eee;
+}
+
+.reading-time {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.tags a {
+    background: linear-gradient(to bottom, var(--tag-gradient-start) 0%, var(--tag-gradient-end) 100%);
+    color: #666;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tags a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.tags a:hover {
+    background: #e8e8e8;
+}
+
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.tag-count {
+    background: #ddd;
+    color: #777;
+    font-size: var(--text-xs);
+    margin-left: var(--spacing-sm);
+    padding: 0 var(--spacing-sm);
+    border-radius: 8px;
+}
+
+/* Code formatting */
+code {
+    font-family: var(--font-mono);
+    background-color: #f7f7f7;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--text-sm);
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+pre {
+    background: #f7f7f7;
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    font-size: var(--text-sm);
+    border-radius: var(--small-radius);
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--small-radius);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    border: 1px solid #ccc;
+    padding: var(--spacing-xs);
+    background: white;
+}
+
+/* Footer with gradient */
+footer {
+    background: linear-gradient(to bottom, var(--footer-gradient-start) 0%, var(--footer-gradient-end) 100%);
+    color: white;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    font-size: var(--text-sm);
+    text-align: center;
+    border-top: 1px solid #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+/* High contrast footer links */
+footer a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+footer a:hover {
+    color: #bbdefb;
+    text-decoration: underline;
+}
+
+/* RSS icon */
+.rss-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: var(--spacing-sm);
+}
+
+/* Pagination in Web 2.0 style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+    gap: var(--spacing-sm);
+}
+
+.pagination a {
+    background: linear-gradient(to bottom, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    border-radius: var(--small-radius);
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1a5294;
+    position: relative;
+    overflow: hidden;
+}
+
+.pagination a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.pagination a:hover {
+    background: linear-gradient(to bottom, var(--button-hover-start) 0%, var(--button-hover-end) 100%);
+}
+
+.pagination .page-info {
+    margin: 0 var(--spacing-md);
+    font-size: var(--text-sm);
+    background: #f5f5f5;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--small-radius);
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Web 2.0 badge */
+.web2-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f44336;
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--text-xs);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid #d32f2f;
+    z-index: 2;
+}
+
+/* Search box in Web 2.0 style */
+.web2-search {
+    display: flex;
+    margin: var(--spacing-lg) 0;
+}
+
+.web2-search input {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid #ccc;
+    border-radius: var(--small-radius) 0 0 var(--small-radius);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.web2-search button {
+    background: linear-gradient(to bottom, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+    color: white;
+    border: 1px solid #1a5294;
+    border-left: 0;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 0 var(--small-radius) var(--small-radius) 0;
+    cursor: pointer;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin: var(--spacing-md);
+        border-radius: var(--small-radius);
+    }
+    
+    header {
+        padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl); /* Reduced bottom padding for mobile */
+    }
+    
+    header h1 {
+        font-size: var(--text-2xl);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: var(--spacing-md); /* Reset negative margin and position nav below header text */
+        position: relative;
+        background: linear-gradient(to bottom, #e5e5e5 0%, #d5d5d5 100%);
+        padding: var(--spacing-sm);
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    nav a {
+        margin: var(--spacing-xs);
+        flex-grow: 1;
+        text-align: center;
+        border-radius: var(--small-radius);
+        border: 1px solid var(--border-color);
+    }
+    
+    nav a.active {
+        padding-top: var(--spacing-sm);
+        margin-top: var(--spacing-xs);
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+    
+    article {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Additional breakpoint for very small screens */
+@media (max-width: 480px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    .container {
+        margin: var(--spacing-sm);
+    }
+    
+    header {
+        padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+    }
+    
+    nav {
+        padding: var(--spacing-sm);
+    }
+    
+    nav a {
+        width: calc(50% - 10px);
+        margin: var(--spacing-xs);
+        padding: var(--spacing-sm) var(--spacing-sm);
+        font-size: var(--text-sm);
+    }
+}
+
+/* Featured Images with Web 2.0 styling */
+.featured-image {
+    margin: 1.5rem 0;
+    border-radius: var(--small-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    border-radius: var(--small-radius);
+}
+
+.featured-image:hover img {
+    transform: scale(1.02);
+}
+
+/* Glass reflection effect */
+.featured-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    border-radius: var(--small-radius) var(--small-radius) 0 0;
+    pointer-events: none;
+}
+
+.featured-image .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+    color: white;
+    padding: 15px 10px 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+}
+
+.index-image {
+    margin-bottom: 1.2rem;
+    border-radius: var(--small-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 1px 4px var(--shadow-color);
+}
+
+.index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--small-radius);
+}
+
+.tag-image {
+    margin-bottom: 1.2rem;
+    border-radius: var(--small-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 1px 4px var(--shadow-color);
+}
+
+.tag-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--small-radius);
+}
+
+.archive-image {
+    margin-bottom: 1.2rem;
+    border-radius: var(--small-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 1px 4px var(--shadow-color);
+}
+
+.archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--small-radius);
+}
+
+/* Selection styling */
+::selection {
+    background-color: var(--highlight-color);
+    color: var(--text-color);
+}
+
+/* Date header with Web 2.0 styling */
+.date-header {
+    font-family: var(--font-headings);
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1.1rem;
+    display: inline-block;
+    position: relative;
+    padding: 0.3rem 0.8rem;
+    background: linear-gradient(to bottom, var(--tag-gradient-start) 0%, var(--tag-gradient-end) 100%);
+    border-radius: var(--small-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 2px var(--shadow-color);
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        font-size: var(--text-base);
+    }
+    
+    .container {
+        margin: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    
+    header {
+        padding: var(--spacing-lg);
+        background: none;
+        color: #000;
+    }
+    
+    nav, .web2-search {
+        display: none;
+    }
+    
+    article {
+        padding: var(--spacing-md);
+    }
+    
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+    
+    footer {
+        background: none;
+        color: #000;
+        border-top: 1px solid #ccc;
+        padding: var(--spacing-md);
+    }
+    
+    /* Add URL after links for print */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: var(--text-xs);
+    }
+    
+    /* Except for anchor links */
+    a[href^="#"]:after {
+        content: "";
+    }
+}
+
+/* Update TODO in the TODO.md file to mark Web2 theme as complete */ 

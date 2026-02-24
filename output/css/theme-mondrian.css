@@ -1,0 +1,667 @@
+/* 
+ * Mondrian Theme for BSSG
+ * Inspired by Piet Mondrian's De Stijl artwork with
+ * geometric patterns, primary colors, and black grid lines
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic Mondrian geometric aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Mondrian color scheme */
+    --mondrian-red: #D40920;
+    --mondrian-blue: #1B57B0;
+    --mondrian-yellow: #F9D01E;
+    --mondrian-black: #000000;
+    --mondrian-white: #FFFFFF;
+    --mondrian-gray: #F5F5F5;
+    
+    /* Semantic color assignments */
+    --bg-color: var(--mondrian-white);
+    --text-color: var(--mondrian-black);
+    --accent-color: var(--mondrian-red);
+    --secondary-accent: var(--mondrian-blue);
+    --tertiary-accent: var(--mondrian-yellow);
+    --link-color: var(--mondrian-blue);
+    --link-hover: var(--mondrian-red);
+    --link-visited: var(--mondrian-blue);
+    --header-bg: var(--mondrian-white);
+    --header-text: var(--mondrian-black);
+    --nav-bg: var(--mondrian-gray);
+    --nav-text: var(--mondrian-black);
+    --nav-hover-bg: var(--mondrian-blue);
+    --nav-hover-text: var(--mondrian-white);
+    --footer-bg: var(--mondrian-black);
+    --footer-text: var(--mondrian-white);
+    --border-color: var(--mondrian-black);
+    
+    /* Typography - Enhanced font fallbacks for Mondrian geometric look */
+    --font-main: 'Helvetica Neue', 'Helvetica', 'Arial', 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    --font-headings: 'Helvetica Neue', 'Helvetica', 'Arial', 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', 'Courier New', 'Liberation Mono', monospace;
+    
+    /* Sizing */
+    --content-width: 85%;
+    --max-content-width: 1100px;
+    --grid-size: 10px; /* Base size for Mondrian grid */
+    --border-thickness: 3px; /* Thickness of Mondrian borders */
+    --content-padding: 2.5rem;
+}
+
+/* Base elements */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: 2.5rem auto;
+    padding: 0;
+    background-color: var(--bg-color);
+    position: relative;
+    /* Mondrian-style border */
+    border: var(--border-thickness) solid var(--mondrian-black);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Header with Mondrian grid design */
+header {
+    padding: 2.5rem;
+    position: relative;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    border-bottom: var(--border-thickness) solid var(--mondrian-black);
+    text-align: center;
+}
+
+/* Mondrian accent block - moved to not overlap content */
+header::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: calc(var(--grid-size) * 5);
+    height: calc(var(--grid-size) * 5);
+    background-color: var(--mondrian-red);
+    border: var(--border-thickness) solid var(--mondrian-black);
+    z-index: 0;
+}
+
+/* TEXT BROWSER FALLBACK: Simple decoration for header */
+@supports not (position: absolute) {
+    header::after {
+        content: "■";
+        position: static;
+        background: none;
+        border: none;
+        color: var(--mondrian-red);
+        width: auto;
+        height: auto;
+        z-index: auto;
+        font-size: 1.5rem;
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}
+
+/* Site title */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 0 calc(var(--grid-size) * 6) 0 0; /* Make room for the accent block */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.site-title a {
+    color: var(--header-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-title a:hover {
+    color: var(--accent-color);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--accent-color);
+}
+
+/* Site description */
+header p {
+    margin: 0.75rem auto 0;
+    font-size: 1.15rem;
+    max-width: 550px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background-color: var(--mondrian-white);
+    padding: 0.75rem;
+    border: 1px solid var(--mondrian-black);
+    margin-right: calc(var(--grid-size) * 6); /* Make room for the accent block */
+}
+
+/* Navigation - Mondrian grid style */
+nav {
+    background-color: var(--mondrian-white);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.5rem 0;
+    position: relative;
+    border-bottom: var(--border-thickness) solid var(--mondrian-black);
+}
+
+nav a {
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 0.25rem;
+    font-weight: bold;
+    border-left: 1px solid var(--mondrian-black);
+    border-right: 1px solid var(--mondrian-black);
+}
+
+nav a:first-child {
+    border-left: none;
+}
+
+nav a:last-child {
+    border-right: none;
+}
+
+nav a:hover, 
+nav a.active {
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-text);
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-text);
+}
+
+/* Content area with Mondrian-inspired layout */
+main {
+    padding: var(--content-padding);
+    min-height: 70vh;
+    position: relative;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin: 2.5rem 0 1.25rem;
+    line-height: 1.2;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 12px;
+    border-bottom: var(--border-thickness) solid var(--mondrian-black);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    position: relative;
+    margin-top: 2.25rem;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--mondrian-yellow);
+}
+
+/* TEXT BROWSER FALLBACK: Simple decoration for h2 */
+@supports not (position: absolute) {
+    h2::after {
+        content: " ▬";
+        position: static;
+        background: none;
+        color: var(--mondrian-yellow);
+        width: auto;
+        height: auto;
+        font-size: 1rem;
+    }
+}
+
+h3 {
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+
+p {
+    margin: 1.25rem 0;
+    line-height: 1.6;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+article {
+    margin-bottom: 4rem;
+    position: relative;
+    padding: calc(var(--grid-size) * 2.5);
+}
+
+article:last-child {
+    margin-bottom: 1rem;
+}
+
+article h1 {
+    margin-top: 0;
+    text-align: left;
+}
+
+article .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.reading-time {
+    white-space: nowrap;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Use Mondrian style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-start;
+    margin-top: 2rem;
+}
+
+.tags a {
+    display: inline-block;
+    background-color: var(--mondrian-yellow);
+    color: var(--mondrian-black);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid var(--mondrian-black);
+    transition: all 0.25s ease;
+}
+
+.tags a:hover {
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    transform: translateY(-2px);
+}
+
+.tags-list {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: inline-block;
+    background-color: var(--mondrian-white);
+    color: var(--mondrian-black);
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border: 2px solid var(--mondrian-black);
+    transition: all 0.3s ease;
+}
+
+.tags-list a:hover {
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    border-color: var(--mondrian-blue);
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITY: Focus states for tags list */
+.tags-list a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    border-color: var(--mondrian-blue);
+    transform: translateY(-2px);
+}
+
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    border-top: var(--border-thickness) solid var(--mondrian-black);
+}
+
+/* Mondrian grid blocks in footer */
+footer::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: calc(var(--grid-size) * 8);
+    height: calc(var(--grid-size) * 8);
+    background-color: var(--mondrian-blue);
+    border: var(--border-thickness) solid var(--mondrian-black);
+    z-index: 0;
+}
+
+footer::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: calc(var(--grid-size) * 8);
+    height: calc(var(--grid-size) * 8);
+    background-color: var(--mondrian-yellow);
+    border: var(--border-thickness) solid var(--mondrian-black);
+    z-index: 0;
+}
+
+footer p {
+    margin: 0.75rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+footer a {
+    color: var(--mondrian-white);
+    text-decoration: underline;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--mondrian-yellow);
+    text-decoration: none;
+}
+
+/* ACCESSIBILITY: Focus states for footer links */
+footer a:focus {
+    outline: 2px solid var(--mondrian-yellow);
+    outline-offset: 2px;
+    color: var(--mondrian-yellow);
+    text-decoration: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 4.5rem;
+    align-items: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--mondrian-white);
+    color: var(--mondrian-black);
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid var(--mondrian-black);
+    transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    border-color: var(--mondrian-blue);
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--mondrian-blue);
+    color: var(--mondrian-white);
+    border-color: var(--mondrian-blue);
+    transform: translateY(-2px);
+}
+
+/* Featured images - Mondrian style */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin: 0 auto 2.5rem;
+    position: relative;
+    text-align: center;
+    padding: 12px;
+    border: var(--border-thickness) solid var(--mondrian-black);
+    max-width: 90%;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border: 2px solid var(--mondrian-black);
+}
+
+/* Image caption styling */
+figcaption, 
+.image-caption {
+    color: var(--mondrian-black);
+    padding: 0.7rem;
+    font-style: italic;
+    margin-top: 0.75rem;
+    font-weight: bold;
+    background-color: var(--mondrian-white);
+    border-bottom: 2px solid var(--mondrian-black);
+}
+
+/* Post list on index/tag/archive pages */
+.posts-list article {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: var(--border-thickness) solid var(--mondrian-black);
+}
+
+.posts-list article:last-child {
+    border-bottom: none;
+    margin-bottom: 1rem;
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+/* Summary section in post lists */
+.summary {
+    margin-top: 1.25rem;
+    background-color: var(--mondrian-gray);
+    padding: 1rem;
+    border-left: 4px solid var(--mondrian-blue);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        width: 92%;
+        margin: 1.25rem auto;
+    }
+    
+    header {
+        padding: 1.75rem 1.25rem;
+    }
+    
+    header::after {
+        width: calc(var(--grid-size) * 4);
+        height: calc(var(--grid-size) * 4);
+        top: 15px;
+        right: 15px;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        margin: 0.2rem 0;
+        width: 80%;
+        text-align: center;
+        border: 1px solid var(--mondrian-black);
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.7rem;
+    }
+    
+    h3 {
+        font-size: 1.4rem;
+    }
+    
+    article {
+        padding: 1.25rem;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tags {
+        justify-content: flex-start;
+    }
+    
+    footer {
+        padding: 2rem 1rem 2.5rem;
+    }
+    
+    footer::before,
+    footer::after {
+        width: calc(var(--grid-size) * 4);
+        height: calc(var(--grid-size) * 4);
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+    }
+} 

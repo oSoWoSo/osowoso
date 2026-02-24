@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>/</loc>
+        <loc>https://osowoso.org/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>/2026/02/23/new-website/</loc>
+        <loc>https://osowoso.org/2026/02/23/new-website/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/contributing/</loc>
+        <loc>https://osowoso.org/contributing/</loc>
         <lastmod>2026-02-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/index/</loc>
+        <loc>https://osowoso.org/index/</loc>
         <lastmod>2026-02-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/projects/</loc>
+        <loc>https://osowoso.org/projects/</loc>
         <lastmod>2026-02-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/resources/</loc>
+        <loc>https://osowoso.org/resources/</loc>
         <lastmod>2026-02-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/void/</loc>
+        <loc>https://osowoso.org/void/</loc>
         <lastmod>2026-02-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/abyss-packages/</loc>
+        <loc>https://osowoso.org/abyss-packages/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/bssg/</loc>
+        <loc>https://osowoso.org/bssg/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/clitest/</loc>
+        <loc>https://osowoso.org/clitest/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/simplex-themes/</loc>
+        <loc>https://osowoso.org/simplex-themes/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/vbm/</loc>
+        <loc>https://osowoso.org/vbm/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/vut/</loc>
+        <loc>https://osowoso.org/vut/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>http://localhost:8000/xut/</loc>
+        <loc>https://osowoso.org/xut/</loc>
         <lastmod>2026-02-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>

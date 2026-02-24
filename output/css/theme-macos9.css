@@ -1,0 +1,1102 @@
+/* 
+ * Mac OS 9 Theme for BSSG
+ * Styled after the authentic Mac OS 9.2 look
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic Mac OS 9 aesthetics
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable hover transforms and opacity changes */
+    .site-title a:hover::before,
+    .site-title a:focus::before {
+        opacity: 0 !important;
+    }
+}
+
+:root {
+    /* Mac OS 9 color scheme */
+    --bg-color: #3a57a6; /* Mac OS 9 blue background */
+    --window-bg: #ffffff;
+    --text-color: #000000;
+    --link-color: #0000ee;
+    --link-visited: #660099;
+    --header-color: #000000;
+    --border-color: #000000;
+    --accent-color: #cccccc;
+    --title-bar: linear-gradient(to bottom, #cccccc, #999999);
+    --button-face: linear-gradient(to bottom, #ffffff, #dedede);
+    --scrollbar-bg: #cccccc;
+    --menu-bar-bg: #eeeeee;
+    --active-window: #000000;
+    --inactive-window: #888888;
+    --selection-bg: #3875d7;
+    --selection-text: #ffffff;
+    --highlight-yellow: #ffffcc;
+    --tooltip-bg: #ffffdc;
+    --tooltip-border: #000000;
+    
+    /* Site title gradient colors */
+    --title-gradient-start: #000000;
+    --title-gradient-end: #666666;
+    
+    /* Typography - Enhanced font fallbacks for Mac OS 9 look */
+    --font-main: 'Lucida Grande', 'Geneva', 'Verdana', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-headings: 'Lucida Grande', 'Geneva', 'Verdana', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --font-mono: 'Monaco', 'Menlo', 'Consolas', 'Courier New', 'Liberation Mono', monospace;
+    
+    /* Sizing */
+    --content-width: 680px;
+}
+
+/* Base elements */
+html {
+    font-size: 14px; /* Increased from 12px for better readability */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 15px;
+    line-height: 1.3;
+}
+
+::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 20px auto;
+    background-color: var(--window-bg);
+    border: 1px solid var(--active-window);
+    border-radius: 6px 6px 2px 2px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* Title bar like Mac OS 9 window */
+header {
+    background: var(--title-bar);
+    padding: 3px 10px;
+    margin: 0;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    font-weight: bold;
+    text-align: center;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Close box */
+header::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* TEXT BROWSER FALLBACK: Simple window control */
+@supports not (position: absolute) {
+    header::before {
+        content: "[X]";
+        position: static;
+        background: none;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        width: auto;
+        height: auto;
+        color: var(--text-color);
+        font-size: 10px;
+    }
+}
+
+/* Site title with Mac OS 9 style */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 15px; /* Increased from 13px */
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
+
+.site-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    position: relative;
+}
+
+.site-title a:hover {
+    color: var(--selection-bg);
+    text-decoration: none;
+}
+
+/* Faux Mac OS 9 style element for title */
+.site-title a::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -20px;
+    right: -20px;
+    bottom: -5px;
+    background: linear-gradient(to bottom, #dddddd, #aaaaaa);
+    border: 1px solid #000000;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.site-title a:hover::before {
+    opacity: 1;
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    color: var(--selection-bg);
+    text-decoration: none;
+}
+
+.site-title a:focus::before {
+    opacity: 1;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 15px; /* Increased from 13px */
+    font-weight: bold;
+    text-align: center;
+    color: var(--text-color);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    flex: 1;
+}
+
+header p {
+    display: none; /* Hide description in header for this theme */
+}
+
+/* Menu bar */
+nav {
+    background-color: #eeeeee;
+    border-bottom: 1px solid #999999;
+    padding: 4px 8px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 3px 12px; /* Increased padding */
+    margin: 0 2px;
+    font-size: 14px; /* Increased from 13px */
+    font-weight: normal;
+    border: none;
+}
+
+nav a:hover {
+    background-color: #3875d7;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+nav a.active {
+    background-color: #3875d7;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+nav a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: #3875d7;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+/* Content area */
+main {
+    padding: 15px;
+    overflow: auto;
+    background-color: var(--window-bg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+h3 {
+    font-size: 1.15em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+article h1 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    margin: 0.5em 0 1em;
+    line-height: 1.4;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    text-decoration: underline;
+    border-bottom: 1px solid currentColor;
+}
+
+a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    text-decoration: underline;
+    border-bottom: 1px solid currentColor;
+}
+
+/* Mac OS 9 style button */
+.mac-button {
+    display: inline-block;
+    padding: 3px 12px; /* Increased padding */
+    margin: 2px;
+    background: var(--button-face);
+    border: 1px solid #000000;
+    border-radius: 0;
+    font-family: var(--font-main);
+    font-size: 13px; /* Increased from 12px */
+    text-align: center;
+    color: var(--text-color);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.mac-button:hover {
+    text-decoration: none;
+}
+
+.mac-button:active {
+    background: var(--accent-color);
+    border-color: #000000;
+}
+
+.mac-button.primary {
+    background: var(--selection-bg);
+    color: #ffffff;
+    border-color: #000000;
+}
+
+article {
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+article:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+article .meta {
+    font-size: 0.85em;
+    color: #666666;
+    margin-bottom: 1em;
+}
+
+.reading-time {
+    display: inline-block;
+    padding-left: 5px;
+    margin-left: 5px;
+    border-left: 1px solid #cccccc;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Use Mac OS 9 style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+.tags {
+    margin: 1em 0;
+}
+
+.tags a {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 0 4px 4px 0;
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    font-size: 0.85em;
+    color: #333333;
+    text-decoration: none;
+}
+
+.tags a:hover {
+    background-color: #3875d7;
+    color: #ffffff;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: #3875d7;
+    color: #ffffff;
+}
+
+.tags-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tag-count {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 0.85em;
+    color: #666666;
+}
+
+code {
+    font-family: var(--font-mono);
+    background-color: #f2f2f2;
+    padding: 1px 4px;
+    border-radius: 0px;
+    font-size: 0.9em;
+    color: #333333;
+}
+
+pre {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    overflow-x: auto;
+    font-size: 0.9em;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+    border: 1px solid #cccccc;
+    display: block;
+}
+
+footer {
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+    font-size: 0.9em;
+    color: #666;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Mac OS 9 style scrollbars */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background: #dedede;
+    border: 1px solid #999999;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+    border: 1px solid #666666;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-button {
+    background: #dedede;
+    border: 1px solid #999999;
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+::-webkit-scrollbar-button:hover {
+    background: #cccccc;
+}
+
+.date-header {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid var(--accent-color);
+    font-weight: bold;
+    color: #666666;
+}
+
+.posts-list article {
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    margin-bottom: 0.3em;
+}
+
+.summary {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    color: #333333;
+}
+
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background-color: #f5f5f5;
+    border-left: 4px solid #cccccc;
+    color: #555555;
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    border: 1px solid #cccccc;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #cccccc;
+}
+
+th {
+    background-color: #eeeeee;
+    font-weight: bold;
+    color: #333333;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #cccccc;
+    margin: 1.5em 0;
+}
+
+/* Mac OS 9 style dialog */
+.mac-dialog {
+    border: 1px solid #000000;
+    background-color: #eeeeee;
+    border-radius: 0;
+    max-width: 400px;
+    margin: 2em auto;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.mac-dialog-title {
+    background: var(--title-bar);
+    padding: 3px 10px;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--text-color);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mac-dialog-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.mac-dialog-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 15px 15px;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--tooltip-bg);
+    color: var(--text-color);
+    text-align: center;
+    border: 1px solid var(--tooltip-border);
+    border-radius: 0;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 2em 0;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 3px 10px;
+    margin: 0 3px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #3875d7;
+    color: #ffffff;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--selection-bg);
+    outline-offset: 2px;
+    background-color: #3875d7;
+    color: #ffffff;
+}
+
+.pagination .current {
+    background-color: #3875d7;
+    color: #ffffff;
+    border-color: #3875d7;
+}
+
+/* Media Queries */
+@media (max-width: 700px) {
+    .container {
+        margin: 10px;
+        width: auto;
+        max-width: 100%;
+    }
+    
+    main {
+        padding: 10px;
+    }
+    
+    /* Improved header for mobile */
+    header {
+        padding: 3px 10px;
+        height: auto;
+        min-height: 22px;
+    }
+    
+    .site-title, header h1 {
+        font-size: 12px;
+    }
+    
+    /* Improved navigation for mobile */
+    nav {
+        padding: 3px 5px;
+        justify-content: center;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 3px;
+    }
+    
+    nav a {
+        padding: 4px 6px;
+        margin: 0;
+        font-size: 12px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    
+    /* Article adjustments for mobile */
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    /* Fixed window style elements */
+    .featured-image,
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: 10px 0;
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        height: 20px;
+        font-size: 12px;
+        line-height: 20px;
+    }
+    
+    .featured-image img,
+    .index-image img,
+    .tag-image img,
+    .archive-image img {
+        margin-top: 20px;
+    }
+    
+    /* Adjust pagination for mobile */
+    .pagination {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+}
+
+/* Additional breakpoint for smaller screens */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        margin: 5px;
+        box-sizing: border-box;
+    }
+    
+    body {
+        padding: 5px;
+    }
+    
+    main {
+        padding: 8px;
+    }
+    
+    h1 {
+        font-size: 1.3em;
+    }
+    
+    h2 {
+        font-size: 1.15em;
+    }
+    
+    h3 {
+        font-size: 1.05em;
+    }
+    
+    /* Improved nav for small screens */
+    nav {
+        padding: 2px;
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 2px;
+    }
+    
+    nav a {
+        padding: 3px 4px;
+        font-size: 11px;
+    }
+    
+    /* Adjust tags for mobile */
+    .tags {
+        flex-wrap: wrap;
+    }
+    
+    .tags a {
+        margin: 2px;
+        padding: 1px 5px;
+        font-size: 11px;
+    }
+    
+    /* Window style adjustments */
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        height: 18px;
+        font-size: 11px;
+        line-height: 18px;
+    }
+    
+    .featured-image img,
+    .index-image img,
+    .tag-image img,
+    .archive-image img {
+        margin-top: 18px;
+    }
+    
+    .featured-image::after,
+    .index-image::after,
+    .tag-image::after,
+    .archive-image::after {
+        width: 10px;
+        height: 10px;
+        left: 5px;
+        top: 4px;
+    }
+    
+    blockquote {
+        padding: 8px;
+        margin: 10px 0;
+    }
+    
+    pre {
+        padding: 8px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    .container {
+        margin: 2px;
+    }
+    
+    main {
+        padding: 5px;
+    }
+    
+    .site-title, header h1 {
+        font-size: 11px;
+    }
+    
+    /* Stack navigation for very small screens */
+    nav {
+        flex-direction: column;
+        padding: 2px;
+    }
+    
+    nav a {
+        text-align: center;
+        width: 100%;
+        margin: 1px 0;
+    }
+    
+    /* Window style further adjustments */
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        height: 16px;
+        font-size: 10px;
+        line-height: 16px;
+    }
+    
+    .featured-image img,
+    .index-image img,
+    .tag-image img,
+    .archive-image img {
+        margin-top: 16px;
+    }
+    
+    .featured-image::after,
+    .index-image::after,
+    .tag-image::after,
+    .archive-image::after {
+        width: 8px;
+        height: 8px;
+        left: 4px;
+        top: 4px;
+    }
+    
+    /* Misc adjustments */
+    .mac-button {
+        padding: 1px 8px;
+        font-size: 10px;
+    }
+}
+
+/* No dark mode for Mac OS 9 theme */
+
+/* Mac OS 9 "Picture Viewer" style featured image */
+.featured-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 6px 6px 2px 2px;
+    background-color: var(--window-bg);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for featured image */
+.featured-image::before {
+    content: "Picture Viewer";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* Close box for featured image */
+.featured-image::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 22px; /* Space for the title bar */
+}
+
+.featured-image .image-caption {
+    padding: 5px 8px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-size: 11px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    font-family: var(--font-main);
+}
+
+.index-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 6px 6px 2px 2px;
+    background-color: var(--window-bg);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for index image */
+.index-image::before {
+    content: "Preview";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* Close box for index image */
+.index-image::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.index-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 22px; /* Space for the title bar */
+}
+
+.tag-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 6px 6px 2px 2px;
+    background-color: var(--window-bg);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for tag image */
+.tag-image::before {
+    content: "Tag Viewer";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* Close box for tag image */
+.tag-image::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.tag-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 22px; /* Space for the title bar */
+}
+
+.archive-image {
+    margin: 15px 0;
+    border: 1px solid var(--active-window);
+    border-radius: 6px 6px 2px 2px;
+    background-color: var(--window-bg);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Title bar for archive image */
+.archive-image::before {
+    content: "Archive Viewer";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: var(--title-bar);
+    color: var(--text-color);
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+/* Close box for archive image */
+.archive-image::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+
+.archive-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 22px; /* Space for the title bar */
+} 

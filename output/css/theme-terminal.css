@@ -1,0 +1,977 @@
+/* 
+ * Terminal Theme for BSSG
+ * Old-school terminal/command-line inspired styling
+ */
+
+:root {
+    /* Terminal color scheme */
+    --bg-color: #0d0d0d;
+    --text-color: #33ff33;  /* Classic green terminal text */
+    --dim-color: #00cc00;   /* Dimmer green for secondary elements */
+    --highlight-color: #ffffff; /* White highlight */
+    --header-color: #33ff33;
+    --link-color: #3399ff;
+    --link-visited: #cc99ff;
+    --border-color: #33ff33;
+    --command-prompt: #33ff33;
+    --command-text: #ffffff;
+    --error-color: #ff3333;
+    --warning-color: #ffcc00;
+    --success-color: #33ff33;
+    
+    /* Title gradient colors */
+    --title-gradient-start: #33ff33;  /* Bright terminal green */
+    --title-gradient-end: #00cc00;  /* Darker terminal green */
+    
+    /* Typography - System monospace fonts for terminal aesthetic */
+    --font-main: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, 'Courier New', monospace;
+    --font-headings: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, 'Courier New', monospace;
+    --font-mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 800px;
+    --cursor-blink: 1s;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 2.5rem;
+    
+    /* Line heights */
+    --line-height-normal: 1.5;
+    --line-height-tight: 1.2;
+    
+    /* Font sizes */
+    --text-sm: 0.9rem;
+    --text-md: 1rem;
+    --text-lg: 1.1rem;
+    --text-xl: 1.3rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.8rem;
+    
+    /* Transitions */
+    --transition-normal: 0.3s ease;
+}
+
+/* Removed external font loading for better performance and text browser compatibility */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable all transforms and animations */
+    .site-title a:hover,
+    .featured-image:hover img,
+    .index-image:hover img,
+    .tag-image:hover img,
+    .archive-image:hover img,
+    .pagination a:hover {
+        transform: none !important;
+    }
+    
+    @keyframes flicker {
+        from, to { opacity: 1; }
+    }
+    
+    @keyframes blink {
+        from, to { opacity: 1; }
+    }
+    
+    main::after {
+        animation: none !important;
+    }
+}
+
+/* Base elements */
+html {
+    font-size: 16px;
+    background-color: var(--bg-color);
+    scrollbar-color: var(--text-color) var(--bg-color);
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-md);
+    line-height: var(--line-height-normal);
+    cursor: text;
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.3);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 1000;
+    opacity: 0.15;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 90%);
+    z-index: 1001;
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    position: relative;
+    z-index: 10;
+    overflow-wrap: break-word;
+}
+
+/* Terminal header style */
+header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Site title with terminal-style gradient */
+.site-title {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-weight: normal;
+    font-size: var(--text-3xl);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.site-title::before {
+    content: "## ";
+    color: var(--header-color);
+}
+
+.site-title::after {
+    content: " ##";
+    color: var(--header-color);
+}
+
+.site-title a {
+    color: var(--header-color);
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    position: relative;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.site-title a:hover {
+    color: var(--highlight-color);
+    border: none;
+}
+
+.site-title a:focus {
+    outline-color: var(--link-color);
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a {
+        background: linear-gradient(to right, 
+            var(--title-gradient-start) 0%, 
+            var(--highlight-color) 50%, 
+            var(--title-gradient-end) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
+    }
+    
+    .site-title a:hover {
+        background: linear-gradient(to right, 
+            var(--highlight-color) 0%, 
+            var(--title-gradient-start) 50%, 
+            var(--highlight-color) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: flicker 0.5s infinite alternate;
+    }
+}
+
+header h1 {
+    color: var(--header-color);
+    font-weight: normal;
+    font-size: var(--text-3xl);
+    margin: 0 0 var(--spacing-xs) 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+header h1::before {
+    content: "## ";
+}
+
+header h1::after {
+    content: " ##";
+}
+
+header p {
+    color: var(--dim-color);
+    margin: 0;
+    font-size: var(--text-md);
+}
+
+/* Navigation with terminal command style */
+nav {
+    margin: var(--spacing-md) 0;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs);
+    background-color: rgba(0, 20, 0, 0.3);
+}
+
+nav::before {
+    content: "$ help";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: 0.5rem;
+}
+
+nav a {
+    color: var(--command-text);
+    text-decoration: none;
+    margin-right: var(--spacing-lg);
+    position: relative;
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-xs);
+}
+
+nav a::before {
+    content: "./";
+    color: var(--dim-color);
+}
+
+nav a:hover {
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+/* Content area */
+main {
+    position: relative;
+}
+
+/* Blinking terminal cursor effect */
+main::after {
+    content: "█";
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    color: var(--text-color);
+    animation: blink var(--cursor-blink) step-end infinite;
+    opacity: 0.7;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    font-weight: normal;
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+h1 {
+    font-size: var(--text-3xl);
+}
+
+h2 {
+    font-size: var(--text-2xl);
+}
+
+h2::before {
+    content: "# ";
+}
+
+h3 {
+    font-size: var(--text-xl);
+}
+
+h3::before {
+    content: "## ";
+}
+
+h4 {
+    font-size: var(--text-lg);
+}
+
+h4::before {
+    content: "### ";
+}
+
+p {
+    margin: 0 0 var(--spacing-md);
+    line-height: var(--line-height-normal);
+}
+
+/* Terminal-style links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--link-color);
+    padding-bottom: 1px;
+    transition: all var(--transition-normal);
+}
+
+a:visited {
+    color: var(--link-visited);
+    border-bottom-color: var(--link-visited);
+}
+
+a:hover, a:focus {
+    color: var(--highlight-color);
+    border-bottom-style: solid;
+    background-color: rgba(51, 255, 51, 0.1);
+}
+
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* Article styling */
+article {
+    margin-bottom: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px dashed var(--border-color);
+    position: relative;
+}
+
+article::before {
+    content: "$ cat post.md";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+}
+
+article:last-child {
+    border-bottom: none;
+}
+
+article .meta {
+    color: var(--dim-color);
+    font-size: var(--text-sm);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px dotted var(--dim-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+.reading-time {
+    font-style: italic;
+}
+
+.reading-time::before {
+    content: "[";
+}
+
+.reading-time::after {
+    content: "]";
+}
+
+/* Text browser fallbacks for reading time brackets */
+@supports not (content: "[") {
+    .reading-time::before {
+        content: "";
+    }
+    .reading-time::after {
+        content: "";
+    }
+}
+
+/* Tags */
+.tags {
+    margin-top: var(--spacing-lg);
+}
+
+.tags::before {
+    content: "$ tags: ";
+    color: var(--dim-color);
+}
+
+.tags a {
+    display: inline-block;
+    margin-right: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-xs);
+    background-color: rgba(51, 255, 51, 0.1);
+    color: var(--text-color);
+    font-size: var(--text-sm);
+    border: none;
+}
+
+.tags a:hover {
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+.tags a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+.tags-list {
+    margin: var(--spacing-md) 0;
+}
+
+.tag-count {
+    color: var(--dim-color);
+    font-size: var(--text-sm);
+}
+
+.tag-count::before {
+    content: "(";
+}
+
+.tag-count::after {
+    content: ")";
+}
+
+/* Text browser fallbacks for tag count parentheses */
+@supports not (content: "(") {
+    .tag-count::before {
+        content: "";
+    }
+    .tag-count::after {
+        content: "";
+    }
+}
+
+/* Code blocks */
+code {
+    font-family: var(--font-mono);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-xs) var(--spacing-xs);
+    border: 1px solid var(--dim-color);
+    font-size: var(--text-md);
+}
+
+pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    border: 1px solid var(--dim-color);
+    margin: var(--spacing-lg) 0;
+    position: relative;
+}
+
+pre::before {
+    content: "$ cat code.txt";
+    display: block;
+    color: var(--dim-color);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    border-bottom: 1px dotted var(--dim-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+pre code {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    display: block;
+}
+
+/* Images with terminal-style frames */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: var(--spacing-lg) auto;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs);
+    background-color: rgba(0, 20, 0, 0.3);
+}
+
+/* Terminal-style featured image */
+.featured-image {
+    max-width: 100%;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-md);
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.featured-image::before {
+    content: "$ display image.jpg";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    position: relative;
+}
+
+.featured-image::after {
+    content: "Press any key to continue...";
+    display: block;
+    color: var(--dim-color);
+    margin-top: var(--spacing-xs);
+    font-family: var(--font-mono);
+    position: relative;
+    text-align: center;
+    animation: blink 1s step-end infinite;
+}
+
+.featured-image img {
+    border: 1px dashed var(--border-color);
+    margin: 0 auto;
+    filter: brightness(0.8) contrast(1.2) grayscale(0.3);
+    transition: filter var(--transition-normal);
+}
+
+.featured-image:hover img {
+    filter: brightness(0.9) contrast(1.3) grayscale(0);
+}
+
+.index-image {
+    max-width: 100%;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-md);
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.index-image::before {
+    content: "$ ls -la images/";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    position: relative;
+}
+
+.index-image img {
+    border: 1px dashed var(--border-color);
+    margin: 0 auto;
+    filter: brightness(0.8) contrast(1.2) grayscale(0.3);
+    transition: filter var(--transition-normal);
+}
+
+.index-image:hover img {
+    filter: brightness(0.9) contrast(1.3) grayscale(0);
+}
+
+.tag-image {
+    max-width: 100%;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-md);
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.tag-image::before {
+    content: "$ find . -name \"*.tag\" -print";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    position: relative;
+}
+
+.tag-image img {
+    border: 1px dashed var(--border-color);
+    margin: 0 auto;
+    filter: brightness(0.8) contrast(1.2) grayscale(0.3);
+    transition: filter var(--transition-normal);
+}
+
+.tag-image:hover img {
+    filter: brightness(0.9) contrast(1.3) grayscale(0);
+}
+
+.archive-image {
+    max-width: 100%;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-md);
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.archive-image::before {
+    content: "$ tar -tvf archive.tar";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    position: relative;
+}
+
+.archive-image img {
+    border: 1px dashed var(--border-color);
+    margin: 0 auto;
+    filter: brightness(0.8) contrast(1.2) grayscale(0.3);
+    transition: filter var(--transition-normal);
+}
+
+.archive-image:hover img {
+    filter: brightness(0.9) contrast(1.3) grayscale(0);
+}
+
+/* Footer */
+footer {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px dashed var(--border-color);
+    color: var(--dim-color);
+    font-size: var(--text-sm);
+    text-align: center;
+}
+
+footer::before {
+    content: "$ exit";
+    display: block;
+    color: var(--command-prompt);
+    margin-bottom: var(--spacing-md);
+    text-align: left;
+}
+
+/* Terminal-style date header */
+.date-header {
+    color: var(--dim-color);
+    font-size: var(--text-md);
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    border-top: 1px dotted var(--dim-color);
+    padding-top: var(--spacing-xs);
+}
+
+.date-header::before {
+    content: "--- ";
+}
+
+.date-header::after {
+    content: " ---";
+}
+
+/* Posts list terminal style */
+.posts-list article {
+    border: 1px solid var(--dim-color);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    background-color: rgba(0, 20, 0, 0.2);
+}
+
+.posts-list article::before {
+    content: "$ ls -la post_" attr(data-date);
+    color: var(--command-prompt);
+}
+
+.posts-list h3 {
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    text-transform: none;
+}
+
+.posts-list h3::before {
+    content: "";
+}
+
+.summary {
+    margin-top: var(--spacing-xs);
+    border-top: 1px dotted var(--dim-color);
+    padding-top: var(--spacing-xs);
+}
+
+/* Terminal-style blockquote */
+blockquote {
+    border-left: 4px solid var(--dim-color);
+    padding: var(--spacing-xs) 0 var(--spacing-xs) var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--highlight-color);
+    font-style: italic;
+}
+
+blockquote::before {
+    content: "\"";
+    font-size: 1.5rem;
+    color: var(--dim-color);
+}
+
+blockquote::after {
+    content: "\"";
+    font-size: 1.5rem;
+    color: var(--dim-color);
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: var(--spacing-lg) 0;
+    font-family: var(--font-mono);
+}
+
+th, td {
+    border: 1px solid var(--dim-color);
+    padding: var(--spacing-xs);
+    text-align: left;
+}
+
+th {
+    background-color: rgba(0, 20, 0, 0.3);
+    color: var(--header-color);
+    font-weight: normal;
+}
+
+/* Terminal-style error messages */
+.terminal-error {
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+    padding: var(--spacing-xs);
+    margin: var(--spacing-md) 0;
+    background-color: rgba(255, 0, 0, 0.1);
+    font-family: var(--font-mono);
+}
+
+.terminal-error::before {
+    content: "ERROR: ";
+    font-weight: bold;
+}
+
+.terminal-warning {
+    color: var(--warning-color);
+    border: 1px solid var(--warning-color);
+    padding: var(--spacing-xs);
+    margin: var(--spacing-md) 0;
+    background-color: rgba(255, 204, 0, 0.1);
+    font-family: var(--font-mono);
+}
+
+.terminal-warning::before {
+    content: "WARNING: ";
+    font-weight: bold;
+}
+
+.terminal-success {
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+    padding: var(--spacing-xs);
+    margin: var(--spacing-md) 0;
+    background-color: rgba(51, 255, 51, 0.1);
+    font-family: var(--font-mono);
+}
+
+.terminal-success::before {
+    content: "SUCCESS: ";
+    font-weight: bold;
+}
+
+/* Terminal-style horizontal rule */
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--dim-color);
+    margin: var(--spacing-xl) 0;
+    position: relative;
+}
+
+hr::before {
+    content: "----------------------------";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 1rem;
+    background-color: var(--bg-color);
+    color: var(--dim-color);
+}
+
+/* Text browser fallback for hr decoration */
+@supports not (content: "----------------------------") {
+    hr::before {
+        content: "";
+    }
+}
+
+/* Selection style */
+::selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dim-color);
+    border: 1px solid var(--text-color);
+}
+
+/* Retro ASCII art dividers */
+.ascii-divider {
+    font-family: var(--font-mono);
+    text-align: center;
+    white-space: pre;
+    line-height: 1.2;
+    margin: 2rem 0;
+    color: var(--dim-color);
+}
+
+/* Old screen flicker effect */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.8; }
+    94% { opacity: 1; }
+    98% { opacity: 0.9; }
+    99% { opacity: 1; }
+}
+
+body {
+    animation: flicker 5s infinite;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: var(--spacing-xs);
+    }
+    
+    nav a {
+        margin-right: var(--spacing-md);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        margin: var(--spacing-md) 0 var(--spacing-sm);
+    }
+    
+    .featured-image,
+    .index-image,
+    .tag-image,
+    .archive-image {
+        padding: var(--spacing-sm);
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before {
+        font-size: var(--text-sm);
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    pre {
+        padding: var(--spacing-sm);
+    }
+    
+    blockquote {
+        padding: var(--spacing-xs) 0 var(--spacing-xs) var(--spacing-sm);
+    }
+}
+
+/* Pagination - Terminal Style */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-md) var(--spacing-xs);
+    border-top: 1px dashed var(--border-color);
+    position: relative;
+}
+
+.pagination::before {
+    content: "$ navigate";
+    position: absolute;
+    left: 0;
+    top: -2rem;
+    color: var(--dim-color);
+}
+
+.pagination a {
+    color: var(--highlight-color);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--dim-color);
+    background-color: rgba(0, 20, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    text-align: center;
+}
+
+.pagination a.prev-page::before {
+    content: "« ";
+}
+
+.pagination a.next-page::after {
+    content: " »";
+}
+
+.pagination a:hover {
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--dim-color);
+    color: var(--bg-color);
+}
+
+.pagination .page-info {
+    color: var(--dim-color);
+    font-size: var(--text-sm);
+    text-align: center;
+} 

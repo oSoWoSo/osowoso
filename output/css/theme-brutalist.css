@@ -1,0 +1,855 @@
+/* 
+ * Brutalist Theme for BSSG
+ * Raw, minimalist concrete-inspired design
+ * Features harsh typography, exposed elements, and high contrast
+ * IMPROVED: Enhanced accessibility and text browser support
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+:root {
+    /* Brutalist colors - limited, harsh palette */
+    --bg-color: #ffffff;
+    --concrete: #cccccc;
+    --dark-concrete: #333333;
+    --accent: #ff0000;
+    --text-color: #000000;
+    --link-color: #0000ff;
+    --link-visited: #8B0000; /* Dark red for better contrast on white background */
+    --transition: 0.2s ease;
+    --radius: 0;
+    
+    /* Typography - harsh, utilitarian - IMPROVED fallbacks for text browsers */
+    --font-main: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    --font-headings: 'Arial Black', 'Impact', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    --font-mono: 'Courier New', 'Monaco', 'Consolas', monospace;
+    
+    /* Sizing */
+    --content-width: 1200px;
+}
+
+/* Raw elements with minimal styling */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+/* Container with exposed box model */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    border: 5px solid black;
+    padding: 0;
+    position: relative;
+}
+
+/* Raw concrete header */
+header {
+    background-color: var(--concrete);
+    border-bottom: 5px solid black;
+    padding: 30px;
+    position: relative;
+}
+
+/* Exposed positioning element */
+header::before {
+    content: "HEADER";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dark-concrete);
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    line-height: 1;
+    font-family: var(--font-headings);
+}
+
+/* Site title with brutalist gradient style - IMPROVED accessibility */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    line-height: 1;
+    font-family: var(--font-headings);
+    color: black; /* Fallback for text browsers */
+    border-left: 8px solid var(--accent);
+    padding-left: 10px;
+    display: inline-block;
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title {
+        background: linear-gradient(90deg, black 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a {
+    text-decoration: none;
+    color: black; /* Fallback for text browsers */
+    transition: all var(--transition);
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a {
+        background: linear-gradient(90deg, black 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a:hover {
+    text-decoration: none;
+    color: var(--accent); /* Fallback for text browsers */
+    transform: translateX(5px);
+}
+
+/* Progressive enhancement for hover gradient */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a:hover {
+        background: linear-gradient(90deg, var(--accent) 0%, black 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    text-decoration: none;
+    color: var(--accent); /* Fallback for text browsers */
+    transform: translateX(5px);
+}
+
+/* Progressive enhancement for focus gradient */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a:focus {
+        background: linear-gradient(90deg, var(--accent) 0%, black 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+/* Navigation with stark contrast */
+nav {
+    background-color: black;
+    padding: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    border-right: 1px solid var(--concrete);
+}
+
+nav a:visited {
+    color: var(--link-visited);
+}
+
+nav a:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+nav a.active {
+    background-color: white;
+    color: black;
+}
+
+/* Last item (RSS) with accent color */
+nav a:last-child {
+    background-color: var(--accent);
+    margin-left: auto;
+}
+
+nav a:last-child:hover {
+    background-color: black;
+    color: var(--accent);
+}
+
+nav a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    background-color: var(--accent);
+    color: white;
+}
+
+nav a:last-child:focus {
+    outline: 3px solid white;
+    outline-offset: 2px;
+    background-color: black;
+    color: var(--accent);
+}
+
+/* Content area with visible grid */
+main {
+    padding: 30px;
+    position: relative;
+    background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Exposed main element */
+main::before {
+    content: "MAIN";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dark-concrete);
+}
+
+/* Typography with harsh contrast */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+h1 {
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+h2 {
+    font-size: 2.2rem;
+    border-bottom: 5px solid black;
+    padding-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Raw, obvious links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* Brutalist articles with visible structure */
+article {
+    margin-bottom: 50px;
+    border: 2px solid black;
+    position: relative;
+    width: 100%;
+}
+
+article::before {
+    content: "ARTICLE";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dark-concrete);
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    margin: 0;
+    padding: 20px;
+    background-color: var(--concrete);
+    border-bottom: 2px solid black;
+    font-size: 2rem;
+}
+
+article .article-content {
+    padding: 20px;
+    width: 100%;
+}
+
+article .meta {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.reading-time {
+    font-family: var(--font-mono);
+}
+
+.reading-time::before {
+    content: "⏱️";
+    margin-right: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* Brutalist featured images */
+.featured-image {
+    margin: 0;
+    position: relative;
+    border: 3px solid black;
+}
+
+.featured-image::before {
+    content: "FEATURED IMAGE";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: white;
+    background-color: black;
+    padding: 2px 5px;
+    z-index: 1;
+}
+
+.featured-image img {
+    width: 100%;
+    display: block;
+    margin: 0;
+}
+
+.featured-image .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.index-image {
+    border: 3px solid black;
+    position: relative;
+    margin: 0 0 20px 0;
+}
+
+.index-image::before {
+    content: "INDEX IMAGE";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: white;
+    background-color: black;
+    padding: 2px 5px;
+    z-index: 1;
+}
+
+.index-image img {
+    width: 100%;
+    display: block;
+    margin: 0;
+}
+
+.tag-image {
+    border: 3px solid black;
+    position: relative;
+    margin: 0 0 20px 0;
+}
+
+.tag-image::before {
+    content: "TAG IMAGE";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: white;
+    background-color: black;
+    padding: 2px 5px;
+    z-index: 1;
+}
+
+.tag-image img {
+    width: 100%;
+    display: block;
+    margin: 0;
+}
+
+.archive-image {
+    border: 3px solid black;
+    position: relative;
+    margin: 0 0 20px 0;
+}
+
+.archive-image::before {
+    content: "ARCHIVE IMAGE";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: white;
+    background-color: black;
+    padding: 2px 5px;
+    z-index: 1;
+}
+
+.archive-image img {
+    width: 100%;
+    display: block;
+    margin: 0;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tags a {
+    background-color: black;
+    color: white;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.tags a:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.tags a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    background-color: var(--accent);
+    color: white;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 2rem 0;
+    border: 1px solid black;
+    padding: 15px;
+    position: relative;
+}
+
+.tag-count {
+    background-color: var(--accent);
+    color: white;
+    padding: 0 5px;
+    font-family: var(--font-mono);
+    margin-left: 5px;
+    font-size: 0.8rem;
+}
+
+code {
+    font-family: var(--font-mono);
+    background-color: var(--concrete);
+    padding: 2px 5px;
+    font-size: 0.9em;
+    border: 1px solid black;
+}
+
+pre {
+    background-color: var(--concrete);
+    padding: 20px;
+    overflow-x: auto;
+    border: 2px solid black;
+    position: relative;
+    margin: 2rem 0;
+}
+
+pre::before {
+    content: "CODE BLOCK";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dark-concrete);
+}
+
+pre code {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 3px solid black;
+    display: block;
+    margin: 1.5rem 0;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    padding: 30px;
+    position: relative;
+    border-top: 5px solid black;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+footer::before {
+    content: "FOOTER";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--concrete);
+}
+
+footer a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: var(--accent);
+}
+
+footer a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    color: var(--accent);
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    border: 2px solid black;
+    position: relative;
+    padding: 10px;
+}
+
+.pagination a {
+    background-color: var(--concrete);
+    color: black;
+    padding: 5px 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 2px solid black;
+}
+
+.pagination a:visited {
+    color: var(--link-visited);
+    background-color: var(--concrete);
+}
+
+.pagination a:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.pagination a:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    background-color: var(--accent);
+    color: white;
+}
+
+.pagination a:last-child {
+    margin-left: auto;
+}
+
+.pagination .page-info {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: 0 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+    
+    .container {
+        padding: 1.5rem;
+    }
+    
+    header, footer {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    h1 {
+        font-size: 2.3rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+    
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    nav a {
+        padding: 12px 18px;
+        flex-grow: 1;
+        text-align: center;
+        margin-bottom: 1px;
+        border-right: 1px solid var(--concrete);
+        border-bottom: 1px solid var(--concrete);
+    }
+    
+    nav a:last-child {
+        margin-left: 0;
+    }
+    
+    .tags-list {
+        justify-content: flex-start;
+    }
+    
+    .tags-list li {
+        margin-right: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    article .summary {
+        padding: 1.25rem;
+    }
+    
+    pre {
+        padding: 1.25rem;
+    }
+    
+    blockquote {
+        padding: 0.75rem 0 0.75rem 1.5rem;
+    }
+}
+
+/* Additional responsive improvements */
+@media (max-width: 600px) {
+    html {
+        font-size: 15px;
+    }
+    
+    .container {
+        padding: 1.25rem;
+    }
+    
+    header, footer {
+        padding: 1.25rem;
+    }
+    
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    article header h1 {
+        font-size: 1.8rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
+    
+    h3 {
+        font-size: 1.4rem;
+    }
+    
+    article .summary {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+    
+    pre {
+        padding: 1rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .pagination a {
+        display: block;
+        text-align: center;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    header, footer {
+        padding: 1rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    article header h1 {
+        font-size: 1.6rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+    
+    article .summary:before,
+    pre:before,
+    blockquote:before {
+        font-size: 0.7rem;
+    }
+    
+    article .summary {
+        margin-top: 1rem;
+    }
+    
+    .tags-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .tags-list li {
+        margin: 0;
+    }
+    
+    .tags-list a {
+        display: block;
+        text-align: center;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    html {
+        font-size: 13px;
+    }
+    
+    .container {
+        padding: 0.75rem;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    article .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .tags-list {
+        grid-template-columns: 1fr;
+    }
+    
+    article img {
+        margin: 1.5rem 0;
+    }
+} 

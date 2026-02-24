@@ -1,0 +1,854 @@
+/* 
+ * Super Mario Bros Theme for BSSG
+ * Inspired by the classic Nintendo game with iconic blue sky, green pipes,
+ * brick blocks, question blocks, and classic Mario color palette
+ * IMPROVED: Better accessibility, performance, and text browser support
+ */
+
+/* Reduced motion support - CRITICAL for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable performance-heavy effects for reduced motion */
+    body {
+        background-image: linear-gradient(
+            var(--mario-ground) 0%, 
+            var(--mario-ground) 25px,
+            var(--mario-sky-blue) 25px,
+            var(--mario-sky-blue) 100%
+        ) !important;
+    }
+    
+    /* Simplify animations */
+    .site-title::before, 
+    .pagination a::before {
+        animation: none !important;
+    }
+}
+
+/* REMOVED: External font loading for better performance and text browser support */
+/* @font-face removed - using system fonts with pixel-style fallbacks */
+
+:root {
+    /* Mario color palette */
+    --mario-red: #e52521;
+    --mario-blue: #5d94fb;
+    --mario-sky-blue: #6b8cff;
+    --mario-dark-blue: #283be2;
+    --mario-green: #00b543;
+    --mario-pipe-green: #209b00;
+    --mario-brown: #854c30;
+    --mario-brick: #b13e26;
+    --mario-tan: #ffad66;
+    --mario-yellow: #ffd33a;
+    --mario-question: #ffb000;
+    --mario-black: #000000;
+    --mario-white: #ffffff;
+    --mario-coin: #ffdb37;
+    --mario-pink: #ff6582;
+    --mario-light-gray: #cccccc;
+    --mario-ground: #6a4400;
+    --mario-hills: #00c000;
+    
+    /* Theme color assignments */
+    --bg-color: var(--mario-sky-blue);
+    --text-color: #333333;
+    --heading-color: var(--mario-red);
+    --link-color: var(--mario-dark-blue);
+    --link-hover: var(--mario-red);
+    --border-color: var(--mario-brown);
+    --container-bg: var(--mario-white);
+    --accent-color: var(--mario-red);
+    --header-bg: var(--mario-red);
+    --footer-bg: var(--mario-brown);
+    --footer-text: var(--mario-white);
+    --code-bg: var(--mario-light-gray);
+    --button-bg: var(--mario-question);
+    --button-hover: var(--mario-coin);
+    --nav-bg: var(--mario-pipe-green);
+    --nav-text: var(--mario-white);
+    --nav-hover: var(--mario-yellow);
+    
+    /* Typography - IMPROVED fallbacks for text browsers */
+    --font-headings: 'Courier New', Courier, 'Lucida Console', 'Monaco', monospace;
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'Courier New', Courier, 'Lucida Console', monospace;
+    
+    /* Sizing */
+    --content-width: 90%;
+    --max-content-width: 900px;
+    --content-padding: 1.5rem;
+    --pixel-size: 4px;
+    --border-width: var(--pixel-size);
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 2.5rem;
+    
+    /* Transitions - OPTIMIZED for performance */
+    --transition-fast: 0.15s; /* Reduced for better performance */
+}
+
+/* Base elements - OPTIMIZED background */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    /* OPTIMIZED: Simplified cloud background for better performance */
+    background-image: 
+        /* Ground */
+        linear-gradient(
+            var(--mario-ground) 0%, 
+            var(--mario-ground) 25px,
+            var(--mario-sky-blue) 25px,
+            var(--mario-sky-blue) 100%
+        ),
+        /* Simplified clouds - reduced complexity */
+        radial-gradient(
+            circle at 20% 20%,
+            var(--mario-white) 20px,
+            transparent 20px
+        ),
+        radial-gradient(
+            circle at 70% 15%,
+            var(--mario-white) 25px,
+            transparent 25px
+        );
+    background-repeat: repeat-x, no-repeat, no-repeat;
+    background-size: 100% 100%, 200px 200px, 250px 250px;
+    background-position: 0 calc(100% - 40px), 10% 30%, 60% 20%;
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-lg);
+    line-height: 1.7;
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0;
+    background-color: var(--container-bg);
+    border: var(--border-width) solid var(--border-color);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 
+        var(--pixel-size) var(--pixel-size) 0 var(--mario-brick),
+        calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 2) 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Brick texture at top */
+    border-top: calc(var(--pixel-size) * 4) solid var(--mario-brick);
+}
+
+/* Mario pipe-style border on container - OPTIMIZED */
+.container::before, 
+.container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: var(--pixel-size);
+    background: repeating-linear-gradient(
+        to right,
+        var(--mario-pipe-green) 0,
+        var(--mario-pipe-green) calc(var(--pixel-size) * 2),
+        var(--mario-green) calc(var(--pixel-size) * 2),
+        var(--mario-green) calc(var(--pixel-size) * 4)
+    );
+    z-index: 1;
+}
+
+.container::before {
+    top: 0;
+}
+
+.container::after {
+    bottom: 0;
+}
+
+/* Header with Mario aesthetic - IMPROVED accessibility */
+header {
+    background-color: var(--header-bg);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+    text-align: center;
+    border-bottom: var(--border-width) solid var(--mario-brick);
+    position: relative;
+}
+
+/* Question block title effect - IMPROVED accessibility */
+.site-title {
+    margin: 0;
+    padding: var(--spacing-md);
+    font-size: 1.8rem;
+    display: inline-block;
+    position: relative;
+    background-color: var(--mario-question);
+    border: var(--pixel-size) solid var(--mario-brown);
+    box-shadow: 
+        inset calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0 var(--mario-coin),
+        inset var(--pixel-size) var(--pixel-size) 0 var(--mario-white);
+    font-family: var(--font-headings);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    transition: all var(--transition-fast) ease;
+}
+
+/* OPTIMIZED: Simplified question mark animation */
+.site-title::before {
+    content: "?";
+    position: absolute;
+    top: 50%;
+    right: calc(var(--pixel-size) * 2);
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--mario-brown);
+    font-weight: bold;
+    animation: blink 2s infinite;
+}
+
+/* FALLBACK: Text browser support for question mark */
+@supports not (content: "?") {
+    .site-title::before {
+        content: "?";
+    }
+}
+
+.site-title a {
+    color: var(--mario-brown);
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding-right: calc(var(--pixel-size) * 6);
+    transition: all var(--transition-fast) ease;
+}
+
+.site-title a:hover {
+    color: var(--mario-red);
+    transform: translateY(-2px);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--mario-white);
+    outline-offset: 2px;
+    color: var(--mario-red);
+    transform: translateY(-2px);
+}
+
+/* Site description */
+header p {
+    margin: var(--spacing-md) 0 0;
+    color: var(--mario-white);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 var(--mario-brick);
+}
+
+/* Pipe-style Navigation */
+nav {
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+nav a {
+    color: var(--nav-text);
+    text-decoration: none;
+    background-color: var(--nav-bg);
+    padding: 0.6rem 1.2rem;
+    border: var(--pixel-size) solid var(--mario-green);
+    position: relative;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    box-shadow: 
+        var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+nav a:hover, 
+nav a.active {
+    color: var(--nav-hover);
+    background-color: var(--mario-green);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+nav a:focus {
+    outline: 3px solid var(--mario-yellow);
+    outline-offset: 2px;
+    color: var(--nav-hover);
+    background-color: var(--mario-green);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+nav a.active::before {
+    content: "►";
+    position: absolute;
+    left: calc(var(--pixel-size) * -3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mario-yellow);
+    font-size: 0.8em;
+    animation: blink 1s step-end infinite;
+}
+
+/* Content area */
+main {
+    padding: var(--content-padding) var(--content-padding) var(--spacing-xl);
+    background-color: var(--container-bg);
+    min-height: 65vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--heading-color);
+    line-height: 1.4;
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--mario-red);
+    text-transform: uppercase;
+    text-shadow: 
+        1px 1px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: var(--spacing-lg);
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--mario-blue);
+    padding-left: calc(var(--pixel-size) * 3);
+    border-left: calc(var(--pixel-size) * 3) solid var(--mario-blue);
+    margin-top: var(--spacing-xl);
+}
+
+h3 {
+    font-size: 1.3rem;
+    color: var(--mario-pipe-green);
+    margin-top: var(--spacing-lg);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+    border-bottom: 2px solid transparent;
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom: 2px solid var(--link-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--mario-yellow);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom: 2px solid var(--link-hover);
+}
+
+/* Coin icon for links only in content areas */
+main p a::before {
+    content: "•";
+    color: var(--mario-coin);
+    margin-right: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+main p a:hover::before {
+    content: "⭐";
+    color: var(--mario-yellow);
+}
+
+/* Article styling */
+article {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    position: relative;
+    border-bottom: var(--pixel-size) dashed var(--mario-brick);
+}
+
+article::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--pixel-size) * -3);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(var(--pixel-size) * 6);
+    height: calc(var(--pixel-size) * 6);
+    background-color: var(--mario-coin);
+    border-radius: 50%;
+    border: var(--pixel-size) solid var(--mario-tan);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+article h1 {
+    margin-top: 0;
+}
+
+article .meta {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.reading-time {
+    display: inline-flex;
+    align-items: center;
+    color: #666;
+}
+
+.reading-time::before {
+    content: "⏱️";
+    margin-right: 5px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) 0;
+}
+
+.tags a {
+    background-color: var(--mario-brick);
+    color: var(--mario-white);
+    font-size: 0.85rem;
+    padding: 3px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.tags a:hover {
+    background-color: var(--mario-red);
+    transform: translateY(-2px);
+    border-bottom: none;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--mario-yellow);
+    outline-offset: 2px;
+    background-color: var(--mario-red);
+    transform: translateY(-2px);
+    border-bottom: none;
+}
+
+.tags a::before {
+    display: none;
+}
+
+.tags-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: block;
+    padding: 5px 12px;
+    background-color: var(--mario-pipe-green);
+    color: var(--mario-white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    transition: all 0.2s;
+    border-bottom: none;
+}
+
+.tags-list a:hover {
+    background-color: var(--mario-green);
+    color: var(--mario-yellow);
+    transform: scale(1.05);
+    border-bottom: none;
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--mario-yellow);
+    outline-offset: 2px;
+    background-color: var(--mario-green);
+    color: var(--mario-yellow);
+    transform: scale(1.05);
+    border-bottom: none;
+}
+
+/* Images */
+.featured-image, 
+figure {
+    margin: var(--spacing-lg) 0;
+    position: relative;
+    border: var(--pixel-size) solid var(--mario-brick);
+    background-color: var(--mario-brick);
+    padding: var(--pixel-size);
+    box-shadow: 
+        0 var(--pixel-size) 0 var(--mario-brown),
+        0 calc(var(--pixel-size) * 2) 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.featured-image img, 
+figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--pixel-size) solid var(--mario-white);
+    border-radius: 4px;
+}
+
+figcaption,
+.featured-image figcaption {
+    background-color: var(--mario-brown);
+    color: var(--mario-white);
+    padding: var(--spacing-xs);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: var(--pixel-size);
+    border-radius: 0 0 4px 4px;
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+}
+
+code {
+    background: var(--code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--mario-black);
+    color: var(--mario-white);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    border-left: var(--pixel-size) solid var(--mario-red);
+    border-radius: 4px;
+    margin: var(--spacing-lg) 0;
+}
+
+pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: 0.95rem;
+}
+
+blockquote {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: rgba(107, 140, 255, 0.15);
+    border-left: calc(var(--pixel-size) * 2) solid var(--mario-blue);
+    color: #333;
+    font-style: italic;
+    position: relative;
+    border-radius: 4px;
+}
+
+blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 3rem;
+    color: var(--mario-blue);
+    font-family: serif;
+    opacity: 0.3;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: var(--spacing-lg) 0;
+    font-size: 1rem;
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: 1px solid var(--mario-brick);
+}
+
+th {
+    background-color: var(--mario-red);
+    color: var(--mario-white);
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(107, 140, 255, 0.05);
+}
+
+/* Footer */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: var(--spacing-lg);
+    border-top: var(--pixel-size) solid var(--mario-brick);
+    position: relative;
+    font-size: 0.95rem;
+}
+
+footer::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--pixel-size) * -4);
+    left: 0;
+    width: 100%;
+    height: calc(var(--pixel-size) * 4);
+    background: repeating-linear-gradient(
+        to right,
+        var(--mario-brick) 0,
+        var(--mario-brick) var(--pixel-size),
+        var(--mario-ground) var(--pixel-size),
+        var(--mario-ground) calc(var(--pixel-size) * 2)
+    );
+}
+
+footer a {
+    color: var(--mario-yellow);
+    border-bottom: 1px dotted var(--mario-yellow);
+}
+
+footer a:hover {
+    color: var(--mario-white);
+    border-bottom: 1px solid var(--mario-white);
+}
+
+footer a:focus {
+    outline: 2px solid var(--mario-yellow);
+    outline-offset: 2px;
+    color: var(--mario-white);
+    border-bottom: 1px solid var(--mario-white);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--spacing-xl) 0;
+}
+
+.pagination a {
+    background-color: var(--mario-pipe-green);
+    color: var(--mario-white);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: var(--pixel-size) solid var(--mario-green);
+    transition: all 0.2s;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: var(--mario-green);
+    color: var(--mario-yellow);
+    transform: translateY(-2px);
+    border-bottom: var(--pixel-size) solid var(--mario-green);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--mario-yellow);
+    outline-offset: 2px;
+    background-color: var(--mario-green);
+    color: var(--mario-yellow);
+    transform: translateY(-2px);
+    border-bottom: var(--pixel-size) solid var(--mario-green);
+}
+
+.pagination a::before {
+    display: none;
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 49% {
+        opacity: 0;
+    }
+    50%, 100% {
+        opacity: 1;
+    }
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* IMPROVED: Responsive adjustments with mobile optimizations */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    
+    body {
+        padding: var(--spacing-md);
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: linear-gradient(
+            var(--mario-ground) 0%, 
+            var(--mario-ground) 25px,
+            var(--mario-sky-blue) 25px,
+            var(--mario-sky-blue) 100%
+        );
+    }
+    
+    .container {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        /* OPTIMIZED: Simplified shadows on mobile */
+        box-shadow: var(--pixel-size) var(--pixel-size) 0 var(--mario-brick);
+    }
+    
+    main {
+        padding: var(--spacing-md);
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav a {
+        width: 80%;
+        text-align: center;
+        /* OPTIMIZED: Simplified transitions on mobile */
+        transition: background-color var(--transition-fast) ease;
+    }
+    
+    .site-title {
+        font-size: 1.4rem;
+    }
+    
+    /* OPTIMIZED: Disable animations on mobile */
+    .site-title::before {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: var(--spacing-xs);
+        /* OPTIMIZED: Remove all background images on small mobile */
+        background-image: none;
+        background-color: var(--mario-sky-blue);
+    }
+    
+    .container {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        /* OPTIMIZED: Simplified borders on small mobile */
+        border-left: none;
+        border-right: none;
+    }
+    
+    main {
+        padding: var(--spacing-sm);
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    .site-title {
+        font-size: 1.2rem;
+        padding: var(--spacing-sm);
+        /* OPTIMIZED: Simplified styling on small mobile */
+        letter-spacing: 1px;
+    }
+    
+    .site-title::before {
+        /* OPTIMIZED: Remove question mark on very small screens */
+        display: none;
+    }
+    
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    article {
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+    }
+    
+    .tags {
+        margin: var(--spacing-sm) 0;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 320px) {
+    body {
+        padding: 0;
+    }
+    
+    .container {
+        border-left: none;
+        border-right: none;
+    }
+    
+    nav a {
+        width: 95%;
+    }
+    
+    .site-title {
+        font-size: 1rem;
+        padding: var(--spacing-xs);
+    }
+} 

@@ -1,0 +1,993 @@
+/* 
+ * Italy Theme for BSSG
+ * Authentic Italian design with rich typography and elegant aesthetics
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic Italian design aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable hover transforms */
+    .site-title a:hover,
+    nav a:hover,
+    .tags a:hover,
+    .pagination a:hover {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Authentic Italian color palette */
+    --bg-color: #fffbf0; /* Venetian plaster */
+    --text-color: #2c2418; /* Rich espresso */
+    --link-color: #22577a; /* Mediterranean blue */
+    --link-hover-color: #c1121f; /* Venetian red */
+    --header-color: #3f2918; /* Florentine leather */
+    --border-color: #e3d5c0; /* Tuscan stone */
+    --accent-color: #f2e8dc; /* Travertine marble */
+    --accent-secondary: #d8a165; /* Siena earth */
+    --tag-bg: #dfecde; /* Olive leaf */
+    --tag-text: #2f5d41; /* Cypress forest */
+    --quote-bg: #f9f3e5; /* Parchment */
+    --date-color: #7d6c55; /* Aged bronze */
+    --highlight-color: #fcf4c4; /* Limoncello */
+    --card-shadow: 0 4px 8px rgba(101, 67, 33, 0.05), 0 1px 3px rgba(101, 67, 33, 0.1);
+
+    /* Title gradient colors - Italian flag inspired */
+    --title-gradient-start: #009246; /* Italian green */
+    --title-gradient-middle: #ffffff; /* Italian white */
+    --title-gradient-end: #ce2b37; /* Italian red */
+
+    /* Additional Italian-inspired colors */
+    --chianti-red: #8c1c13;
+    --tuscany-gold: #d4a74c;
+    --amalfi-blue: #1a7b9f;
+    --venice-gold: #e6b954;
+    --verona-pink: #e8a598;
+
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-main: 'Palatino Linotype', 'Book Antiqua', 'Palatino', Georgia, 'Times New Roman', Times, serif;
+    --font-headings: 'Times New Roman', Times, Georgia, 'Palatino', serif;
+    --font-decorative: 'Garamond', Georgia, 'Times New Roman', Times, serif;
+    --font-mono: 'Consolas', 'Liberation Mono', 'Courier New', Courier, monospace;
+
+    /* Spacing and sizing */
+    --radius: 8px;
+    --content-width: 760px;
+    --transition: 0.2s ease;
+    
+    /* Consistency spacing variables */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1c2331; /* Venetian night */
+        --text-color: #e5e1d8; /* Moonlit marble */
+        --link-color: #83b3bf; /* Muted Amalfi blue */
+        --link-hover-color: #e09f3e; /* Amber wine */
+        --header-color: #f3e9d9; /* Antique parchment */
+        --border-color: #3d4a5c; /* Slate stone */
+        --accent-color: #2d3a45; /* Dark cypress */
+        --accent-secondary: #b38455; /* Aged terracotta */
+        --tag-bg: #1f3731; /* Dark olive */
+        --tag-text: #c4d4bc; /* Light sage */
+        --quote-bg: #2a303c; /* Cathedral shadow */
+        --date-color: #a59c8b; /* Weathered stone */
+        --highlight-color: #64562a; /* Aged amber */
+        --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2);
+
+        /* Title gradient colors - Italian flag for dark mode */
+        --title-gradient-start: #009246; /* Italian green */
+        --title-gradient-middle: #f3e9d9; /* Light parchment (instead of white) */
+        --title-gradient-end: #ce2b37; /* Italian red */
+
+        /* Dark mode Italian colors */
+        --chianti-red: #af453b;
+        --tuscany-gold: #c49c51;
+        --amalfi-blue: #5298b5;
+        --venice-gold: #c9a458;
+        --verona-pink: #c98d7f;
+    }
+}
+
+/* REMOVED: External font loading for better performance and text browser compatibility */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 18px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+}
+
+/* Add subtle Italian-inspired background texture */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d8a165' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.4;
+    z-index: -1;
+}
+
+@media (prefers-color-scheme: dark) {
+    body::before {
+        opacity: 0.1;
+    }
+}
+
+::selection {
+    background-color: var(--accent-secondary);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    position: relative;
+}
+
+/* Enhanced header styling */
+header {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-xxl);
+    padding-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+/* Italian flag-inspired decoration */
+header::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #009246 33.3%, #ffffff 33.3%, #ffffff 66.6%, #ce2b37 66.6%); /* Italian flag colors */
+    border-radius: 0;
+}
+
+/* Site title with Italian flag gradient */
+.site-title {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    margin: 0;
+    font-size: 2.75rem;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    position: relative;
+    display: inline-block;
+}
+
+.site-title a {
+    text-decoration: none;
+    background: linear-gradient(90deg, 
+        var(--title-gradient-start) 0%, 
+        var(--title-gradient-middle) 50%, 
+        var(--title-gradient-end) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    transition: all var(--transition);
+    position: relative;
+}
+
+.site-title a:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Italian decorative element for site title */
+.site-title a::after {
+    content: "";
+    position: absolute;
+    right: -1.2rem;
+    bottom: 0.25rem;
+    font-size: 1.2rem;
+    color: var(--tuscany-gold);
+    opacity: 0.8;
+    transform: rotate(10deg);
+    transition: all var(--transition);
+}
+
+.site-title a:hover::after {
+    transform: rotate(0deg) scale(1.1);
+    color: var(--chianti-red);
+    opacity: 1;
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (background-clip: text) {
+    .site-title a {
+        color: var(--header-color);
+    }
+    
+    .site-title a:hover {
+        color: var(--link-hover-color);
+    }
+}
+
+header h1 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    color: var(--header-color);
+    margin: 0;
+    font-size: 2.75rem;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    position: relative;
+    display: inline-block;
+}
+
+header p {
+    font-style: italic;
+    color: var(--date-color);
+    margin-top: var(--spacing-sm);
+    font-size: 1.15rem;
+    font-family: var(--font-decorative);
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--header-color);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition);
+}
+
+.menu-toggle:hover {
+    color: var(--link-hover-color);
+}
+
+/* Refined Navigation */
+nav {
+    margin: var(--spacing-lg) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-family: var(--font-headings);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+    transition: all var(--transition);
+}
+
+/* Navigation link hover effect - inspired by Renaissance fresco underpainting */
+nav a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        var(--title-gradient-start) 0%, 
+        var(--title-gradient-middle) 50%, 
+        var(--title-gradient-end) 100%);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition);
+}
+
+nav a:hover {
+    color: var(--link-hover-color);
+}
+
+/* ACCESSIBILITY: Enhanced focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+}
+
+nav a:hover::after, nav a.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+nav a.active {
+    color: var(--link-hover-color);
+    font-weight: 600;
+}
+
+/* Typography with Renaissance influence */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.25rem;
+    margin-top: 0;
+    position: relative;
+}
+
+/* Decorative Renaissance-style drop cap */
+article p:first-of-type::first-letter {
+    font-family: var(--font-decorative);
+    float: left;
+    font-size: 3.5em;
+    line-height: 0.8;
+    margin-right: 0.2em;
+    color: var(--chianti-red);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-size: 1.85rem;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+p {
+    margin: var(--spacing-md) 0;
+    line-height: 1.8;
+}
+
+/* Refined Links with Renaissance flair */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-color: rgba(34, 87, 122, 0.3);
+    text-underline-offset: 2px;
+    transition: all var(--transition);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
+}
+
+/* Article styling inspired by Renaissance art */
+article {
+    margin-bottom: var(--spacing-xxl);
+    position: relative;
+}
+
+article h1 {
+    margin-bottom: var(--spacing-sm);
+}
+
+article h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        var(--title-gradient-start) 0%, 
+        var(--title-gradient-middle) 50%, 
+        var(--title-gradient-end) 100%);
+    margin-top: var(--spacing-xs);
+}
+
+article .meta {
+    font-family: var(--font-decorative);
+    color: var(--date-color);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* Page meta styling for post pages */
+.page-meta {
+    font-family: var(--font-decorative);
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-meta .meta {
+    color: var(--date-color);
+    font-style: italic;
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 0.9rem;
+}
+
+.page-meta .meta:first-child {
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.page-meta .meta time {
+    font-weight: 500;
+}
+
+.page-meta .meta strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.page-meta .reading-time {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.reading-time {
+    font-style: normal;
+    color: var(--date-color);
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+    margin-right: var(--spacing-xs);
+    font-style: normal;
+}
+
+/* Use Italian-style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+/* Tags with Italian color influence */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) 0;
+}
+
+.tags a {
+    display: inline-block;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.85rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all var(--transition);
+    border: 1px solid rgba(47, 93, 65, 0.1);
+}
+
+.tags a:hover {
+    background-color: var(--tag-text);
+    color: var(--tag-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--tag-text);
+    color: var(--tag-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Featured image with Renaissance framing */
+.featured-image {
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+    background-color: var(--accent-color);
+    box-shadow: var(--card-shadow);
+    position: relative;
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: all var(--transition);
+}
+
+.featured-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(101, 67, 33, 0.1);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.featured-image .image-caption {
+    text-align: center;
+    font-family: var(--font-decorative);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--date-color);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Refined blockquotes inspired by Renaissance manuscripts */
+blockquote {
+    border-left: 3px solid var(--accent-secondary);
+    background-color: var(--quote-bg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    font-family: var(--font-decorative);
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    position: relative;
+}
+
+blockquote::before {
+    content: "\201C";
+    font-family: serif;
+    font-size: 3rem;
+    position: absolute;
+    left: 10px;
+    top: -10px;
+    color: var(--accent-secondary);
+    opacity: 0.5;
+}
+
+blockquote p:first-child {
+    margin-top: 0;
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote cite {
+    display: block;
+    font-style: normal;
+    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+    color: var(--date-color);
+}
+
+/* Code styling */
+code {
+    font-family: var(--font-mono);
+    background-color: var(--accent-color);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+pre {
+    background-color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    font-size: 0.9rem;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Tables with Renaissance styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+}
+
+th, td {
+    padding: var(--spacing-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    font-family: var(--font-headings);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: rgba(216, 161, 101, 0.2);
+}
+
+tr:nth-child(even) {
+    background-color: rgba(242, 232, 220, 0.5);
+}
+
+/* Footer with Italian styling */
+footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-lg);
+    margin-top: var(--spacing-xxl);
+    font-size: 0.9rem;
+    color: var(--date-color);
+    position: relative;
+    text-align: center;
+}
+
+/* Italian flag-inspired footer decoration */
+footer::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #009246 33.3%, #ffffff 33.3%, #ffffff 66.6%, #ce2b37 66.6%);
+    border-radius: 0;
+}
+
+footer p {
+    margin: var(--spacing-sm) 0;
+}
+
+/* Pagination with Italian styling */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.pagination a {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    transition: all var(--transition);
+}
+
+.pagination a:hover {
+    background-color: var(--accent-secondary);
+    color: var(--bg-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--accent-secondary);
+    color: var(--bg-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.pagination .page-info {
+    color: var(--date-color);
+    font-style: italic;
+    font-family: var(--font-decorative);
+}
+
+/* Post list with Italian styling */
+.posts-list article {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.posts-list article:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.posts-list h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+}
+
+.posts-list h2 a {
+    color: var(--header-color);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.posts-list h2 a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Article summary */
+.summary {
+    margin-top: var(--spacing-sm);
+    line-height: 1.7;
+}
+
+/* Date header styling */
+.date-header {
+    font-family: var(--font-decorative);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--date-color);
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-xs);
+    position: relative;
+}
+
+/* Responsive design with Italian sensibility */
+@media (max-width: 992px) {
+    :root {
+        --content-width: 92%;
+    }
+    
+    html {
+        font-size: 17px;
+    }
+    
+    .site-title {
+        font-size: 2.4rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.7rem;
+    }
+    
+    nav {
+        gap: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+    
+    .container {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .site-title {
+        font-size: 2.2rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
+    
+    h3 {
+        font-size: 1.4rem;
+    }
+    
+    article p:first-of-type::first-letter {
+        font-size: 3.2em;
+    }
+    
+    /* Mobile navigation */
+    header {
+        position: relative;
+    }
+    
+    /* Remove the menu toggle button */
+    .menu-toggle {
+        display: none;
+    }
+    
+    nav {
+        display: flex;
+        flex-direction: column;
+        margin-top: var(--spacing-md);
+        max-height: unset;
+        overflow: visible;
+        transition: none;
+    }
+    
+    nav a {
+        padding: var(--spacing-sm);
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        text-align: center;
+    }
+    
+    nav a:last-child {
+        border-bottom: none;
+    }
+    
+    nav a::after {
+        display: none;
+    }
+    
+    /* Better content display on mobile */
+    blockquote {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .featured-image {
+        margin: var(--spacing-md) 0;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+    
+    .pagination .page-info {
+        width: 100%;
+        text-align: center;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .pagination a {
+        flex: 1;
+        text-align: center;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 15px;
+    }
+    
+    .container {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
+    .site-title {
+        font-size: 1.8rem;
+    }
+    
+    .site-title a::after {
+        font-size: 1rem;
+        right: -1rem;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    article p:first-of-type::first-letter {
+        font-size: 2.8em;
+    }
+    
+    pre, table {
+        font-size: 0.85rem;
+    }
+    
+    blockquote {
+        font-size: 1rem;
+        padding: var(--spacing-sm);
+    }
+    
+    blockquote::before {
+        font-size: 2.5rem;
+    }
+    
+    .tags {
+        flex-wrap: wrap;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .pagination a {
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* 
+ * Note: Mobile menu toggle functionality would require JavaScript
+ * This theme uses CSS-only responsive navigation for better compatibility
+ */

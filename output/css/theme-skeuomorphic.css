@@ -1,0 +1,1071 @@
+/* 
+ * Skeuomorphic Theme for BSSG
+ * Featuring realistic textures, 3D effects, and shadows
+ * Inspired by early iOS (pre-iOS 7) and realistic UI elements
+ * IMPROVED: Better accessibility, performance, and text browser support
+ */
+
+/* Reduced motion support - CRITICAL for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable performance-heavy effects */
+    .container, .inner-container, header, nav a, .skeu-button, .pagination a {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Simplify backgrounds for reduced motion */
+    body, .inner-container, header {
+        background-image: none !important;
+    }
+    
+    /* Simplify hover effects */
+    nav a:hover, .skeu-button:hover, .pagination a:hover {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Skeuomorphic color scheme */
+    --leather-dark: #8B2E00;
+    --leather-medium: #A34600;
+    --leather-light: #BF6A30;
+    --stitching: #E6C49A;
+    --text-color: #333333;
+    --text-light: #777777;
+    --link-color: #0066cc;
+    --link-visited: #004499;
+    --paper-bg: #f4f1e9;
+    --paper-dark: #e6e2da;
+    --button-top: #f8f8f8;
+    --button-bottom: #d9d9d9;
+    --button-border: #a9a9a9;
+    --metal-light: #eeeeee;
+    --metal-medium: #cccccc;
+    --metal-dark: #a0a0a0;
+    --glass-blue: rgba(72, 157, 224, 0.3);
+    --glass-border: #83b8de;
+    --glass-highlight: rgba(255, 255, 255, 0.5);
+    --wood-dark: #855E42;
+    --wood-medium: #A67B5B;
+    --wood-light: #CDAA7D;
+    
+    /* Title gradient colors for the embossed effect */
+    --title-gradient-start: #dfd3c3;
+    --title-gradient-middle: #f8f3e9;
+    --title-gradient-end: #c8b8a5;
+    
+    /* Typography - IMPROVED fallbacks for text browsers */
+    --font-main: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    --font-headings: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    --font-mono: 'Menlo', 'SF Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 820px;
+    --border-radius: 8px;
+    --small-radius: 4px;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-xxl: 40px;
+    
+    /* Transition speeds - OPTIMIZED for performance */
+    --transition-fast: 0.15s; /* Reduced for better performance */
+    --transition-medium: 0.2s; /* Reduced for better performance */
+    --transition-slow: 0.3s; /* Reduced for better performance */
+}
+
+/* Base elements - OPTIMIZED background */
+body {
+    font-family: var(--font-main);
+    background-color: var(--leather-medium);
+    /* OPTIMIZED: Simplified pattern for better performance */
+    background-image: linear-gradient(45deg, 
+        var(--leather-medium) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        var(--leather-medium) 75%),
+        linear-gradient(45deg, 
+        var(--leather-medium) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        var(--leather-medium) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+/* Container styled as a leather-bound book - OPTIMIZED */
+.container {
+    max-width: var(--content-width);
+    margin: var(--spacing-lg) auto;
+    background-color: var(--leather-dark);
+    border-radius: var(--border-radius);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--leather-dark);
+    padding: var(--spacing-lg);
+}
+
+/* OPTIMIZED: Simplified leather binding effect */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    width: 2px;
+    background-color: var(--stitching);
+    z-index: 2;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    width: 20px;
+    /* SIMPLIFIED: Basic pattern instead of complex repeating gradient */
+    background: linear-gradient(to bottom, 
+        var(--stitching) 0%, 
+        transparent 20%, 
+        transparent 80%, 
+        var(--stitching) 100%);
+    z-index: 1;
+    opacity: 0.3; /* Reduced opacity for performance */
+}
+
+/* Inner container for content with paper texture - OPTIMIZED */
+.inner-container {
+    background-color: var(--paper-bg);
+    border-radius: var(--small-radius);
+    padding: 1px;
+    position: relative;
+    margin-left: var(--spacing-lg);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    /* SIMPLIFIED: Basic texture pattern */
+    background-image: radial-gradient(circle at 20% 50%, rgba(209, 206, 199, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(209, 206, 199, 0.1) 0%, transparent 50%);
+}
+
+/* Polished wood header - OPTIMIZED */
+header {
+    background: linear-gradient(to bottom, var(--wood-light) 0%, var(--wood-medium) 50%, var(--wood-dark) 100%);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: 0;
+    position: relative;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); /* Reduced shadow */
+    border-bottom: 1px solid var(--wood-dark);
+    border-radius: var(--small-radius) var(--small-radius) 0 0;
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* OPTIMIZED: Simplified wood grain texture */
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* SIMPLIFIED: Basic wood grain pattern */
+    background-image: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(130, 83, 51, 0.1) 50%, 
+        transparent 100%);
+    border-radius: var(--small-radius) var(--small-radius) 0 0;
+    opacity: 0.3; /* Reduced opacity */
+}
+
+/* Site title with improved accessibility - IMPROVED */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.8rem;
+    font-weight: normal;
+    position: relative;
+    z-index: 1;
+}
+
+.site-title a {
+    color: var(--text-color); /* Fallback for text browsers */
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 -1px 1px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.03em;
+    transition: all var(--transition-medium);
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a {
+        background: linear-gradient(to bottom, 
+            var(--title-gradient-start),
+            var(--title-gradient-middle) 50%,
+            var(--title-gradient-end));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a:hover {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px); /* Reduced transform for better performance */
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+/* OPTIMIZED: Simplified beveled edge effect */
+.site-title a::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 4px;
+    background: var(--wood-medium);
+    /* SIMPLIFIED: Basic bevel effect */
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.site-title a:hover::before {
+    opacity: 0.5; /* Reduced opacity for better performance */
+}
+
+/* FALLBACK: For browsers that don't support background-clip */
+@supports not (background-clip: text) {
+    .site-title a {
+        color: var(--text-color) !important;
+        background: none !important;
+    }
+}
+
+/* Navigation with iOS-style tabs - IMPROVED accessibility */
+nav {
+    background: linear-gradient(to bottom, var(--paper-bg) 0%, var(--paper-dark) 100%);
+    padding: var(--spacing-sm) var(--spacing-sm) 5px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--wood-dark);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+nav a {
+    text-decoration: none;
+    padding: 8px 16px;
+    margin: 0 var(--spacing-xs);
+    color: #444;
+    font-weight: bold;
+    font-size: 0.9rem;
+    position: relative;
+    display: inline-block;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, var(--button-top) 0%, var(--button-bottom) 100%);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--button-border);
+    text-shadow: 0 1px 0 white;
+    white-space: nowrap;
+    transition: all var(--transition-fast) ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* OPTIMIZED: Simplified shine effect */
+nav a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 5px 5px 0 0;
+    pointer-events: none;
+}
+
+nav a:hover, nav a:focus {
+    background: linear-gradient(to bottom, #f9f9f9 0%, #e8e8e8 100%);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* Pressed button effect - OPTIMIZED */
+nav a.active, nav a:active {
+    background: linear-gradient(to bottom, #d9d9d9 0%, #e9e9e9 100%);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    padding-top: 9px;
+    padding-bottom: 7px;
+}
+
+/* Make RSS button special - IMPROVED accessibility */
+nav a:last-child {
+    background: linear-gradient(to bottom, #7eb6e2 0%, #5a9bd1 100%);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid #4a8bc1;
+}
+
+nav a:last-child:hover {
+    background: linear-gradient(to bottom, #90c1e8 0%, #6ba6d9 100%);
+}
+
+nav a:last-child:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+nav a:last-child:active {
+    background: linear-gradient(to bottom, #5a9bd1 0%, #7eb6e2 100%);
+}
+
+/* Main content area with paper texture - OPTIMIZED */
+main {
+    padding: var(--spacing-lg);
+    background-color: var(--paper-bg);
+    min-height: 300px;
+    position: relative;
+}
+
+/* OPTIMIZED: Simplified paper texture */
+main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* SIMPLIFIED: Basic line pattern instead of complex repeating gradient */
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        transparent 95%, 
+        rgba(224, 222, 216, 0.3) 95%, 
+        rgba(224, 222, 216, 0.3) 100%);
+    background-size: 100% 24px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: normal;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.7rem;
+    color: var(--leather-dark);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: var(--leather-medium);
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* Links styled as underlining ink - IMPROVED accessibility */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+    transition: all var(--transition-fast);
+    position: relative;
+    z-index: 1;
+}
+
+a:visited {
+    color: var(--link-visited);
+    border-bottom-color: rgba(0, 68, 153, 0.3);
+}
+
+a:hover {
+    color: #0088ff;
+    border-bottom-color: rgba(0, 136, 255, 0.5);
+}
+
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: #0088ff;
+    border-bottom-color: rgba(0, 136, 255, 0.5);
+}
+
+/* Skeuomorphic button - IMPROVED accessibility */
+.skeu-button {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: bold;
+    text-shadow: 0 1px 0 white;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, var(--button-top) 0%, var(--button-bottom) 100%);
+    border: 1px solid var(--button-border);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    position: relative;
+    cursor: pointer;
+    margin: 5px 0;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+/* OPTIMIZED: Simplified shine effect */
+.skeu-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 5px 5px 0 0;
+    pointer-events: none;
+}
+
+.skeu-button:hover {
+    background: linear-gradient(to bottom, #f9f9f9 0%, #e8e8e8 100%);
+}
+
+.skeu-button:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background: linear-gradient(to bottom, #f9f9f9 0%, #e8e8e8 100%);
+}
+
+.skeu-button:active {
+    background: linear-gradient(to bottom, #d9d9d9 0%, #e9e9e9 100%);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    padding-top: 9px;
+    padding-bottom: 7px;
+}
+
+/* Articles with paper texture and subtle shadow */
+article {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: white;
+    border-radius: var(--small-radius);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    border: 1px solid #d9d9d9;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    color: var(--leather-dark);
+}
+
+article .meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.reading-time {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* Tags styled as iOS style badges */
+.tags a {
+    background: linear-gradient(to bottom, #7eb6e2 0%, #5a9bd1 100%);
+    color: white;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.tags a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.tags a:hover {
+    background: linear-gradient(to bottom, #90c1e8 0%, #6ba6d9 100%);
+}
+
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.tag-count {
+    background: #5190c6;
+    color: white;
+    font-size: 0.75em;
+    margin-left: 5px;
+    padding: 0 5px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Code formatting with inset effect */
+code {
+    font-family: var(--font-mono);
+    background-color: #f1f1f1;
+    padding: 2px 4px;
+    font-size: 0.9em;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+pre {
+    background: #f1f1f1;
+    padding: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+    overflow-x: auto;
+    font-size: 0.9em;
+    border-radius: var(--small-radius);
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+/* Images with polaroid style */
+img {
+    max-width: 100%;
+    height: auto;
+    padding: var(--spacing-xs);
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin: var(--spacing-sm) 0;
+}
+
+/* Footer with leather texture */
+footer {
+    background: linear-gradient(to bottom, var(--leather-light) 0%, var(--leather-medium) 100%);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--leather-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 var(--small-radius) var(--small-radius);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Leather texture for footer */
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H0V0h5z'/%3E%3Cpath d='M6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+    border-radius: 0 0 var(--small-radius) var(--small-radius);
+}
+
+/* High contrast footer links */
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+footer a:hover {
+    color: #f0f0f0;
+    border-bottom-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Pagination with skeuomorphic buttons */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: var(--spacing-lg) 0;
+    gap: var(--spacing-sm);
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    color: #444;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, var(--button-top) 0%, var(--button-bottom) 100%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--button-border);
+    text-shadow: 0 1px 0 white;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.pagination a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 5px 5px 0 0;
+    pointer-events: none;
+}
+
+.pagination a:hover {
+    background: linear-gradient(to bottom, #f9f9f9 0%, #e8e8e8 100%);
+}
+
+.pagination a:active {
+    background: linear-gradient(to bottom, #d9d9d9 0%, #e9e9e9 100%);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    padding-top: 9px;
+    padding-bottom: 7px;
+}
+
+.pagination .page-info {
+    margin: 0 var(--spacing-sm);
+    font-size: 0.9rem;
+    background: #f5f5f5;
+    padding: 3px 10px;
+    border-radius: var(--small-radius);
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* IMPROVED: Better responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: none;
+        background-color: var(--leather-medium);
+    }
+    
+    .container {
+        margin: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        /* OPTIMIZED: Simplified shadows on mobile */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .inner-container {
+        margin-left: var(--spacing-sm);
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: none;
+    }
+    
+    header {
+        padding: var(--spacing-md);
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: none;
+    }
+    
+    main::before {
+        /* OPTIMIZED: Remove paper lines on mobile */
+        display: none;
+    }
+    
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: var(--spacing-md);
+    }
+    
+    nav a {
+        margin: var(--spacing-xs);
+        flex-grow: 1;
+        text-align: center;
+        /* OPTIMIZED: Simplified effects on mobile */
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    
+    nav a::after {
+        /* OPTIMIZED: Remove shine effect on mobile */
+        display: none;
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: none;
+    }
+    
+    article {
+        padding: var(--spacing-md);
+        /* OPTIMIZED: Simplified shadows on mobile */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .skeu-button::after {
+        /* OPTIMIZED: Remove shine effect on mobile */
+        display: none;
+    }
+    
+    .tags a::after {
+        /* OPTIMIZED: Remove shine effect on mobile */
+        display: none;
+    }
+    
+    .featured-image, .index-image, .tag-image, .archive-image {
+        /* OPTIMIZED: Simplified shadows on mobile */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transform: none; /* Remove rotation on mobile */
+    }
+    
+    .featured-image:hover, .index-image:hover, .tag-image:hover, .archive-image:hover {
+        /* OPTIMIZED: Simplified hover effects on mobile */
+        transform: none;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* Featured image with polaroid-style frame */
+.featured-image {
+    margin: var(--spacing-xl) auto;
+    background-color: white;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xl);
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transform: rotate(-1deg);
+    position: relative;
+    max-width: 90%;
+    transition: all var(--transition-medium) ease;
+    z-index: 1;
+}
+
+.featured-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    z-index: 0;
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e9e9e9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.featured-image:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 
+        0 10px 15px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.featured-image .image-caption {
+    position: absolute;
+    bottom: var(--spacing-md);
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 0.95rem;
+    color: #555;
+    text-shadow: 0 1px 0 white;
+    z-index: 2;
+}
+
+/* Tape effect on the top of the polaroid */
+.featured-image::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.index-image {
+    margin: var(--spacing-xl) auto;
+    background-color: white;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xl);
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transform: rotate(1deg);
+    position: relative;
+    max-width: 90%;
+    transition: all var(--transition-medium) ease;
+    z-index: 1;
+}
+
+.index-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    z-index: 0;
+}
+
+.index-image img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e9e9e9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.index-image:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 
+        0 10px 15px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.index-image::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: -5px;
+    right: 20px;
+    transform: rotate(-5deg);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.tag-image {
+    margin: var(--spacing-xl) auto;
+    background-color: white;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xl);
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transform: rotate(-1.5deg);
+    position: relative;
+    max-width: 90%;
+    transition: all var(--transition-medium) ease;
+    z-index: 1;
+}
+
+.tag-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    z-index: 0;
+}
+
+.tag-image img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e9e9e9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.tag-image:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 
+        0 10px 15px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.tag-image::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: -5px;
+    left: 20px;
+    transform: rotate(5deg);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.archive-image {
+    margin: var(--spacing-xl) auto;
+    background-color: white;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xl);
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transform: rotate(2deg);
+    position: relative;
+    max-width: 90%;
+    transition: all var(--transition-medium) ease;
+    z-index: 1;
+}
+
+.archive-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    z-index: 0;
+}
+
+.archive-image img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e9e9e9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.archive-image:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 
+        0 10px 15px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.archive-image::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: -5px;
+    right: 30px;
+    left: 30px;
+    transform: rotate(-2deg);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+} 

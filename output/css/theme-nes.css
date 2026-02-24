@@ -1,0 +1,844 @@
+/* 
+ * NES Theme for BSSG
+ * Retro theme inspired by Nintendo Entertainment System,
+ * using the NES color palette and pixel art aesthetics
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic NES aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable NES-specific animations */
+    .site-title a:hover,
+    .site-title a:focus {
+        animation: none !important;
+    }
+}
+
+:root {
+    /* Original NES color palette */
+    --nes-black: #000000;
+    --nes-dark-gray: #545454;
+    --nes-medium-gray: #767676;
+    --nes-light-gray: #a9a9a9;
+    --nes-white: #ffffff;
+    --nes-dark-blue: #001e3c;
+    --nes-blue: #0073ef;
+    --nes-light-blue: #00b7ef;
+    --nes-dark-red: #6e0019;
+    --nes-red: #e60012;
+    --nes-light-red: #ff3c5a;
+    --nes-dark-green: #005100;
+    --nes-green: #00a800;
+    --nes-light-green: #44ff44;
+    --nes-dark-purple: #440051;
+    --nes-purple: #8800a8;
+    --nes-light-purple: #cc44ff;
+    --nes-dark-yellow: #513d00;
+    --nes-yellow: #a85400;
+    --nes-light-yellow: #ffd044;
+    
+    /* Theme color assignments */
+    --bg-color: var(--nes-dark-blue);
+    --text-color: var(--nes-light-gray);
+    --heading-color: var(--nes-white);
+    --link-color: var(--nes-light-blue);
+    --link-hover: var(--nes-light-yellow);
+    --border-color: var(--nes-blue);
+    --container-bg: var(--nes-black);
+    --accent-color: var(--nes-red);
+    --header-bg: var(--nes-blue);
+    --footer-bg: var(--nes-dark-gray);
+    --footer-text: var(--nes-light-gray);
+    --code-bg: var(--nes-dark-gray);
+    
+    /* Typography - Enhanced font fallbacks for NES pixelated look */
+    --font-main: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    --font-headings: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    --font-mono: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    
+    /* Sizing */
+    --content-width: 88%;
+    --max-content-width: 850px;
+    --content-padding: 1.5rem;
+    --pixel-size: 4px;
+    --border-width: var(--pixel-size);
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 2.5rem;
+}
+
+/* Base elements */
+html {
+    font-size: 15px;
+    image-rendering: pixelated;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    background-image: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.1) 1px, 
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg, 
+            rgba(0, 0, 0, 0.1) 1px, 
+            transparent 1px
+        );
+    background-size: calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 2);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-lg);
+    line-height: 1.7;
+    letter-spacing: -0.03em;
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0;
+    background-color: var(--container-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: 
+        var(--pixel-size) var(--pixel-size) 0 var(--nes-blue),
+        calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 2) 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* NES-style pixelated border */
+.container::before, 
+.container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: var(--pixel-size);
+    background: repeating-linear-gradient(
+        to right,
+        var(--nes-blue) 0,
+        var(--nes-blue) calc(var(--pixel-size) * 2),
+        var(--nes-dark-blue) calc(var(--pixel-size) * 2),
+        var(--nes-dark-blue) calc(var(--pixel-size) * 4)
+    );
+    z-index: 1;
+}
+
+.container::before {
+    top: 0;
+}
+
+.container::after {
+    bottom: 0;
+}
+
+/* Header with NES aesthetic */
+header {
+    background-color: var(--header-bg);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+    text-align: center;
+    border-bottom: var(--border-width) solid var(--nes-light-blue);
+    position: relative;
+}
+
+/* Create 8-bit title "block" effect */
+.site-title {
+    margin: 0;
+    padding: var(--spacing-md);
+    font-size: 1.5rem;
+    display: inline-block;
+    position: relative;
+    background-color: var(--nes-black);
+    border: var(--pixel-size) solid var(--nes-light-blue);
+    box-shadow: var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5);
+}
+
+.site-title a {
+    color: var(--nes-white);
+    text-decoration: none;
+    text-shadow: 
+        var(--pixel-size) 0 0 var(--nes-blue),
+        0 var(--pixel-size) 0 var(--nes-blue),
+        calc(var(--pixel-size) * -1) 0 0 var(--nes-blue),
+        0 calc(var(--pixel-size) * -1) 0 var(--nes-blue);
+}
+
+.site-title a:hover {
+    color: var(--nes-light-yellow);
+    animation: blink 0.5s step-end infinite alternate;
+}
+
+.site-title a:focus {
+    outline: 3px solid var(--nes-light-yellow);
+    outline-offset: 3px;
+    color: var(--nes-light-yellow);
+    animation: blink 0.5s step-end infinite alternate;
+}
+
+/* Site description */
+header p {
+    margin: var(--spacing-sm) auto 0;
+    color: var(--nes-black);
+    font-size: 0.85rem;
+    max-width: 550px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    line-height: 1.7;
+}
+
+/* 8-bit Navigation */
+nav {
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+nav a {
+    color: var(--nes-white);
+    text-decoration: none;
+    background-color: var(--nes-dark-blue);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: var(--pixel-size) solid var(--nes-light-blue);
+    position: relative;
+    display: inline-block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    box-shadow: 
+        var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+nav a:hover, 
+nav a.active {
+    color: var(--nes-light-yellow);
+    background-color: var(--nes-blue);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+nav a:focus {
+    outline: 3px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    color: var(--nes-light-yellow);
+    background-color: var(--nes-blue);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+nav a.active::before {
+    content: "►";
+    position: absolute;
+    left: calc(var(--pixel-size) * -3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--nes-light-yellow);
+    font-size: 0.8em;
+    animation: blink 1s step-end infinite;
+}
+
+/* 8-bit content area */
+main {
+    padding: var(--content-padding) var(--content-padding) var(--spacing-xl);
+    background-color: var(--container-bg);
+    min-height: 65vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--heading-color);
+    line-height: 1.4;
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--nes-light-yellow);
+    text-transform: uppercase;
+    text-shadow: 
+        var(--pixel-size) 0 0 var(--nes-dark-gray),
+        0 var(--pixel-size) 0 var(--nes-dark-gray),
+        calc(var(--pixel-size) * -1) 0 0 var(--nes-dark-gray),
+        0 calc(var(--pixel-size) * -1) 0 var(--nes-dark-gray);
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.25rem;
+    color: var(--nes-light-blue);
+    border-bottom: var(--pixel-size) solid var(--nes-blue);
+    padding-bottom: var(--spacing-xs);
+    margin-top: var(--spacing-xl);
+}
+
+h3 {
+    font-size: 1rem;
+    color: var(--nes-light-red);
+    margin-top: var(--spacing-lg);
+}
+
+p {
+    margin: var(--spacing-md) 0;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    position: relative;
+}
+
+a:hover {
+    color: var(--link-hover);
+    animation: blink 0.5s step-end infinite alternate;
+}
+
+a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    animation: blink 0.5s step-end infinite alternate;
+}
+
+a::before {
+    content: "";
+    position: absolute;
+    left: -1em;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(var(--pixel-size) * 2);
+    height: calc(var(--pixel-size) * 2);
+    background-color: transparent;
+}
+
+a:hover::before {
+    content: "►";
+    position: absolute;
+    left: -1em;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    color: var(--nes-light-yellow);
+    font-size: 0.7em;
+    animation: slide 0.5s steps(2) infinite;
+}
+
+/* Article styling */
+article {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--nes-black);
+    border: var(--border-width) solid var(--nes-dark-gray);
+    position: relative;
+}
+
+article::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--pixel-size) * -1);
+    right: calc(var(--pixel-size) * -1);
+    width: calc(var(--pixel-size) * 8);
+    height: calc(var(--pixel-size) * 8);
+    background: 
+        linear-gradient(
+            135deg, 
+            transparent 0%, 
+            transparent 50%, 
+            var(--nes-dark-gray) 50%, 
+            var(--nes-dark-gray) 100%
+        );
+}
+
+article h1 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+article .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+    font-size: 0.8rem;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--nes-dark-blue);
+    border: var(--pixel-size) solid var(--nes-blue);
+}
+
+/* Reading time */
+.reading-time {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Use NES-style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱";
+        font-size: 1.2em;
+    }
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+}
+
+.tags a {
+    background-color: var(--nes-dark-green);
+    color: var(--nes-light-green);
+    padding: 0.3em 0.7em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    border: calc(var(--pixel-size) / 2) solid var(--nes-green);
+    text-decoration: none;
+}
+
+.tags a:hover {
+    background-color: var(--nes-green);
+    color: var(--nes-black);
+    animation: none;
+    transform: translateY(2px);
+}
+
+.tags a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    background-color: var(--nes-green);
+    color: var(--nes-black);
+    animation: none;
+    transform: translateY(2px);
+}
+
+.tags a:hover::before {
+    content: "";
+    display: none;
+}
+
+/* Tags list page */
+.tags-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+}
+
+.tags-list li {
+    margin: 0;
+}
+
+.tags-list a {
+    display: inline-block;
+    padding: 0.6em 1.1em;
+    background-color: var(--nes-dark-green);
+    color: var(--nes-light-green);
+    text-decoration: none;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    border: var(--pixel-size) solid var(--nes-green);
+    box-shadow: var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease;
+}
+
+.tags-list a:hover {
+    background-color: var(--nes-green);
+    color: var(--nes-black);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+.tags-list a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    background-color: var(--nes-green);
+    color: var(--nes-black);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 
+        0 0 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Featured images */
+.featured-image, 
+.index-image, 
+.tag-image, 
+.archive-image {
+    margin: var(--spacing-lg) auto;
+    text-align: center;
+    position: relative;
+    border: var(--border-width) solid var(--nes-light-gray);
+    padding: var(--pixel-size);
+    background-color: var(--nes-dark-gray);
+    box-shadow: 
+        var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5),
+        inset var(--pixel-size) var(--pixel-size) 0 rgba(255, 255, 255, 0.1);
+    max-width: 92%;
+}
+
+.featured-image img, 
+.index-image img, 
+.tag-image img, 
+.archive-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    image-rendering: pixelated;
+    filter: contrast(1.1) brightness(1.1);
+    border: var(--pixel-size) solid var(--nes-black);
+}
+
+/* Image caption */
+figcaption,
+.image-caption {
+    font-size: 0.85rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--nes-black);
+    color: var(--nes-light-gray);
+    margin-top: var(--pixel-size);
+    border: calc(var(--pixel-size) / 2) solid var(--nes-dark-gray);
+    line-height: 1.5;
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+    background-color: var(--code-bg);
+    font-size: 0.85rem;
+}
+
+code {
+    padding: 0.2em 0.4em;
+    color: var(--nes-light-green);
+}
+
+pre {
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    border: var(--pixel-size) solid var(--nes-dark-blue);
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+/* Blockquote */
+blockquote {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    background-color: var(--nes-dark-blue);
+    border-left: var(--border-width) solid var(--nes-blue);
+    font-style: italic;
+    position: relative;
+}
+
+blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: 0.1em;
+    left: var(--spacing-sm);
+    font-size: 3rem;
+    color: var(--nes-light-blue);
+    line-height: 1;
+    opacity: 0.3;
+}
+
+blockquote p:first-child {
+    margin-top: 0;
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Post list */
+.posts-list article {
+    margin-bottom: var(--spacing-lg);
+    transition: all 0.2s;
+}
+
+.posts-list article:hover {
+    transform: scale(1.01);
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.posts-list h3 a {
+    color: var(--nes-light-blue);
+    text-decoration: none;
+}
+
+.posts-list h3 a:hover {
+    color: var(--nes-light-yellow);
+}
+
+/* ACCESSIBILITY: Focus states for post list links */
+.posts-list h3 a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    color: var(--nes-light-yellow);
+}
+
+/* Summary in post lists */
+.summary {
+    background-color: rgba(0, 30, 60, 0.3);
+    padding: var(--spacing-sm);
+    border-left: var(--pixel-size) solid var(--nes-light-blue);
+    margin-top: var(--spacing-sm);
+    font-size: 0.9rem;
+}
+
+/* Footer with NES design */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+    text-align: center;
+    border-top: var(--border-width) solid var(--nes-blue);
+    font-size: 0.85rem;
+    position: relative;
+}
+
+footer::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--border-width) * -1);
+    left: 0;
+    right: 0;
+    height: calc(var(--pixel-size) * 2);
+    background: repeating-linear-gradient(
+        to right,
+        var(--nes-blue) 0,
+        var(--nes-blue) calc(var(--pixel-size) * 2),
+        var(--nes-dark-blue) calc(var(--pixel-size) * 2),
+        var(--nes-dark-blue) calc(var(--pixel-size) * 4)
+    );
+}
+
+footer p {
+    margin: 0.7rem 0;
+    line-height: 1.6;
+}
+
+footer a {
+    color: var(--nes-light-blue);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--nes-light-yellow);
+}
+
+footer a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    color: var(--nes-light-yellow);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-xl);
+    align-items: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--nes-dark-blue);
+    color: var(--nes-light-blue);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border: var(--pixel-size) solid var(--nes-blue);
+    box-shadow: var(--pixel-size) var(--pixel-size) 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.pagination a:hover {
+    background-color: var(--nes-blue);
+    color: var(--nes-light-yellow);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    animation: none;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--nes-light-yellow);
+    outline-offset: 2px;
+    background-color: var(--nes-blue);
+    color: var(--nes-light-yellow);
+    transform: translateY(var(--pixel-size));
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    animation: none;
+}
+
+.pagination a:hover::before {
+    content: "";
+    display: none;
+}
+
+.pagination .page-info {
+    font-size: 0.9rem;
+    background-color: var(--nes-black);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: var(--pixel-size) solid var(--nes-dark-gray);
+}
+
+/* 8-bit animations */
+@keyframes blink {
+    0%, 100% { 
+        opacity: 1; 
+    }
+    50% { 
+        opacity: 0.5; 
+    }
+}
+
+@keyframes slide {
+    0% { 
+        transform: translateY(-50%) translateX(0); 
+    }
+    100% { 
+        transform: translateY(-50%) translateX(var(--pixel-size)); 
+    }
+}
+
+/* Lists */
+ul, ol {
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+    
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    .container {
+        width: 95%;
+        margin: var(--spacing-sm) auto;
+    }
+    
+    main {
+        padding: var(--spacing-sm);
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+    
+    nav a {
+        width: 85%;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+    
+    .site-title {
+        font-size: 1.2rem;
+        padding: var(--spacing-sm);
+    }
+    
+    article {
+        padding: var(--spacing-sm);
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+    
+    h3 {
+        font-size: 0.9rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: center;
+    }
+    
+    .pagination a {
+        width: 90%;
+        text-align: center;
+    }
+    
+    .pagination .page-info {
+        order: -1;
+        margin-bottom: var(--spacing-xs);
+        width: 90%;
+        box-sizing: border-box;
+    }
+} 

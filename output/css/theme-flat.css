@@ -1,0 +1,981 @@
+/* 
+ * Flat Design Theme for BSSG
+ * Inspired by Microsoft Metro/Modern UI design language
+ * Features typography-focused design, solid colors, and minimal decoration
+ * Enhanced with accessibility, performance, and compatibility improvements
+ */
+
+:root {
+    /* Flat color palette */
+    --bg-color: #f2f2f2;
+    --accent-color: #0078d7;
+    --accent-hover: #106ebe;
+    --accent-dark: #005a9e;
+    --text-color: #333333;
+    --text-light: #767676;
+    --text-on-accent: #ffffff;
+    --tile-color-1: #00b7c3;
+    --tile-color-2: #e81123;
+    --tile-color-3: #52b043;
+    --tile-color-4: #b35497;
+    --tile-color-5: #00bcf2;
+    --divider-color: #e6e6e6;
+    --title-gradient-start: #0078d7;
+    --title-gradient-end: #00bcf2;
+    
+    /* Typography */
+    --font-main: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-headings: 'Segoe UI Light', 'Open Sans Light', sans-serif;
+    --font-mono: 'Consolas', 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 1100px;
+    --tile-size: 150px;
+    --gap-size: 10px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable all transforms and animations */
+    .site-title a:hover,
+    .metro-tile:hover,
+    .metro-button:hover,
+    .tags a:hover,
+    .pagination a:hover,
+    footer a:hover::after,
+    .featured-image:hover img,
+    .index-image:hover img,
+    .tag-image:hover img,
+    .archive-image:hover img {
+        transform: none !important;
+    }
+    
+    .progress-indicator {
+        transition: none !important;
+    }
+}
+
+/* Base elements */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* Clean, minimal container */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Flat header with accent color */
+header {
+    background-color: var(--accent-color);
+    color: var(--text-on-accent);
+    padding: 24px 40px;
+    position: relative;
+}
+
+/* Site title with Metro UI style gradient */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    font-family: var(--font-headings);
+    font-weight: 300;
+}
+
+.site-title a {
+    color: var(--text-on-accent);
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.site-title a:hover {
+    transform: translateY(-1px);
+}
+
+.site-title a:focus {
+    outline-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a {
+        background: linear-gradient(90deg, var(--title-gradient-start), var(--title-gradient-end));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .site-title a:hover {
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    }
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    font-family: var(--font-headings);
+    font-weight: 300;
+}
+
+/* Navigation with Metro style */
+nav {
+    background-color: var(--accent-color);
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 25px;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+}
+
+nav a::after {
+    content: none; /* Remove the underline animation */
+}
+
+nav a:hover, nav a:focus {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+nav a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+/* Active navigation item */
+nav a.active {
+    color: white;
+    border-bottom: 3px solid white;
+    font-weight: 600;
+}
+
+/* Last nav item (RSS) gets special styling */
+nav a:last-child {
+    margin-left: auto; /* Push to right */
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 14px 25px;
+}
+
+nav a:last-child:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Content area with clean white space */
+main {
+    padding: 40px;
+    background-color: white;
+    min-height: 400px;
+}
+
+/* Typography - light and clean */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--text-color);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 26px;
+    margin-top: 40px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Links with minimal styling */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:visited {
+    color: var(--accent-dark);
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--accent-hover);
+}
+
+/* Metro style button */
+.metro-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.metro-button:hover {
+    background-color: var(--accent-hover);
+}
+
+.metro-button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-hover);
+}
+
+/* Articles as flat tiles */
+article {
+    margin-bottom: 30px;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+/* Article header as an accent color tile */
+article .article-header {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 30px;
+    position: relative;
+}
+
+/* Rotating colors for article headers */
+article:nth-child(5n+1) .article-header {
+    background-color: var(--tile-color-1);
+}
+
+article:nth-child(5n+2) .article-header {
+    background-color: var(--tile-color-2);
+}
+
+article:nth-child(5n+3) .article-header {
+    background-color: var(--tile-color-3);
+}
+
+article:nth-child(5n+4) .article-header {
+    background-color: var(--tile-color-4);
+}
+
+article:nth-child(5n+5) .article-header {
+    background-color: var(--tile-color-5);
+}
+
+article .article-header h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+/* Fix for article content h1 - should use normal text color */
+article .article-content h1 {
+    color: var(--text-color);
+    font-size: 24px;
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+/* Article content with clean padding */
+article .article-content {
+    padding: 30px;
+    background-color: white;
+    border: 1px solid var(--divider-color);
+    border-top: none;
+}
+
+article .meta {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.reading-time {
+    color: var(--text-light);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Metro style tag chips */
+.tags a {
+    background-color: var(--divider-color);
+    color: var(--text-color);
+    padding: 5px 15px;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tags a:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-count {
+    display: inline-block;
+    background-color: var(--text-light);
+    color: white;
+    font-size: 12px;
+    padding: 0 8px;
+    margin-left: 8px;
+}
+
+/* Code formatting */
+code {
+    font-family: var(--font-mono);
+    background-color: #f7f7f7;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+
+pre {
+    background-color: #f7f7f7;
+    padding: 20px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 20px 0;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px 0;
+}
+
+/* Footer in accent color */
+footer {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 30px 40px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* High contrast footer links */
+footer a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+footer a:hover::after {
+    transform: scaleX(1);
+}
+
+footer a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+footer a:focus::after {
+    transform: scaleX(1);
+}
+
+/* Metro-style grid layout */
+.metro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--tile-size), 1fr));
+    gap: var(--gap-size);
+    margin: 20px 0;
+}
+
+.metro-tile {
+    background-color: var(--accent-color);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+}
+
+.metro-tile:hover {
+    background-color: var(--accent-hover);
+}
+
+.metro-tile:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-hover);
+}
+
+/* Rotating colors for metro tiles */
+.metro-tile:nth-child(5n+1) {
+    background-color: var(--tile-color-1);
+}
+
+.metro-tile:nth-child(5n+2) {
+    background-color: var(--tile-color-2);
+}
+
+.metro-tile:nth-child(5n+3) {
+    background-color: var(--tile-color-3);
+}
+
+.metro-tile:nth-child(5n+4) {
+    background-color: var(--tile-color-4);
+}
+
+.metro-tile:nth-child(5n+5) {
+    background-color: var(--tile-color-5);
+}
+
+/* Double-width and double-height tiles */
+.metro-tile.double-width {
+    grid-column: span 2;
+}
+
+.metro-tile.double-height {
+    grid-row: span 2;
+}
+
+/* Pagination with Metro style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 20px;
+    gap: 10px;
+}
+
+.pagination a {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--accent-hover);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background-color: var(--accent-hover);
+}
+
+.pagination .page-info {
+    margin: 0 15px;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/* Progress indicator */
+.progress-indicator {
+    height: 3px;
+    background-color: var(--accent-color);
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+/* Media query for responsive design */
+@media (max-width: 992px) {
+    .container {
+        max-width: 95%;
+    }
+    
+    main {
+        padding: 30px;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+    
+    h3 {
+        font-size: 18px;
+    }
+    
+    article .article-header,
+    article .article-content {
+        padding: 25px;
+    }
+    
+    .metro-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    header, nav, main, footer {
+        padding: 20px;
+    }
+    
+    nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 0 20px;
+    }
+    
+    nav a {
+        padding: 15px 10px;
+    }
+    
+    article .article-header,
+    article .article-content {
+        padding: 20px;
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .metro-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .site-title, header h1 {
+        font-size: 28px;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    article {
+        margin-bottom: 20px;
+    }
+    
+    .featured-image, 
+    .index-image, 
+    .tag-image, 
+    .archive-image {
+        margin: 20px 0;
+    }
+    
+    .tags {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+    
+    header, main, footer {
+        padding: 15px;
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0;
+        justify-content: center;
+        overflow-x: visible;
+    }
+    
+    nav a {
+        padding: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        width: auto;
+        text-align: center;
+        font-size: 13px;
+        flex: 1 0 auto;
+        min-width: 90px;
+        max-width: 50%;
+    }
+    
+    nav a:last-child {
+        margin-left: 0;
+        width: auto;
+    }
+    
+    .site-title, header h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    h2 {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+    
+    h3 {
+        font-size: 17px;
+        margin-top: 20px;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pagination a, 
+    .pagination .page-info {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .tags {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tags a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .featured-image::before, 
+    .index-image::before, 
+    .tag-image::before, 
+    .archive-image::before {
+        font-size: 10px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .container {
+        box-shadow: none;
+    }
+    
+    header, main, footer {
+        padding: 12px;
+    }
+    
+    .site-title, header h1 {
+        font-size: 22px;
+    }
+    
+    h1 {
+        font-size: 22px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    h3 {
+        font-size: 16px;
+    }
+    
+    article .article-header,
+    article .article-content {
+        padding: 15px;
+    }
+    
+    pre {
+        padding: 10px;
+        margin: 15px 0;
+        font-size: 13px;
+    }
+    
+    code {
+        font-size: 13px;
+    }
+    
+    .featured-image .image-caption,
+    .index-image .image-caption,
+    .tag-image .image-caption,
+    .archive-image .image-caption {
+        padding: 10px;
+        font-size: 12px;
+    }
+    
+    .metro-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+}
+
+/* Featured images in Metro/Modern UI style */
+.featured-image {
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    background-color: white;
+}
+
+.featured-image::before {
+    content: "Featured Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    margin: 0;
+    transition: filter 0.3s ease;
+}
+
+.featured-image:hover img {
+    filter: brightness(1.05);
+}
+
+.featured-image .image-caption {
+    padding: 15px;
+    background-color: white;
+    color: var(--text-light);
+    font-size: 14px;
+    border-top: 1px solid var(--divider-color);
+}
+
+.index-image {
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    background-color: white;
+}
+
+.index-image::before {
+    content: "Index Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background-color: var(--tile-color-1);
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.index-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    margin: 0;
+    transition: filter 0.3s ease;
+}
+
+.index-image:hover img {
+    filter: brightness(1.05);
+}
+
+.tag-image {
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    background-color: white;
+}
+
+.tag-image::before {
+    content: "Tag Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background-color: var(--tile-color-3);
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.tag-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    margin: 0;
+    transition: filter 0.3s ease;
+}
+
+.tag-image:hover img {
+    filter: brightness(1.05);
+}
+
+.archive-image {
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    background-color: white;
+}
+
+.archive-image::before {
+    content: "Archive Image";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background-color: var(--tile-color-4);
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.archive-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    margin: 0;
+    transition: filter 0.3s ease;
+}
+
+.archive-image:hover img {
+    filter: brightness(1.05);
+} 
