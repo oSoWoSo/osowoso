@@ -1,12 +1,12 @@
 ---
 title: oSoWoSo
-date: 2026-02-24 00:16:19 +0100
-lastmod: 2026-02-24 00:16:19 +0100
+date: 2026-02-24 01:29:14 +0100
+lastmod: 2026-02-24 01:29:14 +0100
 tags: osowoso
 slug: index
 secondary: false
 ---
-![oSoWoSo.org Banner](osowoso.png)
+![oSoWoSo.org Banner](/osowoso.png)
 ---
 Our world is in our hands...
 ---
@@ -80,38 +80,3 @@ Share links with anyone interested!
 
 Link to join the oSoWoSo group on SimpleX chat:
 [SimpleX chat](https://simplex.chat/contact#/?v=2-5&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FzlrmKvCD4YaM6TBs5WPEUFov1sn5vljm%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAEH9aGr1yWEk8yVMwnNV1S5fWH6WEwrQroQ122baoXUQ%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22dC-zufvOGLs-i3cbV5F93A%3D%3D%22%7D)
-
-# Open Source Ecology
-[OSE](https://www.opensourceecology.org/)
-
----
-open Source World Society
-
-[oSoWoSo](https://osowoso.org)
-
-Repository
-----------
-
-- [code/](code/) - code referenced in various YouTube (non-YSAP series) videos. *
-- [episodes/](episodes/) - scripts and notes used during YSAP videos. *
-- [patreon/](patreon/) - scripts and programs used for patreon shoutouts.  *
-- [tools/](tools/) - helper tools used for content creation. *
-- [website/](website/) - scripts used for creating the [ysap.sh](https://ysap.sh) site. * Reused for [osowoso](https://osowoso.org)
-
-
-You can also access it on your terminal with:
-
-    curl osowoso.org/index.txt
-
-
-License
--------
-
-All code licensed under the MIT License
-
-* by [Dave Eddy](https://github.com/bahamas10)
-[ysap.sh](https://ysap.sh)  
-  Thanks Dave
-
-remade by [zenobit](https://codeberg.org/zenobit)
-

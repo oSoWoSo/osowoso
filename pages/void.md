@@ -6,6 +6,6 @@ slug: void
 ---
 
 # Collection of repos and tools for Void Linux
-That I created that you all may find useful.
+That you all may find useful.
 
-- xut - xtra user templates - Build and install packages for Void Linux, using templates from the abyss-packages unofficial repo
+- [xut](https://codeberg.org/mobinmob/xut) - Build and install packages for Void Linux, using templates from the abyss-packages unofficial repo
