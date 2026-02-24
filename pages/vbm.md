@@ -1,7 +1,7 @@
 ---
 title: vbm
 date: 2026-02-23 12:05:18 +0100
-lastmod: 2026-02-24 00:16:19 +0100
+lastmod: 2026-02-24 13:16:57 +0100
 tags: vbm, xbps, package, void
 slug: vbm
 secondary: true
@@ -105,7 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - https://github.com/netzverweigerer/vpm - vpm was written by Armin Jenewein <vpm@m2m.pm>
 - https://github.com/bahamas10/vpm - forked by Dave Eddy <dave@daveeddy.com>
-- https://codeberg.org/oSoWoSo/vbm - and this fork by zenobit <zen@osowoso.xyz>
+- https://codeberg.org/oSoWoSo/vbm - and this fork by zenobit <zen@duck.com>
 
 # Mirrors
 

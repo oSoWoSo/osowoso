@@ -13,7 +13,7 @@ slug: projects
 - [DistroHopper](https://dh.osowoso.org) - Quickly download, create and run VM of any#TODO operating system
 - [Distro SVG](https://distro.osowoso.org) - Collection of distro icons in svg format
 - [dobot xi](https://dotbot.osowoso.org) - Dotbot xi plugin (Use xi from xtools)
-- [Gumák](https://gumak.osowoso.org) - Gumák and other usefull TUIs
+- [Gumák](https://gum.osowoso.org) - Gumák and other usefull TUIs
 - [Passthrough helper Void](https://pass.osowoso.org) - GPU passthrough helper
 - [piu](https://piu.osowoso.org) - Cross platform package manager wrapper
 - [Quickemu font and logos](https://font.osowoso.org) - Icon font containing logos of popular Operating Systems
