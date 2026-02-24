@@ -1,5 +1,5 @@
-output/*
-static/*
+#output/*
+#static/*
 drafts/*
 backup/*
 Markdown.pl

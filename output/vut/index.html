@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vut | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="vut">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:8000//vut/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="vut">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://localhost:8000/rss.xml">
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-theme');</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "vut",
+  "url": "http://localhost:8000/vut/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "http://localhost:8000"
+  }
+}
+</script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="http://localhost:8000/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <nav>
+                <div class="nav-left">
+                    <a href="http://localhost:8000/">Home</a> <a href="http://localhost:8000/contributing/">Contributing</a> <a href="http://localhost:8000/projects/">Projects</a> <a href="http://localhost:8000/resources/">Resources</a> <a href="http://localhost:8000/void/">Void</a> <a href="http://localhost:8000/pages.html">Pages</a> <a href="http://localhost:8000/archives/">Archives</a> <a href="http://localhost:8000/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://feedback.osowoso.org/">feedback</a>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <span class="icon light-icon active">☀️</span>
+                        <span class="icon dark-icon">🌙</span>
+                    </button>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="/toggle.js"></script>
+        </header>
+        <main><article class="page">
+  <h1>vut</h1>
+  <div class="page-content">
+<h1 id="void-ultimate-tool-vut">Void Ultimate Tool (VUT)</h1>
+<p>A simple shell script that provides a menu of useful tools for
+working with <a href="https://wiki.voidlinux.org/XBPS">XBPS</a> and <a
+href="https://wiki.voidlinux.org/Xbps-src">xbps-src</a> on Void
+Linux.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li><a href="https://wiki.voidlinux.org/Xbps-src">xbps-src</a></li>
+<li><a href="https://github.com/junegunn/fzf">fzf</a></li>
+<li><a href="https://github.com/natemaia/vpsm">vpsm</a></li>
+<li><a href="https://github.com/leahneukirchen/xxtools">xxtools</a></li>
+<li><a href="https://git-scm.com/">git</a></li>
+<li><a href="https://github.com/r-darwish/topgrade">topgrade</a>
+(optional)</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Clone this repository and run the <code>vut</code> script:</p>
+<p>git clone https://github.com/osowoso/vut.git cd vut ./vut.sh</p>
+<h2 id="features">Features</h2>
+<p>The tool provides a menu with the following options:</p>
+<ol type="1">
+<li><strong>XBPS-SRC menu</strong>: Provides a menu of tools for working
+with <a href="https://wiki.voidlinux.org/Xbps-src">xbps-src</a>. These
+include options for creating, editing, and building templates, as well
+as options for updating, cleaning, and linting templates. There are also
+options for installing and removing packages.</li>
+<li><strong>PACKAGES menu</strong>: Provides options for installing and
+removing packages using <code>xbps-install</code>.</li>
+<li><strong>Update xbps</strong>: Updates <code>xbps</code> and the XBPS
+package index using <code>xbps-install -Suv</code>.</li>
+<li><strong>Update all</strong>: Updates all packages on the system
+using <a href="https://github.com/r-darwish/topgrade">topgrade</a> (if
+installed).</li>
+<li><strong>List possible arguments</strong>: Lists the available
+arguments for the <code>vut</code> script.</li>
+<li><strong>Edit config file</strong>: Opens the configuration file
+(<code>~/.config/vut/vut.conf</code>) in the default editor.</li>
+<li><strong>Install essential programs</strong>: Installs essential
+programs for development (git, fzf, vpsm, xxtools).</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<p>The tool is configured using the <code>~/.config/vut/vut.conf</code>
+file. This file contains a number of variables that control the behavior
+of the tool. The default configuration file is created when you run the
+<code>vut</code> script for the first time, and you can edit it manually
+if necessary.</p>
+<h2 id="license">License</h2>
+<p>This tool is released under the <a
+href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="http://localhost:8000/">Home</a> &middot; <a href="http://localhost:8000/contributing/">Contributing</a> &middot; <a href="http://localhost:8000/projects/">Projects</a> &middot; <a href="http://localhost:8000/resources/">Resources</a> &middot; <a href="http://localhost:8000/void/">Void</a> &middot; <a href="http://localhost:8000/pages.html">Pages</a> &middot; <a href="http://localhost:8000/archives/">Archives</a> &middot; <a href="http://localhost:8000/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 

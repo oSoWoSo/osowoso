@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xut | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="xut">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:8000//xut/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="xut">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://localhost:8000/rss.xml">
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-theme');</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "xut",
+  "url": "http://localhost:8000/xut/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "http://localhost:8000"
+  }
+}
+</script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="http://localhost:8000/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <nav>
+                <div class="nav-left">
+                    <a href="http://localhost:8000/">Home</a> <a href="http://localhost:8000/contributing/">Contributing</a> <a href="http://localhost:8000/projects/">Projects</a> <a href="http://localhost:8000/resources/">Resources</a> <a href="http://localhost:8000/void/">Void</a> <a href="http://localhost:8000/pages.html">Pages</a> <a href="http://localhost:8000/archives/">Archives</a> <a href="http://localhost:8000/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://feedback.osowoso.org/">feedback</a>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <span class="icon light-icon active">☀️</span>
+                        <span class="icon dark-icon">🌙</span>
+                    </button>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="/toggle.js"></script>
+        </header>
+        <main><article class="page">
+  <h1>xut</h1>
+  <div class="page-content">
+<h2 id="xut-xtra-user-templates">xut : xtra user templates</h2>
+<p>Installs and updates unofficial packages for Void Linux.</p>
+<p><em>Created and tested for/with the <a
+href="https://codeberg.org/mobinmob/abyss-packages">abyss-packages
+repo</a>.</em> <em>Working with other unofficial repos is supported
+partially. Code contributions, testing and general coordination is
+highly appreciated!</em></p>
+<p><strong>This script is in the alpha stage.</strong></p>
+<h3 id="why-and-how">Why and how</h3>
+<p>The <code>xbps-src</code> package builder for voidlinux is a really
+powerful tool, but it only works with a single repository, the
+void-packages repo. The only straightforward way to add software to repo
+provide it in an accessible way to the users is to send PRs and be
+accepted. That created a well-maintained and curated repository by the
+distribution developers but impedes the inclusion of software that the
+same maintainers decide - for entirely valid reasons - to not
+accept.</p>
+<p><code>xut</code> tries to provide a solution for users that need more
+packages that cannot be provided in the official repos. It clones the
+void-packages, the <a
+href="https://codeberg.org/mobinmob/abyss-packages">abyss-packages
+repository</a> and possibly other third party repos, merges the
+templates from unofficial repos to the clone of void-packages and
+installs or updates sw <strong>with a single command.</strong></p>
+<h3 id="install-and-setup">Install and setup</h3>
+<ol type="1">
+<li>Clone this repo, run the <code>xut</code> command directly from the
+clone or install using the Makefile.</li>
+<li>Use the xutconf.sample if you want to modify configuration.</li>
+<li>The script depends on:
+<ul>
+<li><code>sh</code> and the posix userland **(*)**,</li>
+<li><code>xbps &gt;= 0.60</code>,</li>
+<li><code>git</code>,</li>
+<li><code>mktemp</code>,</li>
+<li>the <code>xi</code> tool from the <em>xtools</em> package which
+requires a working <code>sudo</code> configuration, (for
+installation/update).</li>
+<li>the <code>tput</code> tool from <em>ncurses</em> (optional).</li>
+</ul></li>
+</ol>
+<blockquote>
+<p>Note that <code>xut</code> <em>will run in other distributions</em>
+that have the above tools available, but installing (-i) and upgrading
+(-u) packages is disabled. In this case, <code>xi</code> is not
+needed.</p>
+</blockquote>
+<blockquote>
+<p>**(*)** <code>xut</code> uses posix sh and tries to use only the
+posix userland utilities. The <code>local</code> keyword may be used in
+the future, but effort is being made to use only the extensions that are
+supported in gnu coreutils, busybox and the bsd userland (additional
+arguments).</p>
+</blockquote>
+<h3 id="todo">Todo</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Deal with shlibs in order to package
+more complex sw or modified packages from the upstream
+repos.</label></li>
+<li><label><input type="checkbox" checked="" />Implement a way to handle
+package updates gracefully. [<strong>-u argument</strong>]</label></li>
+<li><label><input type="checkbox" checked="" />Search for a practical
+way to enable more than one unofficial repos (Inteligent merging by
+<span class="citation" data-cites="zenobit">@zenobit</span> available
+from 0.4.1).</label></li>
+<li><label><input type="checkbox" />… (suggestions are welcome, working
+code even more welcome)</label></li>
+</ul>
+<h3 id="usage">Usage</h3>
+<pre class="shell"><code>xut [options]</code></pre>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr>
+<th>OPTIONS</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-s</td>
+<td>Sync the repos</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>Keep a log file (5 most recent log files remain)</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>Display this usage information.</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>Enable debugging and logging output.</td>
+</tr>
+<tr>
+<td>-b &lt;package1,package2&gt;</td>
+<td>Build a (comma-separated) list of packages.</td>
+</tr>
+<tr>
+<td>-i &lt;package1,package2&gt;</td>
+<td>Build and install a (comma-separated) list of packages.</td>
+</tr>
+<tr>
+<td>-x <command></td>
+<td>Give xbps-src commands.</td>
+</tr>
+<tr>
+<td>-q <query></td>
+<td>Search for <query> in available templates.</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>Update packages.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Build packages (without installing them):</li>
+</ul>
+<pre class="shell"><code>xut -b package1,package2</code></pre>
+<ul>
+<li>Sync repos and install packages:</li>
+</ul>
+<pre class="shell"><code>xut -si package1,package2</code></pre>
+<ul>
+<li>Use the above command with logging enabled:</li>
+</ul>
+<pre class="shell"><code>xut -sli package1,package2</code></pre>
+<ul>
+<li>Execute an xbps-command in the merged repo:</li>
+</ul>
+<pre class="shell"><code>xut -x &lt;command&gt;</code></pre>
+<ul>
+<li>Update packages after syncing repos:</li>
+</ul>
+<pre class="shell"><code>xut -su</code></pre>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="http://localhost:8000/">Home</a> &middot; <a href="http://localhost:8000/contributing/">Contributing</a> &middot; <a href="http://localhost:8000/projects/">Projects</a> &middot; <a href="http://localhost:8000/resources/">Resources</a> &middot; <a href="http://localhost:8000/void/">Void</a> &middot; <a href="http://localhost:8000/pages.html">Pages</a> &middot; <a href="http://localhost:8000/archives/">Archives</a> &middot; <a href="http://localhost:8000/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 

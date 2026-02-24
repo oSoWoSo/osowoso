@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bssg | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="bssg">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:8000//bssg/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="bssg">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://localhost:8000/rss.xml">
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-theme');</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "bssg",
+  "url": "http://localhost:8000/bssg/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "http://localhost:8000"
+  }
+}
+</script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="http://localhost:8000/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <nav>
+                <div class="nav-left">
+                    <a href="http://localhost:8000/">Home</a> <a href="http://localhost:8000/contributing/">Contributing</a> <a href="http://localhost:8000/projects/">Projects</a> <a href="http://localhost:8000/resources/">Resources</a> <a href="http://localhost:8000/void/">Void</a> <a href="http://localhost:8000/pages.html">Pages</a> <a href="http://localhost:8000/archives/">Archives</a> <a href="http://localhost:8000/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://feedback.osowoso.org/">feedback</a>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <span class="icon light-icon active">☀️</span>
+                        <span class="icon dark-icon">🌙</span>
+                    </button>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="/toggle.js"></script>
+        </header>
+        <main><article class="page">
+  <h1>bssg</h1>
+  <div class="page-content">
+<h1 id="bssg---bash-static-site-generator">BSSG - Bash Static Site
+Generator</h1>
+<p><a href="https://bssg.dragas.net">BSSG</a> is a simple static site
+generator written in Bash. It processes Markdown files and builds a
+minimal, accessible website suitable for personal journals, daily
+writing, or introspective personal newspapers.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a
+href="#recommended-setup-separating-content-from-core">Recommended
+Setup: Separating Content from Core</a></li>
+<li><a href="#directory-structure">Directory Structure</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#markdown-post-format">Markdown Post Format</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#themes">Themes</a></li>
+<li><a href="#theme-previews">Theme Previews</a></li>
+<li><a href="#admin-interface">Admin Interface</a></li>
+<li><a href="#bssg-post-editor">BSSG Post Editor</a></li>
+<li><a href="#performance-features">Performance Features</a></li>
+<li><a href="#site-configuration">Site Configuration</a></li>
+<li><a href="#future-plans">Future Plans</a></li>
+<li><a href="#local-development-server">Local Development
+Server</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#author-and-license">Author and License</a></li>
+<li><a href="#documentation">Documentation</a></li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>Generates HTML from Markdown using pandoc, commonmark, or
+markdown.pl (configurable)</li>
+<li>Supports post metadata (title, date, tags)</li>
+<li>Supports <code>lastmod</code> timestamp in frontmatter for tracking
+content updates (used in sitemap, RSS feed, and optionally displayed on
+posts)</li>
+<li>Full date and time support with timezone awareness</li>
+<li>Post descriptions/summaries for previews, OpenGraph, and RSS</li>
+<li>Admin interface for managing posts and scheduling publications
+(planned for future release)</li>
+<li>Standalone post editor with modern Ghost-like interface for visual
+content creation</li>
+<li>Creates tag index pages with optional tag RSS feeds</li>
+<li>Related Posts: automatically suggests related posts based on shared
+tags at the end of each post</li>
+<li>Author index pages with conditional navigation menu and optional
+author RSS feeds</li>
+<li>Archives by year and month for chronological browsing</li>
+<li>Dynamic menu generation based on available pages</li>
+<li>Support for primary and secondary pages with automatic menu
+organization</li>
+<li>Generates <code>sitemap.xml</code> and RSS feeds with timezone
+support</li>
+<li>Two build modes: <code>normal</code> (incremental, cache-backed) and
+<code>ram</code> (memory-first)</li>
+<li>RAM mode stage timing summary printed at the end of each RAM
+build</li>
+<li>Asset pre-compression with incremental and parallel gzip processing
+(<code>.html</code>, <code>.css</code>, <code>.xml</code>,
+<code>.js</code>)</li>
+<li>Clean design</li>
+<li>No JavaScript required (except for admin interface)</li>
+<li>Works well without images</li>
+<li>Cross-platform (Linux, macOS, BSDs)</li>
+<li>Reading time calculation for posts</li>
+<li>Pagination for blog posts with configurable posts per page</li>
+<li>Multiple themes available (see <a href="#themes">Themes
+section</a>)</li>
+<li>Theme preview generator to see all available themes in action</li>
+<li>Supports static files (images, CSS, JS, etc.)</li>
+<li>Configurable clean output directory option</li>
+<li>Draft posts support</li>
+<li>Backup and restore functionality</li>
+<li>Incremental builds with file and metadata caching for improved
+performance</li>
+<li>Parallel processing with GNU parallel (if available) plus
+shell-worker fallbacks</li>
+<li>File locking for safe concurrent operations</li>
+<li>Automatic handling of different operating systems
+(Linux/macOS/BSDs)</li>
+<li>Custom URL slugs with SEO-friendly permalinks</li>
+<li>Featured images in posts are displayed in index, tag, and archive
+pages</li>
+<li>Support for static pages with custom URLs</li>
+<li>Support for custom homepage - useful if you want to build a website,
+not a blog</li>
+<li>Built-in local development server for easy previewing</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<ol type="1">
+<li><p>Clone the repository:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://brew.bsd.cafe/stefano/BSSG.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> BSSG</span></code></pre></div></li>
+<li><p>Create your first post:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post</span></code></pre></div></li>
+<li><p>Build the site:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> build</span></code></pre></div>
+<p><em>(This command now invokes the modular build process located in
+<code>scripts/build/</code>)</em></p></li>
+<li><p>View your site in the <code>output</code> directory or serve it
+locally:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> server</span></code></pre></div>
+<p>This will build your site and start a local web server. By default,
+you can access your site at <code>http://localhost:8000</code>.
+Alternatively, to manually serve the <code>output</code> directory
+(e.g., if you want to use a different server):</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> output</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server 8000 <span class="co"># Or any other simple HTTP server</span></span></code></pre></div></li>
+<li><p>Open your browser and navigate to the URL provided by the server
+(e.g., http://localhost:8000).</p></li>
+</ol>
+<h2 id="recommended-setup-separating-content-from-core">Recommended
+Setup: Separating Content from Core</h2>
+<p><strong>Why separate?</strong> This setup keeps your website’s
+content (posts, pages, static files, configuration) in a dedicated
+directory, separate from the BSSG core scripts. This makes it much
+easier to update BSSG itself (using <code>git pull</code> in the core
+directory) without affecting or risking conflicts with your site
+content. This is the <strong>recommended approach for most
+users</strong>.</p>
+<ol type="1">
+<li><p><strong>Clone BSSG Core (if you haven’t already):</strong>
+<code>bash     git clone https://brew.bsd.cafe/stefano/BSSG.git     cd BSSG # Navigate into the BSSG core directory</code></p></li>
+<li><p><strong>Initialize Your Site Directory:</strong> From within the
+BSSG core directory, run the <code>init</code> command, specifying the
+path where you want your new site’s content to live:
+<code>bash     ./bssg.sh init /path/to/your/new/website</code>
+<em>Replace <code>/path/to/your/new/website</code> with the actual path
+(e.g., <code>~/my-blog</code>, <code>./my-website</code>).</em></p></li>
+<li><p><strong>Directory Structure Creation:</strong> BSSG will create
+the necessary content directories (<code>src</code>, <code>pages</code>,
+<code>drafts</code>, <code>static</code>) inside
+<code>/path/to/your/new/website</code>. The build output
+(<code>output/</code>) will also be placed within this new site
+directory by default.</p></li>
+<li><p><strong>Site Configuration File:</strong> A specific
+<code>config.sh.local</code> file will be automatically created
+<em>inside your new site directory</em>
+(<code>/path/to/your/new/website/config.sh.local</code>). This file
+tells BSSG where to find your content (<code>SRC_DIR</code>,
+<code>PAGES_DIR</code>, etc.) and where to build the output
+(<code>OUTPUT_DIR</code>).</p></li>
+<li><p><strong>Automatic Configuration Loading (Optional but
+Recommended):</strong> The <code>init</code> script will ask if you want
+to modify the <code>config.sh.local</code> file located <em>within the
+BSSG core directory</em> to automatically point to your new site’s
+configuration.</p>
+<ul>
+<li><p><strong>Choose <code>yes</code> (y):</strong> This is the
+<strong>recommended</strong> option. It adds a line to the <em>core</em>
+<code>config.sh.local</code> that sources your <em>site’s</em>
+configuration file. This means you can run <code>./bssg.sh</code>
+commands (like <code>build</code>, <code>post</code>, <code>page</code>)
+directly from the BSSG core directory, and it will automatically use the
+correct settings for your separated site. (Note: For reliability, the
+<code>source</code> command added to the core config will use the
+resolved absolute path to your site’s configuration file, even if you
+provided a relative or tilde-prefixed path during
+<code>init</code>.)</p></li>
+<li><p><strong>Choose <code>no</code> (N):</strong> If you choose no,
+you will need to manually specify your site’s configuration file using
+the <code>--config</code> flag every time you run a BSSG command from
+the core directory that needs to know about your site:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Running build from the BSSG core directory</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> build <span class="at">--config</span> /path/to/your/new/website/config.sh.local</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Creating a post from the BSSG core directory</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post <span class="at">--config</span> /path/to/your/new/website/config.sh.local</span></code></pre></div></li>
+</ul></li>
+</ol>
+<p><strong>Benefit:</strong> With your content separated, you can safely
+update the BSSG core scripts in their own directory using
+<code>git pull</code> without worrying about overwriting your posts,
+pages, or custom configurations.</p>
+<h2 id="requirements">Requirements</h2>
+<p>BSSG requires the following tools:</p>
+<ul>
+<li>Bash (Note: On macOS, the default bash is too old and not
+compatible. You need to install a newer version using Homebrew:
+<code>brew install bash</code>)</li>
+<li>pandoc, commonmark, or markdown.pl (configurable in
+config.sh.local)</li>
+<li>Standard Unix utilities (awk, sed, grep, find, date)</li>
+</ul>
+<h3 id="installation-of-dependencies">Installation of Dependencies</h3>
+<h4 id="on-debianubuntu">On Debian/Ubuntu:</h4>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install cmark socat</span></code></pre></div>
+<h4 id="on-macos-using-homebrew">On macOS (using Homebrew):</h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install bash cmark socat</span></code></pre></div>
+<h4 id="on-freebsd">On FreeBSD:</h4>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkg</span> install bash cmark socat</span></code></pre></div>
+<h4 id="on-openbsd">On OpenBSD:</h4>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkg_add</span> bash cmark socat</span></code></pre></div>
+<h4 id="on-netbsd">On NetBSD:</h4>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkgin</span> in bash cmark socat</span></code></pre></div>
+<h3 id="using-markdown.pl-instead-of-commonmark">Using markdown.pl
+instead of commonmark</h3>
+<p>If you prefer using markdown.pl instead of commonmark:</p>
+<ol type="1">
+<li>Set <code>MARKDOWN_PROCESSOR="markdown.pl"</code> in your
+<code>config.sh.local</code> file</li>
+<li>Make sure markdown.pl is installed:
+<ul>
+<li>You can download it from <a
+href="https://daringfireball.net/projects/markdown/">Daring
+Fireball</a></li>
+<li>Place it in your PATH or directly in the BSSG directory</li>
+<li>Make it executable with <code>chmod +x markdown.pl</code></li>
+</ul></li>
+</ol>
+<p>BSSG will search for either <code>markdown.pl</code> or
+<code>Markdown.pl</code> (case-sensitive) in both your system PATH and
+the current BSSG directory.</p>
+<h3 id="using-pandoc-instead-of-commonmark">Using pandoc instead of
+commonmark</h3>
+<p>If you prefer using pandoc instead of commonmark:</p>
+<ol type="1">
+<li>Set <code>MARKDOWN_PROCESSOR="pandoc"</code> in your
+<code>config.sh.local</code> file</li>
+<li>Make sure pandoc is installed:
+<ul>
+<li>On Debian/Ubuntu: <code>apt install pandoc</code></li>
+<li>On Fedora: <code>dnf install pandoc</code></li>
+<li>On macOS: <code>brew install pandoc</code></li>
+<li>On FreeBSD: <code>pkg install hs-pandoc</code></li>
+<li>On OpenBSD: <code>pkg_add pandoc</code></li>
+</ul></li>
+</ol>
+<p>Commonmark provides a stricter and more standardized Markdown
+implementation and is portable across different operating systems.</p>
+<h2 id="directory-structure">Directory Structure</h2>
+<pre><code>BSSG/
+├── bssg.sh                        # Main command interface script
+├── bssg-editor.html               # Standalone post editor (Ghost-like interface)
+├── generate_theme_previews.sh     # Script to generate previews of all themes
+├── scripts/                       # Supporting scripts
+│   ├── build/                     # Modular build scripts
+│   │   ├── main.sh                # Main build orchestrator
+│   │   ├── config_loader.sh       # Loads defaults and local overrides
+│   │   ├── deps.sh                # Dependency checks
+│   │   ├── cache.sh               # Cache/config hash helpers
+│   │   ├── content.sh             # Metadata/excerpt/markdown helpers
+│   │   ├── indexing.sh            # File/tags/authors/archive index builders
+│   │   ├── templates.sh           # Template preload/menu generation
+│   │   ├── generate_posts.sh      # Post rendering
+│   │   ├── generate_pages.sh      # Static page rendering
+│   │   ├── generate_index.sh      # Homepage/pagination generation
+│   │   ├── generate_tags.sh       # Tag pages (+ optional tag RSS)
+│   │   ├── generate_authors.sh    # Author pages (+ optional author RSS)
+│   │   ├── generate_archives.sh   # Archive pages (year/month)
+│   │   ├── generate_feeds.sh      # Main RSS + sitemap
+│   │   ├── generate_secondary_pages.sh # Creates pages.html index
+│   │   ├── related_posts.sh       # Related-post indexing/render helpers
+│   │   ├── post_process.sh        # URL rewrite + permissions fixes
+│   │   ├── assets.sh              # Static copy + CSS/theme handling
+│   │   ├── ram_mode.sh            # RAM-mode preload/in-memory datasets
+│   │   └── utils.sh               # Shared helpers (time, URLs, parallel)
+│   ├── post.sh                    # Handles post creation
+│   ├── page.sh                    # Handles page creation
+│   ├── edit.sh                    # Handles post/page editing (updates lastmod)
+│   ├── delete.sh                  # Handles post/page/draft deletion
+│   ├── list.sh                    # Lists posts, pages, drafts, tags
+│   ├── backup.sh                  # Backup functionality
+│   ├── restore.sh                 # Restore functionality
+│   ├── benchmark.sh               # Build benchmarking helper
+│   ├── server.sh                  # Local development server implementation
+│   ├── theme.sh                   # Theme management and processing (legacy helper)
+│   ├── template.sh                # Template processing utilities (legacy helper)
+│   └── css.sh                     # CSS generation utilities (legacy helper)
+├── src/                           # Source directory for markdown posts (Configurable: $SRC_DIR)
+│   └── *.md                       # Markdown posts
+├── pages/                         # Source directory for static pages (Configurable: $PAGES_DIR)
+│   └── *.md                       # Markdown pages
+├── drafts/                        # Source directory for drafts (Configurable: $DRAFTS_DIR)
+│   ├── *.md/*.html                # Draft posts
+│   └── pages/                     # Optional subdirectory for page drafts
+│       └── *.md/*.html            # Draft pages
+├── templates/                     # HTML templates (used by themes)
+│   ├── header.html                # Header template
+│   └── footer.html                # Footer template
+├── themes/                        # Theme directory for different visual styles
+│   ├── default/                   # Default theme
+│   ├── dark/                      # Dark theme
+│   └── ...                        # Other themes
+├── static/                        # Static files to be copied to output directory
+├── admin/                         # Admin interface files
+├── example/                       # Theme preview directory (generated)
+├── .bssg_cache/                   # Cache directory for improved performance
+├── config.sh                      # Default site configuration
+├── config.sh.local                # Optional user overrides for configuration
+└── output/                        # Generated HTML website (created during build)</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-commands">Basic Commands</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> BSSG</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> [--config <span class="op">&lt;</span>path<span class="op">&gt;</span>] <span class="pp">[</span><span class="ss">command</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span></span></code></pre></div>
+<h3 id="available-commands">Available Commands</h3>
+<pre><code>Usage: ./bssg.sh [--config &lt;path&gt;] command [options]
+
+Commands:
+  post [-html] [draft_file]
+                               Interactive: create/edit post or continue a draft.
+  post -t &lt;title&gt; [-T &lt;tags&gt;] [-s &lt;slug&gt;] [--html] [-d] {-c &lt;content&gt; | -f &lt;file&gt; | --stdin} [--build]
+                               Command-line: create post non-interactively.
+  page [-html] [-s] [draft_file]
+                               Create a page or continue a page draft.
+  edit [-n] &lt;file&gt;             Edit an existing post/page/draft (updates lastmod).
+  delete [-f] &lt;file&gt;           Delete a post/page/draft.
+  list                         List all posts.
+  tags [-n]                    List all tags. Use -n to sort by post count.
+  drafts                       List all draft posts.
+  backup                       Create a backup of posts, pages, drafts, and config.
+  restore [backup_file|ID]     Restore from a backup (options: --no-content, --no-config).
+  backups                      List all available backups.
+  build [options]              Build the site (run &#39;./bssg.sh build --help&#39; for full options).
+  server [options]             Build and run local server (run &#39;./bssg.sh server --help&#39;).
+  init &lt;target_directory&gt;      Initialize a new site in the specified directory.
+  help                         Show help.</code></pre>
+<h3 id="creating-posts-and-pages">Creating Posts and Pages</h3>
+<p>To create a new post interactively:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post</span></code></pre></div>
+<p>To create a new page interactively:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> page</span></code></pre></div>
+<p>You’ll be prompted for a title, and <code>$EDITOR</code> will open
+for you to write your content. By default, the site rebuilds
+automatically after saving an interactive post if
+<code>REBUILD_AFTER_POST</code> is set to <code>true</code> in your
+configuration (<code>config.sh</code> or
+<code>config.sh.local</code>).</p>
+<p>To create a post non-interactively via the command line (see command
+list above for all options):</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Create markdown post from file, force build</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post <span class="at">-t</span> <span class="st">&quot;My CLI Post&quot;</span> <span class="at">-f</span> content.md <span class="at">--build</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Create HTML post from stdin, don&#39;t force build (relies on REBUILD_AFTER_POST)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;&lt;p&gt;Hello&lt;/p&gt;&quot;</span> <span class="kw">|</span> <span class="ex">./bssg.sh</span> post <span class="at">-t</span> <span class="st">&quot;HTML Test&quot;</span> <span class="at">--html</span> <span class="at">--stdin</span></span></code></pre></div>
+<p>To create a secondary page (appears under the “Pages” menu):</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> page <span class="at">-s</span></span></code></pre></div>
+<p>Secondary pages will be listed under a “Pages” menu item in the
+navigation, which appears automatically when secondary pages exist.</p>
+<h4 id="creating-html-content">Creating HTML Content</h4>
+<p>To create content in HTML format instead of Markdown:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post <span class="at">-html</span>  <span class="co"># For posts</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> page <span class="at">-html</span>  <span class="co"># For pages</span></span></code></pre></div>
+<p>Example of HTML content:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>title: HTML Example</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>date: 2023-01-15</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>tags: html, example</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>This is an HTML post<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You can use full HTML markup in this post.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item 1<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item 2<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div>
+<h4 id="working-with-drafts">Working with Drafts</h4>
+<p>To save content as a draft (will not be published):</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post <span class="at">-d</span>  <span class="co"># For posts</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> page <span class="at">-d</span>  <span class="co"># For pages</span></span></code></pre></div>
+<p>To continue editing a draft:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> post drafts/your-draft-file.md  <span class="co"># For posts</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> page drafts/pages/your-draft-file.md  <span class="co"># For pages</span></span></code></pre></div>
+<p>To list all draft posts:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> drafts</span></code></pre></div>
+<h3 id="editing-and-deleting-posts">Editing and Deleting Posts</h3>
+<p>To edit an existing post:</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> edit src/your-post-file.md</span></code></pre></div>
+<p>To rename the file when the title changes:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> edit <span class="at">-n</span> src/your-post-file.md</span></code></pre></div>
+<p>To delete a post:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> delete src/your-post-file.md</span></code></pre></div>
+<h3 id="listing-posts-and-tags">Listing Posts and Tags</h3>
+<p>To list all posts:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> list</span></code></pre></div>
+<p>To list all tags:</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> tags</span></code></pre></div>
+<p>To list tags sorted by number of posts:</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> tags <span class="at">-n</span></span></code></pre></div>
+<h3 id="backup-and-restore">Backup and Restore</h3>
+<p>To create a backup of all posts:</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> backup</span></code></pre></div>
+<p>To list available backups:</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> backups</span></code></pre></div>
+<p>To restore from a backup (will prompt for confirmation):</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> restore [backup_file<span class="kw">|</span><span class="ex">ID]</span></span></code></pre></div>
+<p>You can use these options with restore to selectively restore
+content:</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> restore backup_id <span class="at">--no-content</span>  <span class="co"># Don&#39;t restore content (src, drafts, pages)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> restore backup_id <span class="at">--no-config</span>   <span class="co"># Don&#39;t restore configuration (config.sh, config.sh.local)</span></span></code></pre></div>
+<h3 id="build-options">Build Options</h3>
+<pre><code>Usage: ./bssg.sh build [options]
+
+Options:
+  --src DIR               Override source directory (from config: SRC_DIR)
+  --pages DIR             Override pages directory (from config: PAGES_DIR)
+  --drafts DIR            Override drafts directory (from config: DRAFTS_DIR)
+  --output DIR            Override output directory (from config: OUTPUT_DIR)
+  --templates DIR         Override templates directory (from config: TEMPLATES_DIR)
+  --themes-dir DIR        Override themes directory (from config: THEMES_DIR)
+  --theme NAME            Override theme for this build
+  --static DIR            Override static directory (from config: STATIC_DIR)
+  --clean-output [bool]   Clean output directory before build (default from config)
+  -f, --force-rebuild     Ignore cache and rebuild all files
+  --build-mode MODE       Build mode: normal or ram
+  --site-title TITLE      Override site title
+  --site-url URL          Override site URL
+  --site-description DESC Override site description
+  --author-name NAME      Override author name
+  --author-email EMAIL    Override author email
+  --posts-per-page NUM    Override pagination size
+  --deploy                Force deployment after successful build (overrides config)
+  --no-deploy             Skip deployment after build (overrides config)
+  --help                  Show build help</code></pre>
+<p><code>--config &lt;path&gt;</code> is a global option and can be
+passed with any command (including <code>build</code>) to load a
+specific configuration file.</p>
+<p>Examples:</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> <span class="at">--config</span> /path/to/site/config.sh.local build <span class="at">--build-mode</span> ram</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> build <span class="at">--output</span> ./public <span class="at">--clean-output</span> true</span></code></pre></div>
+<p>The option list above reflects the current <code>build --help</code>
+output.</p>
+<h3 id="internationalization-i18n">Internationalization (i18n)</h3>
+<p>BSSG supports generating the site in different languages.</p>
+<ol type="1">
+<li><strong>Configuration:</strong>
+<ul>
+<li>Set the desired language code in your <code>config.sh.local</code>
+file:
+<code>bash     SITE_LANG="es" # Use 'es' for Spanish, 'fr' for French, etc.</code></li>
+<li>If <code>SITE_LANG</code> is not set or the specified locale file
+doesn’t exist, BSSG will default to English (<code>en</code>).</li>
+</ul></li>
+<li><strong>Locale Files:</strong>
+<ul>
+<li>Translations are stored in the <code>locales/</code> directory.</li>
+<li>Each language has its own file (e.g., <code>locales/en.sh</code>,
+<code>locales/es.sh</code>).</li>
+<li>These files contain exported shell variables for all translatable
+strings used in the templates and the build script (e.g.,
+<code>export MSG_HOME="Home"</code>).</li>
+</ul></li>
+<li><strong>Adding a New Language:</strong>
+<ul>
+<li>Copy <code>locales/en.sh</code> to a new file named after the
+language code (e.g., <code>locales/fr.sh</code> for French).</li>
+<li>Translate the string values within the new file.</li>
+<li>Set <code>SITE_LANG</code> in <code>config.sh.local</code> to the
+new language code (e.g., <code>SITE_LANG="fr"</code>).</li>
+<li>Run <code>./bssg.sh build</code> to generate the site in the new
+language.</li>
+</ul></li>
+</ol>
+<h3 id="post-and-page-management">Post and Page Management</h3>
+<ul>
+<li><strong>Edit Posts:</strong>
+<code>bash     ./bssg.sh edit &lt;post_filename.md&gt;</code></li>
+<li><strong>Delete Posts:</strong>
+<code>bash     ./bssg.sh delete &lt;post_filename.md&gt;</code></li>
+<li><strong>List Posts:</strong>
+<code>bash     ./bssg.sh list</code></li>
+<li><strong>List Tags:</strong>
+<code>bash     ./bssg.sh tags</code></li>
+</ul>
+<h2 id="markdown-post-format">Markdown Post Format</h2>
+<p>Posts should include YAML frontmatter at the beginning:</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Post Title</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> YYYY-MM-DD HH:MM:SS +TIMEZONE</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="an">lastmod:</span><span class="co"> YYYY-MM-DD HH:MM:SS +TIMEZONE # Optional: Last modification date</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="an">tags:</span><span class="co"> tag1, tag2, tag3</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="an">slug:</span><span class="co"> custom-slug</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /path/to/image.jpg</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="an">image_caption:</span><span class="co"> Optional caption for the image</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> A brief summary of your post that will appear in listings, social media shares, and RSS feeds.</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="an">author_name:</span><span class="co"> John Doe # Optional: Override default site author</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="an">author_email:</span><span class="co"> john@example.com # Optional: Override default site author email</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>Content goes here...</span></code></pre></div>
+<ul>
+<li>The <code>date</code> format supports full timestamps with timezone
+information. If you don’t specify a time, the system will use the
+current time. If you don’t specify a timezone, the system will use your
+local timezone.</li>
+<li>The optional <code>lastmod</code> field allows you to specify the
+date and time the content was last modified. It uses the same format as
+<code>date</code>. If omitted, it defaults to the <code>date</code>
+value. This field is used:
+<ul>
+<li>For the <code>&lt;lastmod&gt;</code> tag in
+<code>sitemap.xml</code>.</li>
+<li>For the <code>&lt;atom:updated&gt;</code> tag in
+<code>rss.xml</code>.</li>
+<li>To optionally display an “Updated on” date on the post page if it
+differs from the publish <code>date</code>.</li>
+</ul></li>
+</ul>
+<h3 id="post-description">Post Description</h3>
+<p>The <code>description</code> field in the frontmatter lets you
+provide a brief summary of your post. This description will be used
+in:</p>
+<ul>
+<li>Post previews on the index, tag, and archive pages</li>
+<li>OpenGraph meta tags for better social media sharing</li>
+<li>RSS feed entries</li>
+</ul>
+<p>If you don’t specify a description, the system will automatically
+extract one from the beginning of your post content.</p>
+<h3 id="featured-images">Featured Images</h3>
+<p>The <code>image</code> field in the frontmatter allows you to specify
+an image path that will be displayed with your post. This can be: - A
+relative path (e.g., <code>/images/photo.jpg</code>) that refers to a
+file in your static directory - An absolute URL (e.g.,
+<code>https://example.com/images/photo.jpg</code>)</p>
+<p>The optional <code>image_caption</code> field lets you add a
+descriptive caption to the featured image.</p>
+<p>When you specify an image, it will appear: - At the top of individual
+post pages - As a thumbnail in index pages, tag pages, and archive pages
+- In the RSS feed - In OpenGraph and Twitter metadata for better social
+media sharing</p>
+<h3 id="multi-author-support">Multi-Author Support</h3>
+<p>BSSG supports multiple authors through optional frontmatter fields
+that can override the default site author configuration on a per-post
+basis.</p>
+<h4 id="author-fields">Author Fields</h4>
+<ul>
+<li><code>author_name</code>: The name of the post author
+(optional)</li>
+<li><code>author_email</code>: The email address of the post author
+(optional)</li>
+</ul>
+<h4 id="fallback-behavior">Fallback Behavior</h4>
+<p>BSSG uses intelligent fallback logic for author information:</p>
+<ol type="1">
+<li><strong>Custom Author</strong>: If both <code>author_name</code> and
+<code>author_email</code> are specified, they will be used for that
+post</li>
+<li><strong>Name Only</strong>: If only <code>author_name</code> is
+specified, the name will be used but no email will be included in
+metadata</li>
+<li><strong>Default Fallback</strong>: If author fields are empty or
+missing, the default <code>AUTHOR_NAME</code> and
+<code>AUTHOR_EMAIL</code> from your site configuration will be used</li>
+</ol>
+<h4 id="author-index-pages">Author Index Pages</h4>
+<p>When multiple authors are detected in your posts, BSSG automatically
+generates:</p>
+<ul>
+<li><strong>Main Authors Index</strong>: A page at
+<code>/authors/</code> listing all authors with their post counts</li>
+<li><strong>Individual Author Pages</strong>: Pages at
+<code>/authors/author-slug/</code> showing all posts by a specific
+author</li>
+<li><strong>Conditional Navigation</strong>: An “Authors” menu item that
+only appears when you have multiple authors (configurable
+threshold)</li>
+</ul>
+<p>The author pages reuse the same styling as tag pages for visual
+consistency and include: - Post listings sorted by date (newest first) -
+Post counts and metadata - Schema.org structured data for SEO -
+Responsive design that works on all devices</p>
+<h4 id="configuration-options">Configuration Options</h4>
+<p>You can control author page behavior in your
+<code>config.sh.local</code>:</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable/disable author pages (default: false)</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_PAGES</span><span class="op">=</span>false</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimum number of authors to show the Authors menu (default: 2)</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="va">SHOW_AUTHORS_MENU_THRESHOLD</span><span class="op">=</span>2</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable author-specific RSS feeds (default: false)</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_RSS</span><span class="op">=</span>false</span></code></pre></div>
+<h4 id="where-author-information-appears">Where Author Information
+Appears</h4>
+<p>Author information is displayed and used in:</p>
+<ul>
+<li><strong>Post Pages</strong>: Copyright notices in the footer</li>
+<li><strong>Index Pages</strong>: “by Author Name” in post listings</li>
+<li><strong>Author Pages</strong>: Dedicated pages listing posts by each
+author</li>
+<li><strong>Navigation Menu</strong>: “Authors” link (when multiple
+authors exist)</li>
+<li><strong>RSS Feeds</strong>: Dublin Core <code>dc:creator</code>
+elements with proper author attribution</li>
+<li><strong>Schema.org Metadata</strong>: JSON-LD structured data for
+search engines</li>
+<li><strong>Archive Pages</strong>: Author information in post
+listings</li>
+</ul>
+<h4 id="examples">Examples</h4>
+<p><strong>Post with custom author:</strong></p>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Guest Post Example</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="an">author_name:</span><span class="co"> Jane Smith</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="an">author_email:</span><span class="co"> jane@example.com</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p><strong>Post with name only (no email):</strong></p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Anonymous Contributor Post</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="an">author_name:</span><span class="co"> Anonymous Contributor</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="an">author_email:</span><span class="co"> # Leave empty - no email will be included</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p><strong>Post using default site author:</strong></p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Regular Post</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># No author fields - will use AUTHOR_NAME and AUTHOR_EMAIL from config</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>This feature is particularly useful for: - Guest posts from different
+authors - Multi-author blogs or publications - Posts where you want to
+credit a specific contributor - Maintaining author attribution when
+migrating content from other platforms - Creating author-focused content
+organization alongside tags and archives</p>
+<h2 id="customization">Customization</h2>
+<p>To customize the appearance of your site, you can edit:</p>
+<ul>
+<li><p>Custom Homepage Content: If you want a custom landing page
+instead of the default “Latest Posts” list (useful for non-blog
+websites), simply create a file named <code>index.md</code> inside your
+<code>pages/</code> directory (<code>${PAGES_DIR}</code>). BSSG will
+automatically use the content of this file for the homepage
+(<code>index.html</code>) and will <em>not</em> display the post list.
+Ensure the <code>index.md</code> file has the frontmatter
+<code>slug: index</code> set.</p></li>
+<li><p><code>templates/header.html</code> - Site header and
+navigation</p></li>
+<li><p><code>templates/footer.html</code> - Site footer</p></li>
+<li><p>CSS styles are generated in
+<code>output/css/style.css</code></p></li>
+<li><p><code>config.sh.local</code> - Configuration file for site-wide
+settings</p></li>
+<li><p><strong><code>CUSTOM_CSS</code>:</strong> (Optional) Specify a
+path (relative to the output directory root) to a custom CSS file. If
+set, a <code>&lt;link&gt;</code> tag will be added to the
+<code>&lt;head&gt;</code> of every generated page, after the theme’s
+default <code>style.css</code>. The CSS file itself should be placed in
+your <code>$STATIC_DIR</code> (default: <code>static/</code>) to be
+copied to the output directory. Example:
+<code>CUSTOM_CSS="/css/my-styles.css"</code> (assuming
+<code>static/css/my-styles.css</code> exists).</p></li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p>The <code>config.sh</code> file contains the default configuration
+settings for the site generator:</p>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Directory configuration</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="va">SRC_DIR</span><span class="op">=</span><span class="st">&quot;src&quot;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="va">PAGES_DIR</span><span class="op">=</span><span class="st">&quot;pages&quot;</span>  <span class="co"># Directory for static pages</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="va">OUTPUT_DIR</span><span class="op">=</span><span class="st">&quot;output&quot;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="va">TEMPLATES_DIR</span><span class="op">=</span><span class="st">&quot;templates&quot;</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="va">THEMES_DIR</span><span class="op">=</span><span class="st">&quot;themes&quot;</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="va">STATIC_DIR</span><span class="op">=</span><span class="st">&quot;static&quot;</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="va">DRAFTS_DIR</span><span class="op">=</span><span class="st">&quot;drafts&quot;</span> <span class="co"># Directory for drafts</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="va">THEME</span><span class="op">=</span><span class="st">&quot;default&quot;</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="va">CACHE_DIR</span><span class="op">=</span><span class="st">&quot;.bssg_cache&quot;</span> <span class="co"># Default cache directory location (relative to BSSG root)</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Build configuration</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="va">CLEAN_OUTPUT</span><span class="op">=</span>false <span class="co"># If true, BSSG will always perform a full rebuild</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="va">REBUILD_AFTER_POST</span><span class="op">=</span>true <span class="co"># Build site automatically after creating a new post (scripts/post.sh)</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="va">REBUILD_AFTER_EDIT</span><span class="op">=</span>true <span class="co"># Build site automatically after editing a post (scripts/edit.sh)</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="va">PRECOMPRESS_ASSETS</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If true, compress text assets (HTML, CSS, XML, JS) with gzip during build.</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="va">BUILD_MODE</span><span class="op">=</span><span class="st">&quot;normal&quot;</span> <span class="co"># Options: &quot;normal&quot;, &quot;ram&quot;. RAM mode preloads inputs and keeps build indexes/data in memory.</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional performance tunables (not required):</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_MODE_MAX_JOBS=6            # Cap parallel workers in RAM mode (defaults to 6)</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_MODE_VERBOSE=false         # Extra RAM-mode debug/timing logs</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_GZIP_LEVEL=9       # gzip level for precompression (1-9)</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_MAX_JOBS=0         # 0=auto based on CPU/RAM mode cap</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_VERBOSE=false      # Verbose logs for precompression</span></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_RSS_PREFILL_MIN_HITS=2     # RAM tag-RSS cache prefill threshold</span></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_RSS_PREFILL_MAX_POSTS=24   # RAM tag-RSS prefill upper bound</span></span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Customization</span></span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a><span class="va">CUSTOM_CSS</span><span class="op">=</span><span class="st">&quot;&quot;</span> <span class="co"># Optional: Path to custom CSS file relative to output root (e.g., &quot;/css/custom.css&quot;). File should be placed in STATIC_DIR.</span></span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Site information</span></span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_TITLE</span><span class="op">=</span><span class="st">&quot;My new BSSG site&quot;</span></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_DESCRIPTION</span><span class="op">=</span><span class="st">&quot;A complete SSG - written in bash&quot;</span></span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_URL</span><span class="op">=</span><span class="st">&quot;http://localhost:8000&quot;</span></span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a><span class="va">AUTHOR_NAME</span><span class="op">=</span><span class="st">&quot;Anonymous&quot;</span> </span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a><span class="va">AUTHOR_EMAIL</span><span class="op">=</span><span class="st">&quot;anonymous@example.com&quot;</span></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Content configuration</span></span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a><span class="va">DATE_FORMAT</span><span class="op">=</span><span class="st">&quot;%Y-%m-%d %H:%M:%S %z&quot;</span></span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="va">TIMEZONE</span><span class="op">=</span><span class="st">&quot;local&quot;</span>  <span class="co"># Options: &quot;local&quot;, &quot;GMT&quot;, or a specific timezone like &quot;America/New_York&quot;</span></span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a><span class="va">SHOW_TIMEZONE</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. Whether to display the timezone in rendered dates.</span></span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a><span class="va">POSTS_PER_PAGE</span><span class="op">=</span>10</span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a><span class="va">RSS_ITEM_LIMIT</span><span class="op">=</span>15 <span class="co"># Number of items to include in the RSS feed.</span></span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a><span class="va">RSS_INCLUDE_FULL_CONTENT</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. Include full post content in RSS feed.</span></span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a><span class="va">RSS_FILENAME</span><span class="op">=</span><span class="st">&quot;rss.xml&quot;</span> <span class="co"># The filename for the main RSS feed (e.g., feed.xml, rss.xml)</span></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a><span class="va">INDEX_SHOW_FULL_CONTENT</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. Show full post content on homepage instead of just description/excerpt.</span></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_ARCHIVES</span><span class="op">=</span>true  <span class="co"># Enable or disable archive pages</span></span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_PAGES</span><span class="op">=</span>false <span class="co"># Enable or disable author pages (default: false)</span></span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_RSS</span><span class="op">=</span>false <span class="co"># Enable or disable author-specific RSS feeds (default: false)</span></span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a><span class="va">SHOW_AUTHORS_MENU_THRESHOLD</span><span class="op">=</span>2 <span class="co"># Minimum authors to show menu (default: 2)</span></span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a><span class="va">URL_SLUG_FORMAT</span><span class="op">=</span><span class="st">&quot;Year/Month/Day/slug&quot;</span> <span class="co"># Format for post URLs. Available: Year, Month, Day, slug</span></span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_TAG_RSS</span><span class="op">=</span>true <span class="co"># Enable or disable tag-specific RSS feed generation (default: true)</span></span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Archive Page Configuration</span></span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a><span class="va">ARCHIVES_LIST_ALL_POSTS</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If true, list all posts on the main archive page.</span></span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Page configuration</span></span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a><span class="va">PAGE_URL_FORMAT</span><span class="op">=</span><span class="st">&quot;slug&quot;</span> <span class="co"># Format for page URLs. Available: slug, filename (without ext)</span></span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Markdown processing configuration</span></span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a><span class="va">MARKDOWN_PROCESSOR</span><span class="op">=</span><span class="st">&quot;commonmark&quot;</span> <span class="co"># Options: &quot;pandoc&quot;, &quot;commonmark&quot;, or &quot;markdown.pl&quot;</span></span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Language Configuration</span></span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_LANG</span><span class="op">=</span><span class="st">&quot;en&quot;</span>  <span class="co"># Default language code (e.g., en, es, fr). See locales/ directory.</span></span>
+<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Related Posts Configuration</span></span>
+<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_RELATED_POSTS</span><span class="op">=</span>true <span class="co"># Enable or disable related posts feature</span></span>
+<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a><span class="va">RELATED_POSTS_COUNT</span><span class="op">=</span>3 <span class="co"># Number of related posts to show (default: 3)</span></span>
+<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Server Configuration (for &#39;bssg.sh server&#39; command)</span></span>
+<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a><span class="co"># These are the defaults used by &#39;bssg.sh server&#39; if not overridden by command-line options.</span></span>
+<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a><span class="va">BSSG_SERVER_PORT_DEFAULT</span><span class="op">=</span><span class="st">&quot;8000&quot;</span>    <span class="co"># Default port for the local development server</span></span>
+<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a><span class="va">BSSG_SERVER_HOST_DEFAULT</span><span class="op">=</span><span class="st">&quot;localhost&quot;</span> <span class="co"># Default host for the local development server</span></span>
+<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Deployment configuration</span></span>
+<span id="cb41-76"><a href="#cb41-76" aria-hidden="true" tabindex="-1"></a><span class="va">DEPLOY_AFTER_BUILD</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. Automatically deploy after a successful build.</span></span>
+<span id="cb41-77"><a href="#cb41-77" aria-hidden="true" tabindex="-1"></a><span class="va">DEPLOY_SCRIPT</span><span class="op">=</span><span class="st">&quot;&quot;</span>           <span class="co"># Path to the deployment script to execute if DEPLOY_AFTER_BUILD is true.</span></span>
+<span id="cb41-78"><a href="#cb41-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-79"><a href="#cb41-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Terminal colors for output</span></span>
+<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a><span class="va">RED</span><span class="op">=</span><span class="st">&#39;\033[0;31m&#39;</span></span>
+<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a><span class="va">GREEN</span><span class="op">=</span><span class="st">&#39;\033[0;32m&#39;</span></span>
+<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a><span class="va">YELLOW</span><span class="op">=</span><span class="st">&#39;\033[0;33m&#39;</span></span>
+<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a><span class="va">NC</span><span class="op">=</span><span class="st">&#39;\033[0m&#39;</span> <span class="co"># No Color </span></span></code></pre></div>
+<h4 id="date-format-examples">Date Format Examples</h4>
+<ul>
+<li><code>DATE_FORMAT="%Y-%m-%d %H:%M:%S"</code> - 2023-05-15 14:30:45
+(default)</li>
+<li><code>DATE_FORMAT="%d-%m-%Y %H:%M:%S"</code> - 15-05-2023 14:30:45
+(European format)</li>
+<li><code>DATE_FORMAT="%b %d, %Y at %I:%M %p"</code> - May 15, 2023 at
+02:30 PM (American format)</li>
+<li><code>DATE_FORMAT="%d/%m/%Y"</code> - 15/05/2023 (date only)</li>
+</ul>
+<h4 id="local-configuration">Local Configuration</h4>
+<p><strong>IMPORTANT:</strong> Do not modify <code>config.sh</code>
+directly. This file is part of the git repository and your changes could
+be lost during updates.</p>
+<p>For local modifications, use the <code>config.sh.local</code> file
+instead. This file will override any settings in the main configuration
+and is ignored by git. You can override any variable from
+<code>config.sh</code>, including <code>SRC_DIR</code>,
+<code>PAGES_DIR</code>, and <code>DRAFTS_DIR</code>.</p>
+<p>Example <code>config.sh.local</code>:</p>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Override site information for local development</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_TITLE</span><span class="op">=</span><span class="st">&quot;Development Site&quot;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_URL</span><span class="op">=</span><span class="st">&quot;http://localhost:8080&quot;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="va">AUTHOR_NAME</span><span class="op">=</span><span class="st">&quot;Your Name&quot;</span></span></code></pre></div>
+<h2 id="static-files">Static Files</h2>
+<p>Any files placed in the <code>static/</code> directory will be
+automatically copied to the output directory during the build process.
+This is useful for including:</p>
+<ul>
+<li>Images</li>
+<li>Additional CSS files</li>
+<li>JavaScript files</li>
+<li>Downloadable files</li>
+<li>Favicons</li>
+<li>Any other static assets</li>
+</ul>
+<p>Example usage: 1. Place an image in
+<code>static/images/photo.jpg</code> 2. Reference it in your post as:
+<code>markdown    ![My Photo](/images/photo.jpg)</code> 3. Or set it as
+a featured image in your post frontmatter:
+<code>---    title: Post with Image    image: /images/photo.jpg    ---</code></p>
+<h3 id="deployment">Deployment</h3>
+<p>BSSG allows you to automatically execute a custom deployment script
+after a successful build process. This is useful for uploading your site
+to a server, updating a Git repository, or performing any other
+post-build actions.</p>
+<p><strong>Configuration:</strong></p>
+<p>Two configuration variables in <code>config.sh.local</code> control
+this feature:</p>
+<ul>
+<li><code>DEPLOY_AFTER_BUILD</code>: Set this to <code>"true"</code> to
+enable automatic deployment after a successful build. Defaults to
+<code>"false"</code>.</li>
+<li><code>DEPLOY_SCRIPT</code>: Specify the path to your deployment
+script. This can be an absolute path or a path relative to the project
+root (where <code>bssg.sh</code> resides).</li>
+</ul>
+<p>Example <code>config.sh.local</code>:</p>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatically deploy after build</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="va">DEPLOY_AFTER_BUILD</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Path to the deployment script (relative to project root)</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="va">DEPLOY_SCRIPT</span><span class="op">=</span><span class="st">&quot;scripts/deploy.sh&quot;</span></span></code></pre></div>
+<p><strong>Command-Line Overrides:</strong></p>
+<p>You can override the <code>DEPLOY_AFTER_BUILD</code> setting for a
+specific build using command-line flags:</p>
+<ul>
+<li><code>./bssg.sh build --deploy</code>: Forces the deployment script
+to run, regardless of the <code>DEPLOY_AFTER_BUILD</code> setting.</li>
+<li><code>./bssg.sh build --no-deploy</code>: Prevents the deployment
+script from running, regardless of the <code>DEPLOY_AFTER_BUILD</code>
+setting.</li>
+</ul>
+<p><strong>Deployment Script:</strong></p>
+<ul>
+<li>Your deployment script (e.g., <code>scripts/deploy.sh</code>) must
+be executable (<code>chmod +x scripts/deploy.sh</code>).</li>
+<li>BSSG will execute the script from the project root directory.</li>
+<li>The script receives two arguments:
+<ol type="1">
+<li>The path to the generated output directory
+(<code>$OUTPUT_DIR</code>).</li>
+<li>The site URL (<code>$SITE_URL</code>).</li>
+</ol></li>
+<li>The script should exit with a status code of <code>0</code> on
+success. A non-zero exit code will be reported as an error in the build
+output, but will not necessarily stop the build process itself (unless
+you modify <code>scripts/build/main.sh</code> to do so).</li>
+</ul>
+<p>Example <code>scripts/deploy.sh</code> using <code>rsync</code>:</p>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="va">OUTPUT_DIR</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_URL</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$2</span><span class="st">&quot;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_USER</span><span class="op">=</span><span class="st">&quot;your_user&quot;</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_HOST</span><span class="op">=</span><span class="st">&quot;your_server.com&quot;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_PATH</span><span class="op">=</span><span class="st">&quot;/path/to/your/webroot/&quot;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Deploying site from &#39;</span><span class="va">$OUTPUT_DIR</span><span class="st">&#39; to </span><span class="va">$REMOTE_USER</span><span class="st">@</span><span class="va">$REMOTE_HOST</span><span class="st">:</span><span class="va">$REMOTE_PATH</span><span class="st">&quot;</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Site URL: </span><span class="va">$SITE_URL</span><span class="st">&quot;</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Example rsync command (ensure ssh keys are set up for passwordless login)</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avz</span> <span class="at">--delete</span> <span class="st">&quot;</span><span class="va">$OUTPUT_DIR</span><span class="st">/&quot;</span> <span class="st">&quot;</span><span class="va">$REMOTE_USER</span><span class="st">@</span><span class="va">$REMOTE_HOST</span><span class="st">:</span><span class="va">$REMOTE_PATH</span><span class="st">&quot;</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="va">$?</span> <span class="ot">-eq</span> 0 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Deployment successful.&quot;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 0</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Deployment failed!&quot;</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h2 id="themes">Themes</h2>
+<p>BSSG includes a variety of themes to customize the look of your site.
+Themes are organized in the <code>themes/</code> directory. You can see
+a list and preview of the available themes <a
+href="https://bssg.dragas.net/example">here</a></p>
+<h3 id="some-of-the-available-themes">Some of the Available Themes</h3>
+<h4 id="modern-themes">Modern Themes</h4>
+<ul>
+<li><code>default</code> - A clean and accessible blog theme</li>
+<li><code>minimal</code> - A clean and minimal theme</li>
+<li><code>dark</code> - Dark mode theme</li>
+<li><code>flat</code> - Microsoft Metro/Modern UI inspired flat
+design</li>
+<li><code>glassmorphism</code> - Modern frosted glass effect with
+blue/teal gradient</li>
+<li><code>material</code> - Material Design inspired theme</li>
+<li><code>art-deco</code> - Inspired by 1920s-30s Art Deco style with
+geometric patterns, elegant fonts, and gold/black/silver/jewel color
+palettes</li>
+<li><code>bauhaus</code> - Inspired by the Bauhaus school, focusing on
+functionality, primary geometric shapes, primary colors plus black and
+white, and clean sans-serif typography</li>
+<li><code>mid-century</code> - Mid-century modern aesthetic (1950s-60s),
+with clean lines, organic shapes, specific color palettes and
+characteristic fonts</li>
+<li><code>swiss-design</code> - International Typographic Style, focused
+on grids, sans-serif typography (like Helvetica), strong visual
+hierarchy, and minimalism</li>
+<li><code>nordic-clean</code> - Inspired by Scandinavian design, very
+minimal, airy, with plenty of white space, light and natural colors, and
+clean typography</li>
+<li><code>braun</code> - Inspired by iconic Braun design with a focus on
+minimalism, functionality, and understated elegance</li>
+<li><code>mondrian</code> - Inspired by Piet Mondrian’s De Stijl artwork
+featuring primary colors, black grid lines, geometric shapes, and white
+backgrounds</li>
+</ul>
+<h4 id="retro-computing-themes">Retro Computing Themes</h4>
+<ul>
+<li><code>amiga500</code> - Amiga 500 inspired theme</li>
+<li><code>apple2</code> - Apple II inspired theme</li>
+<li><code>atarist</code> - Atari ST inspired theme</li>
+<li><code>c64</code> - Commodore 64 inspired theme</li>
+<li><code>msdos</code> - MS-DOS inspired theme</li>
+<li><code>terminal</code> - Terminal/console theme</li>
+<li><code>zxspectrum</code> - ZX Spectrum inspired theme</li>
+<li><code>nes</code> - Retro theme inspired by Nintendo Entertainment
+System, using the NES color palette and pixel art aesthetics</li>
+<li><code>gameboy</code> - Retro theme inspired by Game Boy, using a
+light green background with dark green text for readability while
+maintaining nostalgic feel</li>
+<li><code>tty</code> - Ultra-minimal theme simulating an old teletype
+output with monospace text on simple background and terminal-like
+aesthetics</li>
+<li><code>mario</code> - Super Mario Bros inspired theme with iconic
+blue sky background, green pipes for navigation, brick blocks, question
+blocks, and the classic Mario color palette</li>
+</ul>
+<h4 id="operating-system-themes">Operating System Themes</h4>
+<ul>
+<li><code>beos</code> - BeOS inspired theme</li>
+<li><code>macclassic</code> - Classic Mac OS inspired theme</li>
+<li><code>macos9</code> - Mac OS 9 inspired theme</li>
+<li><code>nextstep</code> - NeXTSTEP inspired theme</li>
+<li><code>osx</code> - macOS inspired theme</li>
+<li><code>win311</code> - Windows 3.11 inspired theme</li>
+<li><code>win95</code> - Windows 95 inspired theme</li>
+<li><code>win7</code> - Windows 7 inspired theme</li>
+<li><code>winxp</code> - Windows XP inspired theme</li>
+</ul>
+<h4 id="web-era-themes">Web Era Themes</h4>
+<ul>
+<li><code>web1</code> - Web 1.0 theme with HTML 3.2 aesthetics</li>
+<li><code>web2</code> - Web 2.0 theme with glossy buttons and
+gradients</li>
+<li><code>vaporwave</code> - Retro futurism with 80s aesthetics and neon
+colors</li>
+<li><code>y2k</code> - Turn of the millennium aesthetic with bold colors
+and bubble effects</li>
+<li><code>bbs</code> - Bulletin Board System theme with ANSI colors and
+ASCII art aesthetics</li>
+</ul>
+<h4 id="content-focused-themes">Content-Focused Themes</h4>
+<ul>
+<li><code>docs</code> - A clean, structured theme ideal for technical
+documentation with excellent code formatting and clear navigation</li>
+<li><code>longform</code> - Optimized for reading long articles with
+highly readable typography, contained text width, and minimal
+distractions</li>
+<li><code>reader-mode</code> - Simulates browser reader mode with almost
+total emphasis on text, sepia background, very readable serif font, and
+minimal graphic elements</li>
+<li><code>thoughtful</code> - A warm, accessible, and performant theme
+for personal reflection blogs and thoughtful writing</li>
+<li><code>text-only</code> - A step beyond minimalism using browser
+defaults with clean base typography for readability and lightning-fast
+loading</li>
+</ul>
+<h4 id="special-themes">Special Themes</h4>
+<ul>
+<li><code>brutalist</code> - Raw, minimalist concrete-inspired
+design</li>
+<li><code>newspaper</code> - Classic newspaper layout</li>
+<li><code>diary</code> - Personal diary/journal style</li>
+<li><code>random</code> - Selects a random theme (from the available
+themes) for each build</li>
+</ul>
+<p>To use a theme, specify it in your config file:</p>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="va">THEME</span><span class="op">=</span><span class="st">&quot;msdos&quot;</span></span></code></pre></div>
+<p>For a surprise each time, use the random option:</p>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="va">THEME</span><span class="op">=</span><span class="st">&quot;random&quot;</span></span></code></pre></div>
+<h3 id="theme-previews">Theme Previews</h3>
+<p>BSSG includes a script to generate previews of all available themes.
+This is useful for seeing how each theme looks with your content before
+deciding which one to use.</p>
+<p>To generate theme previews:</p>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./generate_theme_previews.sh</span></span></code></pre></div>
+<p>This will create a directory called <code>example/</code> containing
+subdirectories for each theme, along with an index.html file that allows
+you to navigate between them.</p>
+<p>You can also specify a custom SITE_URL for the previews:</p>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./generate_theme_previews.sh</span> <span class="at">--site-url</span> <span class="st">&quot;https://example.com/blog&quot;</span></span></code></pre></div>
+<p>The script will use the SITE_URL from the following sources in order
+of precedence: 1. Command line argument (–site-url) 2. Local config file
+(config.sh.local) 3. Main config file (config.sh) 4. Default value
+(http://localhost)</p>
+<p>Each theme preview will be accessible at <code>SITE_URL/theme</code>
+(e.g., <code>https://example.com/blog/dark</code>).</p>
+<h2 id="admin-interface">Admin Interface</h2>
+<p><strong>Note: The admin interface is currently in development and has
+not been released yet. This section describes planned features for a
+future release.</strong></p>
+<p>BSSG will include an admin interface for managing your blog. When
+released, the admin interface will provide a user-friendly way to: -
+Create and edit posts with a WYSIWYG Markdown editor - Create and manage
+drafts - Schedule posts for future publication - Organize posts with
+tags - View statistics about your blog</p>
+<p>The admin interface will feature: 1. Node.js-based server 2. Modern
+web interface 3. Post scheduling capabilities 4. Draft management 5.
+Blog statistics and analytics</p>
+<h3 id="post-scheduling-planned-feature">Post Scheduling (Planned
+Feature)</h3>
+<p>The planned admin interface will allow you to schedule posts for
+future publication. When available, you will be able to:</p>
+<ol type="1">
+<li>Choose “Schedule for later” option</li>
+<li>Select the date and time for publication</li>
+<li>The post will be stored as a draft until the scheduled time</li>
+<li>At the scheduled time, the post will be automatically published</li>
+</ol>
+<h2 id="bssg-post-editor">BSSG Post Editor</h2>
+<p>BSSG includes a standalone post editor
+(<code>bssg-editor.html</code>) that provides a modern, Ghost-like
+writing experience entirely in your browser. This editor is perfect for
+users who prefer a visual interface over command-line tools.</p>
+<h3 id="features-1">Features</h3>
+<ul>
+<li><strong>Modern Interface</strong>: Clean, distraction-free design
+inspired by Ghost CMS</li>
+<li><strong>Split-Pane Editor</strong>: Side-by-side markdown editor and
+live preview (toggleable)</li>
+<li><strong>Complete BSSG Integration</strong>: Full support for all
+BSSG frontmatter fields</li>
+<li><strong>Smart Auto-Save</strong>: Automatically saves your work
+every 10 words or after 5 seconds of inactivity</li>
+<li><strong>Article Management</strong>: Save, load, search, and
+organize multiple articles locally</li>
+<li><strong>Unsplash Integration</strong>: Built-in image browser with
+search and automatic attribution</li>
+<li><strong>Rich Toolbar</strong>: Quick formatting buttons for headers,
+lists, links, images, code, and more</li>
+<li><strong>Keyboard Shortcuts</strong>: Full keyboard support (Ctrl+B
+for bold, Ctrl+I for italic, Ctrl+S to save, etc.)</li>
+<li><strong>Theme Support</strong>: Dark/light mode toggle</li>
+<li><strong>Focus Mode</strong>: Distraction-free writing
+environment</li>
+<li><strong>Export Options</strong>: Export to .md files, copy to
+clipboard, or import existing files</li>
+<li><strong>Responsive Design</strong>: Works on desktop, tablet, and
+mobile devices</li>
+<li><strong>Offline Capable</strong>: No server required - runs entirely
+in your browser</li>
+</ul>
+<h3 id="getting-started">Getting Started</h3>
+<ol type="1">
+<li><strong>Open the Editor</strong>: Simply open
+<code>bssg-editor.html</code> in your web browser</li>
+<li><strong>Configure Settings</strong> (Optional): Add your Unsplash
+API key in the settings panel for real image search</li>
+<li><strong>Start Writing</strong>: Fill in the post metadata in the
+sidebar and start writing in the editor</li>
+<li><strong>Save Your Work</strong>: Use Ctrl+S to save articles
+locally, or use the auto-save feature</li>
+<li><strong>Export</strong>: When ready, export your post as a .md file
+with proper BSSG formatting</li>
+</ol>
+<h3 id="usage-tips">Usage Tips</h3>
+<ul>
+<li><strong>Frontmatter</strong>: All BSSG frontmatter fields are
+supported - title, date, tags, slug, description, image, etc.</li>
+<li><strong>File Naming</strong>: Exported files follow BSSG naming
+convention: <code>YYYY-MM-DD-slug.md</code></li>
+<li><strong>Image Integration</strong>: Use the Unsplash button (🖼️) to
+search and insert images with proper attribution</li>
+<li><strong>Article Management</strong>: Save multiple articles locally
+and switch between them using the Load button</li>
+<li><strong>Keyboard Shortcuts</strong>:
+<ul>
+<li><code>Ctrl+N</code>: New article</li>
+<li><code>Ctrl+S</code>: Save article</li>
+<li><code>Ctrl+O</code>: Load article</li>
+<li><code>Ctrl+P</code>: Toggle preview</li>
+<li><code>Ctrl+B</code>: Bold text</li>
+<li><code>Ctrl+I</code>: Italic text</li>
+<li><code>Ctrl+K</code>: Insert link</li>
+<li><code>Esc</code>: Exit focus mode</li>
+</ul></li>
+</ul>
+<h3 id="unsplash-integration">Unsplash Integration</h3>
+<p>To use real Unsplash images instead of demo placeholders:</p>
+<ol type="1">
+<li>Get a free API key from <a
+href="https://unsplash.com/developers">Unsplash Developers</a></li>
+<li>Enter your API key in the Settings section of the editor</li>
+<li>Use the image button (🖼️) to search and select professional
+photos</li>
+<li>Images are automatically attributed according to Unsplash
+guidelines</li>
+</ol>
+<p>The editor works without an API key using demo images, but real
+Unsplash integration provides access to millions of high-quality
+photos.</p>
+<h3 id="integration-with-bssg-workflow">Integration with BSSG
+Workflow</h3>
+<p>The BSSG Post Editor generates markdown files that are fully
+compatible with your BSSG workflow:</p>
+<ol type="1">
+<li><strong>Write</strong> your post in the editor</li>
+<li><strong>Export</strong> the .md file to your BSSG <code>src/</code>
+directory</li>
+<li><strong>Build</strong> your site with
+<code>./bssg.sh build</code></li>
+<li><strong>Publish</strong> as usual</li>
+</ol>
+<p>The editor can also import existing BSSG posts for editing, making it
+easy to update content with a visual interface.</p>
+<h3 id="embedding-the-editor-in-your-website">Embedding the Editor in
+Your Website</h3>
+<p>Since the BSSG Post Editor runs entirely in the browser with no
+server dependencies, you can safely embed it directly in your published
+website. This allows you to access the editor from anywhere and provides
+a convenient way to create content on-the-go.</p>
+<p><strong>To embed the editor:</strong></p>
+<ol type="1">
+<li><p><strong>Copy the editor file</strong> to your static
+directory:</p>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> bssg-editor.html static/editor.html</span></code></pre></div></li>
+<li><p><strong>Build your site</strong> as usual:</p>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> build</span></code></pre></div></li>
+<li><p><strong>Access the editor</strong> through your website:</p>
+<pre><code>https://yoursite.com/editor.html</code></pre></li>
+</ol>
+<p><strong>Benefits of embedding:</strong></p>
+<ul>
+<li><strong>Remote Access</strong>: Write posts from any device with
+internet access</li>
+<li><strong>No Installation</strong>: No need to have BSSG installed
+locally to create content</li>
+<li><strong>Secure</strong>: Since it’s client-side only, there are no
+security implications</li>
+<li><strong>Convenient</strong>: Always available alongside your
+published content</li>
+<li><strong>Mobile Friendly</strong>: The responsive design works well
+on tablets and phones</li>
+</ul>
+<p><strong>Workflow with embedded editor:</strong></p>
+<ol type="1">
+<li><strong>Access</strong> the editor at
+<code>yoursite.com/editor.html</code></li>
+<li><strong>Write</strong> your post using the visual interface</li>
+<li><strong>Export</strong> the markdown file when finished</li>
+<li><strong>Upload</strong> the file to your <code>src/</code> directory
+(via FTP, Git, or your preferred method)</li>
+<li><strong>Rebuild</strong> your site to publish the new content</li>
+</ol>
+<p><strong>Security Note</strong>: The editor stores data only in your
+browser’s local storage and never transmits content to external servers
+(except for optional Unsplash image search). All article management and
+auto-save functionality works entirely offline, making it safe to embed
+in public websites.</p>
+<h2 id="performance-features">Performance Features</h2>
+<p>BSSG is designed to be efficient even with large sites, using several
+performance-enhancing techniques:</p>
+<h3 id="incremental-builds">Incremental Builds</h3>
+<p>BSSG intelligently rebuilds only what has changed. When you run the
+build command, it:</p>
+<ol type="1">
+<li>Checks if source files have been modified since the last build</li>
+<li>Checks if templates have been modified</li>
+<li>Checks if configuration has changed</li>
+<li>Only rebuilds files affected by changes</li>
+</ol>
+<h3 id="metadata-caching">Metadata Caching</h3>
+<p>The system maintains a cache of extracted metadata from markdown
+files to reduce repeated parsing:</p>
+<ul>
+<li>Extracted frontmatter is stored in
+<code>.bssg_cache/meta/</code></li>
+<li>File index information is stored in
+<code>.bssg_cache/file_index.txt</code></li>
+<li>Tags index information is stored in
+<code>.bssg_cache/tags_index.txt</code></li>
+</ul>
+<h3 id="ram-build-mode">RAM Build Mode</h3>
+<p>BSSG supports a RAM-first build mode for faster full rebuilds and
+lower disk churn:</p>
+<ul>
+<li>Set <code>BUILD_MODE="ram"</code> in <code>config.sh.local</code>,
+or run <code>./bssg.sh build --build-mode ram</code></li>
+<li>Source/posts/pages/templates/locales are preloaded in memory</li>
+<li>Build indexes (file/tags/authors/archive, plus page lists) are kept
+in memory</li>
+<li>RAM mode intentionally skips cache persistence and always behaves
+like an in-memory full rebuild</li>
+<li>A stage timing summary is printed at the end of RAM-mode builds</li>
+<li>On low-end disk-bound hosts, RAM mode can significantly reduce build
+time by avoiding repeated disk reads</li>
+</ul>
+<h3 id="parallel-processing">Parallel Processing</h3>
+<p>BSSG uses multiple execution strategies to process files in
+parallel:</p>
+<ul>
+<li>Automatically detects GNU parallel and enables it for builds with
+many files</li>
+<li>Falls back to internal shell workers when GNU parallel is
+unavailable or unsuitable for a stage</li>
+<li>Auto-detects CPU core count for worker sizing</li>
+<li>In RAM mode, worker count is capped by
+<code>RAM_MODE_MAX_JOBS</code> (default: <code>6</code>) to reduce
+memory pressure</li>
+</ul>
+<p>To take advantage of parallel processing, install GNU parallel:</p>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debian/Ubuntu</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install parallel</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install parallel</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># FreeBSD</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pkg</span> install parallel</span></code></pre></div>
+<h3 id="real-world-result">Real-World Result</h3>
+<p>On a single-core OpenBSD server with spinning disks, the maintainer
+observed build time dropping to about one third of the previous release
+when building with <code>BUILD_MODE="ram"</code>.</p>
+<h2 id="site-configuration">Site Configuration</h2>
+<p>Key configuration options:</p>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Site information</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_TITLE</span><span class="op">=</span><span class="st">&quot;My Journal&quot;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_DESCRIPTION</span><span class="op">=</span><span class="st">&quot;A personal journal and introspective newspaper&quot;</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="va">SITE_URL</span><span class="op">=</span><span class="st">&quot;http://localhost&quot;</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="va">AUTHOR_NAME</span><span class="op">=</span><span class="st">&quot;Anonymous&quot;</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="va">AUTHOR_EMAIL</span><span class="op">=</span><span class="st">&quot;anonymous@example.com&quot;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Content configuration</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="va">DATE_FORMAT</span><span class="op">=</span><span class="st">&quot;%Y-%m-%d %H:%M:%S %z&quot;</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="va">TIMEZONE</span><span class="op">=</span><span class="st">&quot;local&quot;</span>  <span class="co"># Options: &quot;local&quot;, &quot;GMT&quot;, or a specific timezone</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="va">SHOW_TIMEZONE</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. Determines if the timezone offset (e.g., +0200) is shown in displayed dates.</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="va">POSTS_PER_PAGE</span><span class="op">=</span>10</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="va">BUILD_MODE</span><span class="op">=</span><span class="st">&quot;normal&quot;</span> <span class="co"># &quot;normal&quot; (incremental cache-backed) or &quot;ram&quot; (memory-first)</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_ARCHIVES</span><span class="op">=</span>true  <span class="co"># Enable or disable archives by year/month</span></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="va">URL_SLUG_FORMAT</span><span class="op">=</span><span class="st">&quot;Year/Month/Day/slug&quot;</span>  <span class="co"># Format for post URLs</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="va">RSS_ITEM_LIMIT</span><span class="op">=</span>15 <span class="co"># Number of items to include in the RSS feed.</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="va">RSS_INCLUDE_FULL_CONTENT</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot;, the full post content will be included in the RSS feed description instead of the excerpt. Useful for readers that consume entire posts via RSS.</span></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="va">INDEX_SHOW_FULL_CONTENT</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot;, the full post content will be displayed on the homepage and paginated index pages instead of just the description/excerpt.</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_TAG_RSS</span><span class="op">=</span>true <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot; (default), an additional RSS feed will be generated for each tag at `output/tags/&lt;tag-slug&gt;/rss.xml`.</span></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Precompression options</span></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="va">PRECOMPRESS_ASSETS</span><span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="co"># Generate .gz siblings for changed text assets</span></span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_GZIP_LEVEL=9</span></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_MAX_JOBS=0</span></span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="co"># PRECOMPRESS_VERBOSE=false</span></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM-mode tuning (optional)</span></span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_MODE_MAX_JOBS=6</span></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_MODE_VERBOSE=false</span></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_RSS_PREFILL_MIN_HITS=2</span></span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a><span class="co"># RAM_RSS_PREFILL_MAX_POSTS=24</span></span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Related Posts configuration</span></span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_RELATED_POSTS</span><span class="op">=</span>true <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot; (default), related posts based on shared tags will be shown at the end of each post.</span></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a><span class="va">RELATED_POSTS_COUNT</span><span class="op">=</span>3 <span class="co"># Number of related posts to display (default: 3, recommended maximum: 5).</span></span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Multi-author configuration</span></span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_PAGES</span><span class="op">=</span>false <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot;, author index pages will be generated.</span></span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a><span class="va">ENABLE_AUTHOR_RSS</span><span class="op">=</span>false <span class="co"># Options: &quot;true&quot;, &quot;false&quot;. If set to &quot;true&quot;, RSS feeds will be generated for each author.</span></span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a><span class="va">SHOW_AUTHORS_MENU_THRESHOLD</span><span class="op">=</span>2 <span class="co"># Minimum number of authors required to show the &quot;Authors&quot; menu item.</span></span></code></pre></div>
+<p>The <code>URL_SLUG_FORMAT</code> setting determines how your post
+URLs are structured. By default, it uses
+<code>Year/Month/Day/slug</code> which creates URLs like
+<code>http://yoursite.com/2023/01/15/my-post-title/</code>.</p>
+<p>Other possible formats include: - <code>slug</code> - For simple
+<code>/post-title/</code> URLs - <code>Year/slug</code> - For
+<code>/2023/post-title/</code> URLs - <code>Year/Month/slug</code> - For
+<code>/2023/01/post-title/</code> URLs</p>
+<h2 id="local-development-server">Local Development Server</h2>
+<p>BSSG includes a simple built-in web server to help you preview your
+site locally.</p>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> server <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span></span></code></pre></div>
+<p>This command will: 1. <strong>Build your site</strong>: It
+automatically runs the build process. 2. <strong>Adjust
+<code>SITE_URL</code></strong>: For the duration of this build, it
+temporarily sets <code>SITE_URL</code> to match the local server’s
+address (e.g., <code>http://localhost:8000</code> or
+<code>http://&lt;your-host&gt;:&lt;your-port&gt;</code>). This ensures
+that all generated links and asset paths work correctly during local
+preview. The original <code>SITE_URL</code> in your configuration files
+remains unchanged for regular builds. 3. <strong>Start the
+server</strong>: It serves files from your configured
+<code>OUTPUT_DIR</code>.</p>
+<p><strong>Server Options:</strong></p>
+<ul>
+<li><code>--port &lt;PORT&gt;</code>: Specifies the port for the server
+to listen on.
+<ul>
+<li>Default: Value of <code>BSSG_SERVER_PORT_DEFAULT</code> from your
+configuration (typically <code>8000</code>).</li>
+</ul></li>
+<li><code>--host &lt;HOST&gt;</code>: Specifies the host/IP address for
+the server.
+<ul>
+<li>Default: Value of <code>BSSG_SERVER_HOST_DEFAULT</code> from your
+configuration (typically <code>localhost</code>).</li>
+</ul></li>
+<li><code>--no-build</code>: Skips the build step and immediately starts
+the server with the existing content in the <code>OUTPUT_DIR</code>.
+Useful if you have just built the site and want to quickly restart the
+server.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build and serve on http://localhost:8080</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> server <span class="at">--port</span> 8080</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Serve on a specific host, accessible on your local network (if firewall allows)</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> server <span class="at">--host</span> 192.168.0.2 <span class="at">--port</span> 8000</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Serve existing build without rebuilding</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="ex">./bssg.sh</span> server <span class="at">--no-build</span></span></code></pre></div>
+<p>Press <code>Ctrl+C</code> to stop the server.</p>
+<h2 id="future-plans">Future Plans</h2>
+<p>While BSSG is designed to be simple, there are a few enhancements
+planned for the future:</p>
+<ul>
+<li><strong>Stale Content Banner:</strong> Add an option to display a
+banner on posts that haven’t been updated in a configurable amount of
+time (e.g., more than X days/months).</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="missing-dependencies">Missing Dependencies</h4>
+<p>If you encounter errors about missing commands, make sure you’ve
+installed all required dependencies for your platform as mentioned in
+the <a href="#requirements">Requirements</a> section.</p>
+<h4 id="permissions-issues">Permissions Issues</h4>
+<p>If you get “Permission denied” errors when running scripts, make them
+executable:</p>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x bssg.sh</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> +x scripts/<span class="pp">*</span>.sh</span></code></pre></div>
+<h4 id="pandoc-not-found">Pandoc Not Found</h4>
+<p>If you get errors about pandoc not being found, either install pandoc
+or switch to commonmark or markdown.pl in your config.sh.local:</p>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use commonmark (recommended)</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="va">MARKDOWN_PROCESSOR</span><span class="op">=</span><span class="st">&quot;commonmark&quot;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or use markdown.pl</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="va">MARKDOWN_PROCESSOR</span><span class="op">=</span><span class="st">&quot;markdown.pl&quot;</span></span></code></pre></div>
+<h4 id="build-errors">Build Errors</h4>
+<p>If the build process fails, check: 1. That your Markdown files have
+proper frontmatter 2. That there are no syntax errors in your templates
+3. That all required directories exist</p>
+<p>For more help, use the issue tracker on the project’s GitHub
+page.</p>
+<h2 id="author-and-license">Author and License</h2>
+<p>BSSG has been developed by Stefano Marinelli (stefano@dragas.it) -
+https://it-notes.dragas.net</p>
+<p>Read the announcement post detailing the journey behind BSSG: <a
+href="https://it-notes.dragas.net/2025/04/07/launching-bssg-my-journey-from-dynamic-cms-to-bash-static-site-generator/">Launching
+BSSG: My Journey from Dynamic CMS to Bash Static Site Generator</a></p>
+<p>This project is licensed under the BSD 3-Clause License - see the
+LICENSE file for details.</p>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li><strong>Getting Started</strong>: See the installation and usage
+instructions above.</li>
+<li><strong>Configuration</strong>: Customize your site using the
+options in <code>config.sh</code>.</li>
+<li><strong>Templates</strong>: Learn how to create custom templates in
+the <code>templates</code> directory.</li>
+<li><strong>Themes</strong>: Explore the available themes in the
+<code>themes</code> directory.</li>
+<li><strong>Backup &amp; Restore</strong>: Use
+<code>./bssg.sh backup</code> and <code>./bssg.sh restore</code> to
+manage content backups.</li>
+<li><strong>Development Blog</strong>: Stay up-to-date with the latest
+release notes, development progress, and announcements on the official
+BSSG Dev Blog: <a
+href="https://blog.bssg.dragas.net">https://blog.bssg.dragas.net</a></li>
+</ul>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="http://localhost:8000/">Home</a> &middot; <a href="http://localhost:8000/contributing/">Contributing</a> &middot; <a href="http://localhost:8000/projects/">Projects</a> &middot; <a href="http://localhost:8000/resources/">Resources</a> &middot; <a href="http://localhost:8000/void/">Void</a> &middot; <a href="http://localhost:8000/pages.html">Pages</a> &middot; <a href="http://localhost:8000/archives/">Archives</a> &middot; <a href="http://localhost:8000/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clitest | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="clitest">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:8000//clitest/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="clitest">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://localhost:8000/rss.xml">
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-theme');</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "clitest",
+  "url": "http://localhost:8000/clitest/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "http://localhost:8000"
+  }
+}
+</script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="http://localhost:8000/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <nav>
+                <div class="nav-left">
+                    <a href="http://localhost:8000/">Home</a> <a href="http://localhost:8000/contributing/">Contributing</a> <a href="http://localhost:8000/projects/">Projects</a> <a href="http://localhost:8000/resources/">Resources</a> <a href="http://localhost:8000/void/">Void</a> <a href="http://localhost:8000/pages.html">Pages</a> <a href="http://localhost:8000/archives/">Archives</a> <a href="http://localhost:8000/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://feedback.osowoso.org/">feedback</a>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <span class="icon light-icon active">☀️</span>
+                        <span class="icon dark-icon">🌙</span>
+                    </button>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="/toggle.js"></script>
+        </header>
+        <main><article class="page">
+  <h1>clitest</h1>
+  <div class="page-content">
+<h1 id="clitest-command-line-tester">clitest – Command Line Tester</h1>
+<p>clitest is a <a href="#portability">portable</a> POSIX shell script
+that performs automatic testing in Unix command lines.</p>
+<p>It’s the same concept as in Python’s <a
+href="http://en.wikipedia.org/wiki/Doctest">doctest</a> module: you
+document both the commands and their expected output, using the familiar
+interactive prompt format, and a specialized tool tests them.</p>
+<p>In fact, the doctest <a
+href="http://docs.python.org/3/library/doctest.html">official</a>
+description can also be used for clitest:</p>
+<ul>
+<li><p>The <strong>doctest</strong> module searches for pieces of text
+that look like interactive <strong>Python sessions</strong>, and then
+executes those <strong>sessions</strong> to verify that they work
+exactly as shown.</p></li>
+<li><p>The <strong>clitest</strong> command searches for pieces of text
+that look like interactive <strong>Unix command lines</strong>, and then
+executes those <strong>command lines</strong> to verify that they work
+exactly as shown.</p></li>
+</ul>
+<h2 id="download-install">Download &amp; install</h2>
+<p>The full program is just <a
+href="https://raw.github.com/aureliojargas/clitest/master/clitest">a
+single shell script file</a>.</p>
+<p>Save it, make it executable and move it to a <code>$PATH</code>
+directory:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sOL</span> https://raw.githubusercontent.com/aureliojargas/clitest/master/clitest</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x clitest</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv clitest /usr/bin</span></code></pre></div>
+<p>Now check if everything is fine:</p>
+<pre><code>clitest --help</code></pre>
+<h2 id="docker-image">Docker image</h2>
+<p>You can also run clitest in a Docker container (<a
+href="https://hub.docker.com/r/aureliojargas/clitest">more info in
+Docker Hub</a>).</p>
+<pre><code>docker run --rm -t aureliojargas/clitest --help</code></pre>
+<h2 id="quick-intro">Quick Intro</h2>
+<p>Save the commands and their expected output in a text file:</p>
+<p>♦ <a
+href="https://github.com/aureliojargas/clitest/blob/master/examples/intro.txt">examples/intro.txt</a></p>
+<pre><code>$ echo &quot;Hello World&quot;
+Hello World
+$ cd /tmp
+$ pwd
+/tmp
+$ cd &quot;$OLDPWD&quot;
+$</code></pre>
+<p>Use clitest to run these commands and check their output:</p>
+<pre class="console"><code>$ clitest examples/intro.txt
+#1  echo &quot;Hello World&quot;
+#2  cd /tmp
+#3  pwd
+#4  cd &quot;$OLDPWD&quot;
+OK: 4 of 4 tests passed
+$</code></pre>
+<h2 id="cli-syntax">CLI Syntax</h2>
+<p>There’s no syntax to learn.</p>
+<p>The test files are identical to the good old command line interface
+(CLI) you’re so familiar:</p>
+<p>♦ <a
+href="https://github.com/aureliojargas/clitest/blob/master/examples/cut.txt">examples/cut.txt</a></p>
+<pre><code>$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1
+one
+$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4
+four
+$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1,4
+one:four
+$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4,1
+one:four
+$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1-4
+one:two:three:four
+$ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4-
+four:five:six
+$</code></pre>
+<p>That’s it.</p>
+<p>Just paste your shell session inside a text file and you have a
+ready-to-use test suite.</p>
+<pre class="console"><code>$ clitest examples/cut.txt
+#1  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1
+#2  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4
+#3  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1,4
+#4  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4,1
+#5  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1-4
+#6  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4-
+OK: 6 of 6 tests passed
+$</code></pre>
+<p>There are more examples and instructions in the <a
+href="https://github.com/aureliojargas/clitest/tree/master/examples">examples
+folder</a>. For a real-life collection of hundreds of test files, see <a
+href="https://github.com/funcoeszz/funcoeszz/tree/master/testador">funcoeszz
+test files</a>.</p>
+<h2 id="testable-documentation">Testable Documentation</h2>
+<p>Clitest can also <strong>extract and run command lines from
+documentation</strong>, such as Markdown files. This very
+<code>README.md</code> file you are now reading is testable with
+<code>clitest README.md</code>. All the command lines inside it will be
+run and checked.</p>
+<p>No more malfunctioning shell commands in your READMEs, you can have
+testable documentation.</p>
+<p>Given the following Markdown sample document:</p>
+<p>♦ <a
+href="https://github.com/aureliojargas/clitest/blob/master/examples/cut.md">examples/cut.md</a></p>
+<pre><code>The numeric ranges of the Unix command &quot;cut&quot;
+============================================
+
+Use single numbers to extract one specific field:
+
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1
+    one
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4
+    four
+
+Use commas to inform more than one field:
+
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1,4
+    one:four
+
+Note that inverting the order will *not* invert the output:
+
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4,1
+    one:four
+
+Use an hyphen to inform a range of fields, from one to four:
+
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1-4
+    one:two:three:four
+
+If you omit the second range number, it matches until the last:
+
+    $ echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4-
+    four:five:six
+
+cut is cool, isn&#39;t it?</code></pre>
+<p>It is a technical article, not a boring code-only test file. You can
+read its final (formatted) version <a
+href="https://github.com/aureliojargas/clitest/blob/master/examples/cut.md">here</a>.</p>
+<p>You can give this article to clitest, who will identify all the shell
+command lines inside it, run them and check if the results are the
+same.</p>
+<pre class="console"><code>$ clitest --prefix tab examples/cut.md
+#1  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1
+#2  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4
+#3  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1,4
+#4  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4,1
+#5  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 1-4
+#6  echo &quot;one:two:three:four:five:six&quot; | cut -d : -f 4-
+OK: 6 of 6 tests passed
+$</code></pre>
+<p>Note the use of <code>--prefix tab</code> option, to inform clitest
+that the code blocks are prefixed by a tab in this Markdown file. For
+files with 4-spaces indented code blocks, use <code>--prefix 4</code>.
+When using non-indented fenced code blocks (```), such as this <a
+href="https://github.com/aureliojargas/clitest/blob/master/README.md">README.md</a>,
+no prefix option is needed.</p>
+<p>Examples of testable documentation handled by clitest:</p>
+<ul>
+<li>https://github.com/aureliojargas/txt2regex/blob/master/tests/features.md</li>
+<li>https://github.com/aureliojargas/txt2regex/blob/master/tests/cmdline.md</li>
+<li>https://github.com/aureliojargas/sedsed/blob/master/test/command_line.md</li>
+<li>https://github.com/aureliojargas/replace/blob/master/README.md</li>
+<li>https://github.com/aureliojargas/clitest/blob/master/test.md</li>
+<li>https://github.com/caarlos0/jvm/blob/master/tests/test.clitest.md</li>
+<li>https://github.com/caarlos0/git-add-remote/blob/master/tests/suite.clitest.md</li>
+</ul>
+<h2 id="alternative-syntax-inline-output">Alternative Syntax: Inline
+Output</h2>
+<p>Now a nice extension to the original idea. Using the special marker
+<code>#=&gt;</code> you can embed the expected command output at the end
+of the command line.</p>
+<pre class="console"><code>$ echo &quot;foo&quot;                      #=&gt; foo
+$ echo $((10 + 2))                #=&gt; 12</code></pre>
+<p>This is the same as doing:</p>
+<pre class="console"><code>$ echo &quot;foo&quot;
+foo
+$ echo $((10 + 2))
+12
+$</code></pre>
+<p>Inline outputs are very readable when testing series of commands that
+result in short texts.</p>
+<pre class="console"><code>$ echo &quot;abcdef&quot; | cut -c 1        #=&gt; a
+$ echo &quot;abcdef&quot; | cut -c 4        #=&gt; d
+$ echo &quot;abcdef&quot; | cut -c 1,4      #=&gt; ad
+$ echo &quot;abcdef&quot; | cut -c 1-4      #=&gt; abcd</code></pre>
+<blockquote>
+<p>Note: If needed, you can change this marker (i.e., to <code>#→</code>
+or <code>###</code>) at the top of the script or using the
+<code>--inline-prefix</code> option.</p>
+</blockquote>
+<h2 id="advanced-tests">Advanced Tests</h2>
+<p>When using the <code>#=&gt;</code> marker, you can take advantage of
+special options to change the default output matching method.</p>
+<pre class="console"><code>$ head /etc/passwd            #=&gt; --lines 10
+$ tac /etc/passwd | tac       #=&gt; --file /etc/passwd
+$ cat /etc/passwd             #=&gt; --egrep ^root:
+$ echo $((2 + 10))            #=&gt; --regex ^\d+$
+$ make test                   #=&gt; --exit 0
+$ pwd                         #=&gt; --eval echo $PWD</code></pre>
+<ul>
+<li><p>Using <code>#=&gt; --lines</code> the test will pass if the
+command output has exactly <code>N</code> lines. Handy when the output
+text is variable (unpredictable), but the number of resulting lines is
+constant.</p></li>
+<li><p>Using <code>#=&gt; --file</code> the test will pass if the
+command output matches the contents of an external file. Useful to
+organize long/complex outputs into files.</p></li>
+<li><p>Using <code>#=&gt; --egrep</code> the test will pass if
+<code>grep -E</code> matches at least one line of the command
+output.</p></li>
+<li><p>Using <code>#=&gt; --regex</code> the test will pass if the
+command output is matched by a <a
+href="http://perldoc.perl.org/perlre.html">Perl regular expression</a>.
+A multiline output is matched as a single string, with inner
+<code>\n</code>’s. Use the <code>(?ims)</code> modifiers when
+needed.</p></li>
+<li><p>Using <code>#=&gt; --exit</code> the test will pass if the exit
+code of the command is equal to the code specified. Useful when testing
+commands that generate variable output (or no output at all), and the
+exit code is the best indication of success. Both STDIN and STDOUT are
+ignored when using this option.</p></li>
+<li><p>Using <code>#=&gt; --eval</code> the test will pass if both
+commands result in the same output. Useful to expand variables which
+store the full or partial output.</p></li>
+</ul>
+<h2 id="options">Options</h2>
+<pre class="console"><code>$ clitest --help
+Usage: clitest [options] &lt;file ...&gt;
+
+Options:
+  -1, --first                 Stop execution upon first failed test
+  -l, --list                  List all the tests (no execution)
+  -L, --list-run              List all the tests with OK/FAIL status
+  -t, --test RANGE            Run specific tests, by number (1,2,4-7)
+  -s, --skip RANGE            Skip specific tests, by number (1,2,4-7)
+      --pre-flight COMMAND    Execute command before running the first test
+      --post-flight COMMAND   Execute command after running the last test
+  -q, --quiet                 Quiet operation, no output shown
+  -V, --version               Show program version and exit
+
+Customization options:
+  -P, --progress TYPE         Set progress indicator: test, number, dot, none
+      --color WHEN            Set when to use colors: auto, always, never
+      --diff-options OPTIONS  Set diff command options (default: &#39;-u&#39;)
+      --inline-prefix PREFIX  Set inline output prefix (default: &#39;#=&gt; &#39;)
+      --prefix PREFIX         Set command line prefix (default: &#39;&#39;)
+      --prompt STRING         Set prompt string (default: &#39;$ &#39;)
+$</code></pre>
+<h2 id="exit-codes">Exit codes</h2>
+<ul>
+<li><code>0</code> - All tests passed, or normal operation (–help,
+–list, …)</li>
+<li><code>1</code> - One or more tests have failed</li>
+<li><code>2</code> - An error occurred (file not found, invalid range,
+…)</li>
+</ul>
+<h2 id="fail-fast">Fail fast</h2>
+<p>Use the <code>--first</code> option (or the short version
+<code>-1</code>) to abort the execution when any test fails.</p>
+<p>Useful for Continuous Integration (CI), or when running sequential
+tests where the next test depends on the correct result of the
+previous.</p>
+<h2 id="quiet-operation">Quiet operation</h2>
+<p>When automating the tests execution, use <code>--quiet</code> to show
+no output and just check the exit code to make sure all tests have
+passed. Using <code>--first</code> to fail fast is also a good idea in
+this case.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ex">clitest</span> <span class="at">--quiet</span> <span class="at">--first</span> tests.txt</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">then</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># all tests passed</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># one or more tests failed :(</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h2 id="run-specific-tests">Run specific tests</h2>
+<p>To rerun a specific problematic test, or to limit the execution to a
+set of tests, use <code>--test</code>. To ignore one or more tests, use
+<code>--skip</code>. If needed, you can combine both options to inform a
+very specific test range. Examples:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">--test</span> 1-10    tests.txt   <span class="co"># Run the first 10 tests</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">--test</span> 1,2,6-8 tests.txt   <span class="co"># Run tests #1, #2, #6, #7 and #8</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">--skip</span> 11,15   tests.txt   <span class="co"># Run all tests, except #11 and #15</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">-t</span> 1-10 <span class="at">-s</span> 5   tests.txt   <span class="co"># Run first 10 tests, but skip #5</span></span></code></pre></div>
+<h2 id="prepost-scripts">Pre/post scripts</h2>
+<p>You can run a preparing script or command before the first test with
+<code>--pre-flight</code>, for setting env variables and create
+auxiliary files. At the end of all tests, run a final cleanup
+script/command with <code>--post-flight</code> to remove temporary files
+or other transient data.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">--pre-flight</span> ./test-init.sh <span class="at">--post-flight</span> <span class="st">&#39;rm *.tmp&#39;</span> tests.txt</span></code></pre></div>
+<h2 id="customization">Customization</h2>
+<p>Use the customization options to extract and test command lines from
+documents or wiki pages. For example, to test all the command line
+examples listed inside a Markdown file using the 4-spaces syntax for
+code blocks:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> <span class="at">--prefix</span> 4 README.md</span></code></pre></div>
+<p>Or maybe you use a different prompt (<code>$PS1</code>) in your
+documentation?</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span>  <span class="at">--prefix</span> 4 <span class="at">--prompt</span> <span class="st">&#39;[john@localhost ~]$ &#39;</span> README.md</span></code></pre></div>
+<h2 id="nerdiness">Nerdiness</h2>
+<ul>
+<li><p>Use any text file format for the tests, it doesn’t matter. The
+command lines just need to be grepable and have a fixed prefix (or even
+none). Even Windows text files (CR+LF) will work fine.</p></li>
+<li><p>The command line power is available in your test files: use
+variables, pipes, redirection, create files, folders, move
+around…</p></li>
+<li><p>All the commands are tested using a single shell session. This
+means that variables, aliases and functions defined in one test will
+persist in the following tests.</p></li>
+<li><p>Both STDOUT and STDERR are captured, so you can also test error
+messages.</p></li>
+<li><p>To test STDOUT/STDERR and the exit code at the same time, add a
+<code>;echo $?</code> after the command.</p></li>
+<li><p>Use an empty <code>$</code> prompt to close the last command
+output.</p></li>
+<li><p>In the output, every single char (blank or not) counts. Any
+difference will cause a test to fail. To ignore the difference in
+blanks, use <code>--diff-options '-u -w'</code>.</p></li>
+<li><p>Unlike doctest’s <code>&lt;BLANKLINE&gt;</code>, in clitest blank
+lines in the command output aren’t a problem. Just insert them
+normally.</p></li>
+<li><p>To test outputs with no final <code>\n</code>, such as
+<code>printf foo</code>, use
+<code>#=&gt;   --regex ^foo$</code>.</p></li>
+<li><p>In multifile mode, the current folder (<code>$PWD</code>) is
+reset when starting to test a new file. This avoids that a
+<code>cd</code> command in a previous file will affect the
+next.</p></li>
+<li><p>Multiline prompts (<code>$PS2</code>) are not yet
+supported.</p></li>
+<li><p>Ellipsis (as in doctest) are not supported. Use
+<code>#=&gt; --regex</code> instead.</p></li>
+<li><p>Simple examples in <a
+href="https://github.com/aureliojargas/clitest/tree/master/examples">examples/</a>.
+Hardcore examples in <a
+href="https://github.com/aureliojargas/clitest/blob/master/test.md">test.md</a>
+and <a
+href="https://github.com/aureliojargas/clitest/blob/master/test/">test/</a>,
+the clitest own test-suite.</p></li>
+</ul>
+<h2 id="choose-the-execution-shell">Choose the execution shell</h2>
+<p>The clitest shebang is <code>#!/bin/sh</code>. That’s the default
+shell that will be used to run your test command lines. Depending on the
+system, that path points to a different shell, such as ash, dash, or
+bash (<a
+href="https://www.gnu.org/software/bash/manual/html_node/Bash-POSIX-Mode.html">running
+in POSIX mode</a>).</p>
+<p>To force your test commands to always run on a specific shell, just
+call the desired shell before:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">clitest</span> tests.txt            <span class="co"># Uses /bin/sh</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> clitest tests.txt       <span class="co"># Uses Bash</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ksh</span> clitest tests.txt        <span class="co"># Uses Korn Shell</span></span></code></pre></div>
+<h2 id="portability">Portability</h2>
+<p>This script was carefully coded to be portable between <a
+href="http://en.wikipedia.org/wiki/POSIX">POSIX</a> shells. It’s code is
+validated by <a
+href="https://linux.die.net/man/1/checkbashisms">checkbashisms</a> and
+<a href="https://www.shellcheck.net/">shellcheck</a>.</p>
+<p>To make sure it keeps working as expected, after every change clitest
+is automatically tested in the CI, using the following shells:</p>
+<ul>
+<li>bash</li>
+<li>dash</li>
+<li>ksh</li>
+<li>sh (busybox)</li>
+<li>zsh</li>
+</ul>
+<blockquote>
+<p>Fish shell is not supported (it’s not POSIX), but you can use <a
+href="https://github.com/aureliojargas/doctest.fish">doctest.fish</a>
+instead.</p>
+</blockquote>
+<p>Portability issues are considered serious bugs, please <a
+href="https://github.com/aureliojargas/clitest/issues">report
+them</a>!</p>
+<p>Developers: Learn more about portability in POSIX shells:</p>
+<ul>
+<li><a href="http://mywiki.wooledge.org/Bashism">How to make bash
+scripts work in dash</a></li>
+<li><a href="https://wiki.ubuntu.com/DashAsBinSh">Ubuntu — Dash as
+/bin/sh</a></li>
+<li><a href="http://www.etalabs.net/sh_tricks.html">Rich’s sh (POSIX
+shell) tricks</a></li>
+<li><a href="http://code.dogmap.org/lintsh/">lintsh</a></li>
+<li><a
+href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html">Official
+POSIX specification: Shell &amp; Utilities</a></li>
+</ul>
+<h2 id="kiss20"><a
+href="http://en.wikipedia.org/wiki/KISS_principle">KISS</a></h2>
+<p>A shell script to test shell commands.<br />
+No other language or environment involved.</p>
+<h2 id="meta">Meta</h2>
+<ul>
+<li>Author: <a href="http://aurelio.net/about.html">Aurelio
+Jargas</a></li>
+<li>Created: 2013-07-24</li>
+<li>Language: Shell Script</li>
+<li>License: <a
+href="https://github.com/aureliojargas/clitest/blob/master/LICENSE.txt">MIT</a></li>
+</ul>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="http://localhost:8000/">Home</a> &middot; <a href="http://localhost:8000/contributing/">Contributing</a> &middot; <a href="http://localhost:8000/projects/">Projects</a> &middot; <a href="http://localhost:8000/resources/">Resources</a> &middot; <a href="http://localhost:8000/void/">Void</a> &middot; <a href="http://localhost:8000/pages.html">Pages</a> &middot; <a href="http://localhost:8000/archives/">Archives</a> &middot; <a href="http://localhost:8000/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 
