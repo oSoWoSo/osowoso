@@ -1,0 +1,673 @@
+/* 
+ * ZX Spectrum Theme for BSSG
+ * Bold colors with black background inspired by the iconic home computer
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic ZX Spectrum aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable ZX Spectrum-specific animations */
+    .site-title a {
+        animation: none !important;
+    }
+    
+    /* Disable pixel overlay effect for reduced motion */
+    body::before {
+        display: none !important;
+    }
+}
+
+:root {
+    /* ZX Spectrum color palette */
+    --black: #000000;
+    --blue: #0000d8;
+    --red: #d80000;
+    --magenta: #d800d8;
+    --green: #00d800;
+    --cyan: #00d8d8;
+    --yellow: #d8d800;
+    --white: #d8d8d8;
+    --bright-blue: #0000ff;
+    --bright-red: #ff0000;
+    --bright-magenta: #ff00ff;
+    --bright-green: #00ff00;
+    --bright-cyan: #00ffff;
+    --bright-yellow: #ffff00;
+    --bright-white: #ffffff;
+    
+    /* Theme color assignments */
+    --bg-color: var(--black);
+    --text-color: var(--white);
+    --header-color: var(--bright-cyan);
+    --link-color: var(--bright-yellow);
+    --link-visited: var(--yellow);
+    --border-color: var(--cyan);
+    --highlight-color: var(--blue);
+    --accent-color: var(--bright-cyan);
+    --accent-secondary: var(--bright-magenta);
+    --quote-bg: var(--black);
+    
+    /* Typography - Enhanced font fallbacks for ZX Spectrum look */
+    --font-main: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    --font-headings: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    --font-mono: 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    
+    /* Sizing and spacing system */
+    --content-width: 820px;
+    --spacing-xs: 0.375rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1.25rem;
+    --spacing-lg: 1.75rem;
+    --spacing-xl: 2.5rem;
+    --spacing-xxl: 3.5rem;
+    
+    /* Typography sizing */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.125rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 1.75rem;
+    
+    /* Line heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.4;
+    --line-height-loose: 1.6;
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s ease;
+    
+    /* Border width */
+    --border-thin: 1px;
+    --border-normal: 2px;
+    --border-thick: 4px;
+}
+
+
+
+body, input, button, select, textarea {
+    font-family: var(--font-main);
+}
+
+/* Base elements */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-md);
+    line-height: var(--line-height-normal);
+    text-shadow: 0 0 2px var(--text-color);
+}
+
+/* Pixel effect overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Container styling */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    border: var(--border-normal) solid var(--border-color);
+    padding: var(--spacing-sm);
+    position: relative;
+    box-shadow: 0 0 var(--spacing-md) rgba(0, 215, 215, 0.3);
+}
+
+/* ZX Spectrum header with border */
+header {
+    border-bottom: var(--border-normal) solid var(--bright-cyan);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    color: var(--bright-white);
+}
+
+header h1 {
+    font-size: var(--font-size-xl);
+    margin: 0 0 var(--spacing-xs) 0;
+    color: var(--bright-cyan);
+}
+
+/* Site title with ZX Spectrum flashing effect */
+.site-title {
+    font-size: var(--font-size-xl);
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.site-title a {
+    color: var(--bright-cyan);
+    text-decoration: none;
+    display: inline-block;
+    transition: color var(--transition-normal), text-shadow var(--transition-normal);
+    text-shadow: 0 0 3px var(--bright-cyan);
+    animation: border-color-change 4s infinite alternate;
+}
+
+.site-title a:hover {
+    color: var(--bright-white);
+    background-color: transparent;
+    text-shadow: 0 0 8px var(--bright-white), 0 0 15px var(--bright-cyan);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid var(--bright-white);
+    outline-offset: 2px;
+    color: var(--bright-white);
+    text-shadow: 0 0 8px var(--bright-white), 0 0 15px var(--bright-cyan);
+}
+
+/* Navigation with ZX Spectrum colors */
+nav {
+    margin: var(--spacing-md) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+nav a {
+    color: var(--black);
+    background-color: var(--bright-yellow);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin-right: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    border: var(--border-thin) solid var(--bright-white);
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+}
+
+nav a:hover, nav a:focus {
+    background-color: var(--bright-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 0 var(--bright-white);
+}
+
+/* Selected menu item */
+nav a.active {
+    background-color: var(--bright-magenta);
+    color: var(--bright-white);
+    position: relative;
+}
+
+nav a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 2px;
+    background-color: var(--bright-white);
+}
+
+/* Content area */
+main {
+    min-height: 300px;
+    padding: var(--spacing-xs) 0;
+}
+
+/* Typography with ZX Spectrum style */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--font-size-xl);
+    color: var(--bright-cyan);
+    margin-top: var(--spacing-lg);
+}
+
+h2 {
+    font-size: var(--font-size-lg);
+    color: var(--bright-yellow);
+    position: relative;
+    padding-left: var(--spacing-sm);
+}
+
+h2::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--bright-yellow);
+}
+
+h3 {
+    font-size: var(--font-size-md);
+    color: var(--bright-green);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-normal);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--bright-white);
+    background-color: var(--blue);
+    text-shadow: 0 0 4px var(--bright-white);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--bright-yellow);
+    outline-offset: 2px;
+    color: var(--bright-white);
+    background-color: var(--blue);
+    text-shadow: 0 0 4px var(--bright-white);
+}
+
+/* Articles with ZX Spectrum border */
+article {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border: var(--border-normal) solid var(--bright-blue);
+    position: relative;
+    transition: border-color var(--transition-normal);
+}
+
+article:hover {
+    border-color: var(--bright-cyan);
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article .meta {
+    font-size: var(--font-size-sm);
+    color: var(--bright-green);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    border-bottom: 1px dashed var(--bright-blue);
+    padding-bottom: var(--spacing-sm);
+}
+
+.reading-time {
+    color: var(--bright-green);
+    display: inline-flex;
+    align-items: center;
+}
+
+.reading-time::before {
+    content: "T:";
+    margin-right: var(--spacing-xs);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.tags a {
+    color: var(--black);
+    background-color: var(--cyan);
+    padding: 2px 5px;
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    border: 1px solid var(--bright-cyan);
+    transition: all var(--transition-fast);
+}
+
+.tags a:hover {
+    background-color: var(--bright-cyan);
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--bright-yellow);
+    outline-offset: 2px;
+    background-color: var(--bright-cyan);
+    transform: translateY(-2px);
+}
+
+code {
+    font-family: var(--font-mono);
+    background-color: var(--blue);
+    color: var(--bright-white);
+    padding: 2px 4px;
+}
+
+pre {
+    background-color: var(--blue);
+    color: var(--bright-white);
+    padding: var(--spacing-sm);
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    border-left: var(--border-normal) solid var(--bright-blue);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: var(--border-normal) solid var(--bright-magenta);
+    image-rendering: pixelated;
+    display: block;
+    margin: var(--spacing-md) auto;
+}
+
+/* Footer with ZX Spectrum border */
+footer {
+    border-top: var(--border-normal) solid var(--bright-yellow);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--bright-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Pagination in ZX Spectrum style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: var(--spacing-lg) 0;
+    gap: var(--spacing-sm);
+}
+
+.pagination a {
+    color: var(--black);
+    background-color: var(--bright-yellow);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-decoration: none;
+    border: var(--border-thin) solid var(--bright-white);
+    transition: all var(--transition-fast);
+}
+
+.pagination a:hover {
+    background-color: var(--bright-cyan);
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--bright-yellow);
+    outline-offset: 2px;
+    background-color: var(--bright-cyan);
+    transform: translateY(-2px);
+}
+
+.pagination .page-info {
+    color: var(--bright-white);
+    background-color: var(--blue);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: var(--border-thin) solid var(--bright-blue);
+}
+
+/* Loading animation with ZX Spectrum border effect */
+@keyframes border-color-change {
+    0% { border-color: var(--bright-blue); }
+    20% { border-color: var(--bright-red); }
+    40% { border-color: var(--bright-magenta); }
+    60% { border-color: var(--bright-green); }
+    80% { border-color: var(--bright-cyan); }
+    100% { border-color: var(--bright-blue); }
+}
+
+.zx-loading {
+    border: var(--border-normal) solid var(--bright-blue);
+    animation: border-color-change 2s infinite;
+    padding: var(--spacing-sm);
+    text-align: center;
+    margin: var(--spacing-md) 0;
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin: var(--spacing-sm);
+        width: auto;
+        padding: var(--spacing-xs);
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    nav a {
+        margin: var(--spacing-xs) 0;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: var(--spacing-xs);
+    }
+    
+    .container {
+        margin: var(--spacing-xs);
+        padding: var(--spacing-xs);
+    }
+    
+    nav a {
+        font-size: 0.9rem;
+        padding: var(--spacing-xs) var(--spacing-xs);
+    }
+}
+
+/* Featured Images with ZX Spectrum styling */
+.featured-image {
+    margin: var(--spacing-lg) 0;
+    border: var(--border-normal) solid var(--bright-cyan);
+    padding: var(--spacing-xs);
+    background-color: var(--black);
+    position: relative;
+    image-rendering: pixelated;
+    box-shadow: 0 0 var(--spacing-md) rgba(0, 255, 255, 0.2);
+}
+
+.featured-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 3px);
+    background-size: 100% 6px;
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: var(--border-thin) solid var(--bright-blue);
+    margin: 0;
+}
+
+.featured-image .image-caption {
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    color: var(--bright-white);
+    text-align: center;
+    background-color: var(--blue);
+    border: var(--border-thin) solid var(--bright-blue);
+    font-size: var(--font-size-sm);
+}
+
+.index-image {
+    margin-bottom: var(--spacing-md);
+    border: var(--border-normal) solid var(--bright-yellow);
+    padding: var(--spacing-xs);
+    background-color: var(--black);
+    image-rendering: pixelated;
+    transition: transform var(--transition-normal);
+}
+
+.index-image:hover {
+    transform: scale(1.02);
+}
+
+.index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: var(--border-thin) solid var(--yellow);
+    margin: 0;
+}
+
+.tag-image {
+    margin-bottom: var(--spacing-md);
+    border: var(--border-normal) solid var(--bright-green);
+    padding: var(--spacing-xs);
+    background-color: var(--black);
+    image-rendering: pixelated;
+    transition: transform var(--transition-normal);
+}
+
+.tag-image:hover {
+    transform: scale(1.02);
+}
+
+.tag-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: var(--border-thin) solid var(--green);
+    margin: 0;
+}
+
+.archive-image {
+    margin-bottom: var(--spacing-md);
+    border: var(--border-normal) solid var(--bright-magenta);
+    padding: var(--spacing-xs);
+    background-color: var(--black);
+    image-rendering: pixelated;
+    transition: transform var(--transition-normal);
+}
+
+.archive-image:hover {
+    transform: scale(1.02);
+}
+
+.archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: var(--border-thin) solid var(--magenta);
+    margin: 0;
+}
+
+/* Selection styling */
+::selection {
+    background-color: var(--bright-blue);
+    color: var(--bright-white);
+    text-shadow: none;
+}
+
+/* Date header with ZX Spectrum styling */
+.date-header {
+    font-family: var(--font-headings);
+    font-weight: normal;
+    color: var(--black);
+    background-color: var(--bright-green);
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+    font-size: var(--font-size-base);
+    display: inline-block;
+    position: relative;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: var(--border-normal) solid var(--bright-white);
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Blockquote styling */
+blockquote {
+    border-left: var(--border-normal) solid var(--bright-cyan);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    background-color: rgba(0, 0, 210, 0.2);
+    color: var(--bright-white);
+}
+
+/* List styling */
+ul, ol {
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+} 

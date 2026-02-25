@@ -1,0 +1,878 @@
+/* 
+ * Windows 3.11 Theme for BSSG
+ * Classic styling from the Windows 3.11 era
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic Windows 3.11 aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Windows 3.11 color scheme */
+    --bg-color: #c0c0c0;
+    --window-bg: #c0c0c0;
+    --text-color: #000000;
+    --link-color: #0000ee;
+    --link-visited: #551a8b;
+    --header-color: #000000;
+    --border-color: #000000;
+    --window-title: #000080;
+    --window-title-text: #ffffff;
+    --window-frame: #c0c0c0;
+    --highlight-color: #000080;
+    --program-icon-bg: #c0c0c0;
+    --program-icon-border: #000000;
+    --dialog-title-bg: #000080;
+    --dialog-button-bg: #c0c0c0;
+    --menu-hover-bg: #000080;
+    --menu-hover-text: #ffffff;
+    --accent-color: #000080;
+    --accent-secondary: #0000aa;
+    --quote-bg: #e0e0e0;
+    
+    /* Typography - Enhanced font fallbacks for Windows 3.11 look */
+    --font-main: 'Arial', 'Helvetica', 'Segoe UI', 'Tahoma', 'Verdana', sans-serif;
+    --font-headings: 'Times New Roman', 'Times', 'Georgia', 'serif';
+    --font-mono: 'Courier New', 'Courier', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    
+    /* Font Sizes - Windows 3.11 used specific pixel sizes - increased for better readability */
+    --text-xs: 0.85rem;    /* ~10px → ~13.6px */
+    --text-sm: 0.95rem;    /* ~12px → ~15.2px */
+    --text-base: 1rem;     /* ~13px → ~16px - Windows 3.11 standard, increased */
+    --text-md: 1.1rem;     /* ~14px → ~17.6px */
+    --text-lg: 1.25rem;    /* ~16px → ~20px */
+    --text-xl: 1.5rem;     /* ~18px → ~24px */
+    --text-2xl: 1.75rem;   /* ~20px → ~28px */
+    
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.4;
+    --line-height-relaxed: 1.6;
+    
+    /* Spacing - Windows 3.11 used specific pixel measurements */
+    --spacing-xs: 0.20rem;   /* ~3px */
+    --spacing-sm: 0.375rem;  /* ~6px */
+    --spacing-md: 0.75rem;   /* ~12px */
+    --spacing-lg: 1rem;      /* ~16px */
+    --spacing-xl: 1.25rem;   /* ~20px */
+    --spacing-2xl: 1.75rem;  /* ~28px */
+    
+    /* Transitions - subtle for Win3.11 feel */
+    --transition-fast: 0.15s ease;
+    --transition-medium: 0.25s ease;
+    
+    /* Sizing */
+    --content-width: 800px;  /* Increased from 720px */
+    --border-radius: 0;      /* Windows 3.11 didn't use rounded corners */
+}
+
+
+
+/* Base elements */
+html {
+    font-size: 16px;  /* Increased from 12px */
+    background-color: var(--bg-color);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVQImWNgYGD4z0AiYGAEAQYA3+gGkXLpv+IAAAAASUVORK5CYII=");
+    background-repeat: repeat;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: transparent;
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-md);
+    line-height: var(--line-height-normal);
+    font-size: var(--text-base);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: var(--spacing-md) auto;
+    background-color: var(--window-bg);
+    border: 2px solid var(--border-color);
+    position: relative;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Title bar like Program Manager window */
+header {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: 0;
+    position: relative;
+    font-weight: bold;
+    font-size: var(--text-md);
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Window control box */
+header::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: var(--spacing-xs);
+    left: var(--spacing-xs);
+    width: 14px;
+    height: 12px;
+    background-color: var(--window-bg);
+    border: 1px solid black;
+    font-size: var(--text-xs);
+    line-height: 1;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    padding: var(--spacing-xs);
+    font-size: var(--text-md);
+    font-weight: bold;
+    font-family: var(--font-main);
+    color: var(--window-title-text);
+}
+
+/* Site title with Windows 3.11 style */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-md);
+    font-weight: bold;
+    font-family: var(--font-main);
+    color: var(--window-title-text);
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+
+.site-title a {
+    color: var(--window-title-text);
+    text-decoration: none;
+    display: inline-block;
+    text-shadow: none;
+    position: relative;
+    transition: color var(--transition-fast);
+}
+
+.site-title a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Gradient effect that mimics Windows 3.11 style */
+.site-title a:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -3px;
+    right: -3px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #ffffff 25%, 
+        #ffffff 75%, 
+        transparent 100%);
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.site-title a:focus::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -3px;
+    right: -3px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #ffffff 25%, 
+        #ffffff 75%, 
+        transparent 100%);
+}
+
+header p {
+    display: none; /* Hide description in header for this theme */
+}
+
+/* Menu bar styled as Program Manager menu */
+nav {
+    background-color: var(--window-bg);
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: 0 var(--spacing-xs);
+    font-size: var(--text-sm);
+    position: relative;
+    display: inline-block;
+    border: 1px solid var(--window-bg);
+    transition: background-color var(--transition-fast);
+}
+
+nav a:hover {
+    background-color: var(--menu-hover-bg);
+    color: var(--menu-hover-text);
+    text-decoration: none;
+}
+
+/* ACCESSIBILITY: Focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--menu-hover-bg);
+    color: var(--menu-hover-text);
+    text-decoration: none;
+}
+
+/* Program Manager-style icon grid */
+.program-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+}
+
+.program-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.program-icon-img {
+    width: 32px;
+    height: 32px;
+    background-color: var(--program-icon-bg);
+    border: 1px solid var(--program-icon-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.program-icon-label {
+    font-size: var(--text-sm);
+    max-width: 70px;
+    word-break: break-word;
+}
+
+/* Content area */
+main {
+    padding: var(--spacing-md);
+    overflow: auto;
+    background-color: var(--window-bg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--text-2xl);
+}
+
+h2 {
+    font-size: var(--text-xl);
+}
+
+h3 {
+    font-size: var(--text-lg);
+}
+
+h4 {
+    font-size: var(--text-md);
+}
+
+article h1 {
+    font-size: var(--text-2xl);
+    color: var(--highlight-color);
+    margin-top: var(--spacing-lg);
+}
+
+p {
+    margin-bottom: var(--spacing-lg);
+    line-height: var(--line-height-normal);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--highlight-color);
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    color: var(--highlight-color);
+}
+
+/* Article styling - Program Manager file view */
+article {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+}
+
+article:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+article .meta {
+    color: var(--text-color);
+    font-size: var(--text-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.reading-time {
+    font-style: italic;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+    content: "Time: ";
+}
+
+/* Use Windows 3.11-style icon when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+    .reading-time::before {
+        content: "⏱ ";
+    }
+}
+
+/* Tags */
+.tags {
+    margin-top: var(--spacing-xl);
+}
+
+.tags a {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: var(--spacing-xs) var(--spacing-xs);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    font-size: var(--text-xs);
+    background-color: var(--window-bg);
+    transition: all var(--transition-fast);
+}
+
+.tags a:hover {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+}
+
+.tags-list {
+    margin: var(--spacing-lg) 0;
+}
+
+.tag-count {
+    color: var(--text-color);
+    font-size: var(--text-xs);
+}
+
+/* Code blocks */
+code {
+    font-family: var(--font-mono);
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 0 var(--spacing-xs);
+    font-size: var(--text-sm);
+}
+
+pre {
+    background-color: #ffffff;
+    padding: var(--spacing-sm);
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    margin: var(--spacing-lg) 0;
+    line-height: var(--line-height-tight);
+}
+
+pre code {
+    border: none;
+    padding: 0;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+}
+
+/* Footer */
+footer {
+    padding: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+    font-size: var(--text-xs);
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Windows 3.11 scrollbar styling */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--window-bg);
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-button {
+    background-color: var(--window-bg);
+    border: 1px solid var(--border-color);
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAGklEQVQImWNgQAIK/xn+M+CS+P//PwNcBQsAHVIGXTXh8RYAAAAASUVORK5CYII=");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAG0lEQVQImWNggID/QPCfAQr+wxj///9ngKkAAF8FBl0RI5tNAAAAAElFTkSuQmCC");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Date header for index */
+.date-header {
+    font-family: var(--font-main);
+    font-size: var(--text-md);
+    font-weight: bold;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--highlight-color);
+}
+
+/* Posts list */
+.posts-list article {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.posts-list h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+    color: var(--highlight-color);
+}
+
+.summary {
+    margin-top: var(--spacing-sm);
+}
+
+/* Blockquote styling */
+blockquote {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-left: 2px solid var(--border-color);
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: var(--spacing-lg) 0;
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-align: left;
+}
+
+th {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+    font-weight: bold;
+}
+
+/* Old Windows-style horizontal rule */
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: var(--spacing-md) 0;
+}
+
+/* Lists */
+ul, ol {
+    margin: var(--spacing-lg) 0;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Classic highlight styles */
+::selection {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+}
+
+/* Dialog box for special messages - enhanced with 3.11 styling */
+.dialog-box {
+    border: 2px solid var(--border-color);
+    background-color: var(--window-bg);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    position: relative;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dialog-title {
+    background-color: var(--dialog-title-bg);
+    color: var(--window-title-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: -8px -8px 8px -8px;
+    font-weight: bold;
+    font-size: var(--text-sm);
+    text-align: center;
+}
+
+.dialog-content {
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.dialog-icon {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    margin-right: 10px;
+    background-color: var(--window-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    float: left;
+}
+
+.dialog-icon.warning {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAACVBMVEX/AAAAAAD////QQWBoAAAAAnRSTlP/AOW3MEoAAABSSURBVBjTY8AE/v8CwKQUEGADs+YDmbHbIMwVkgDmDgCa6wVlLQCy1kOZG4DMDmi6egBZ7mCmCpDFAKQ/QFmhQNZyMMt/GZg1AMjaAGItQDYXAB42I5XyAZWQAAAAAElFTkSuQmCC");
+}
+
+.dialog-icon.error {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAACVBMVEUAAAD/AAD////QQZBOAAAAAnRSTlP/AOW3MEoAAABGSURBVBjTY8AE///XAmCK/z8AzJIGM/pBrAIwiwXE6ocw/0NZTWDWBiiLAcTogDDBoL8AzPwPYbWDmP9BLGcwcwKaLmQAALB6Jt3T3fMSAAAAAElFTkSuQmCC");
+}
+
+.dialog-icon.info {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAACVBMVEUAAAA0NDT///9eAhEhAAAAAnRSTlP/AOW3MEoAAABFSURBVBjTY8AE/xmA4D+QIQIE/4BMfSD4AGLNBzENQKwGEFMdxJoAYraDmA0gpgCIaQBiykOY/0FMBTDzP4ilDmZOQNMFAJqsJnGIEC/zAAAAAElFTkSuQmCC");
+}
+
+.dialog-buttons {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.dialog-button {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 2px outset var(--dialog-button-bg);
+    background-color: var(--dialog-button-bg);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    margin: 0 3px;
+    min-width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dialog-button:active {
+    border: 2px inset var(--dialog-button-bg);
+}
+
+/* File selector - Windows 3.11 style */
+.file-selector {
+    border: 2px solid var(--border-color);
+    padding: 5px;
+    background-color: var(--window-bg);
+    margin: 10px 0;
+}
+
+.file-selector-header {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+    padding: 3px 5px;
+    font-weight: bold;
+    margin: -5px -5px 5px -5px;
+    text-align: center;
+}
+
+.file-list {
+    height: 150px;
+    overflow-y: auto;
+    border: 1px inset #808080;
+    background: white;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+.file-item {
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.file-item:hover {
+    background-color: var(--window-title);
+    color: var(--window-title-text);
+}
+
+.file-selector-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.file-path {
+    border: 1px inset #808080;
+    background: white;
+    padding: 2px 5px;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin-right: 5px;
+}
+
+/* Simulating the classic desktop pattern */
+.desktop-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 640px) {
+    .container {
+        max-width: 95%;
+    }
+    
+    .program-group {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    header h1, .site-title {
+        font-size: var(--text-base);
+    }
+    
+    h1 {
+        font-size: var(--text-xl);
+    }
+    
+    h2 {
+        font-size: var(--text-lg);
+    }
+    
+    h3 {
+        font-size: var(--text-md);
+    }
+    
+    nav {
+        flex-direction: column;
+    }
+    
+    nav a {
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Pagination - Windows 3.11 Style */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-2xl) 0 var(--spacing-xl);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+    background-color: var(--window-bg);
+}
+
+.pagination a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--dialog-button-bg);
+    border: 2px outset #dfdfdf;
+    font-size: var(--text-sm);
+    text-align: center;
+    transition: background-color var(--transition-fast);
+}
+
+.pagination a:active {
+    border-style: inset;
+}
+
+.pagination a:hover {
+    background-color: var(--window-bg);
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--window-bg);
+}
+
+.pagination .page-info {
+    font-size: var(--text-sm);
+    color: var(--text-color);
+}
+
+/* Featured Images with Windows 3.11 styling */
+.featured-image {
+    margin: var(--spacing-md) 0;
+    border: 1px solid var(--border-color);
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    background-color: #ffffff;
+    padding: var(--spacing-xs);
+    position: relative;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #808080;
+    image-rendering: pixelated;
+}
+
+.featured-image:hover img {
+    opacity: 0.95;
+}
+
+.featured-image .image-caption {
+    margin-top: var(--spacing-sm);
+    background-color: var(--window-bg);
+    padding: var(--spacing-xs);
+    border: 1px solid #808080;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    font-size: var(--text-sm);
+    text-align: center;
+}
+
+.index-image {
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    background-color: #ffffff;
+    padding: var(--spacing-xs);
+}
+
+.tag-image, .archive-image {
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    background-color: #ffffff;
+    padding: var(--spacing-xs);
+}
+
+.tag-image img, .archive-image img, .index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #808080;
+    image-rendering: pixelated;
+}
+
+/* Date header in Win3.11 style */
+.date-header {
+    background-color: var(--window-bg);
+    padding: 3px 8px;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #808080;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+} 

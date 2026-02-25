@@ -1,0 +1,782 @@
+/*
+ * Glassmorphism Theme for BSSG
+ * Modern frosted glass effect with blur, transparency, and subtle borders
+ * Features: backdrop-filter blur, soft shadows, and subtle gradients
+ * IMPROVED: Better accessibility, performance, and text browser support
+ */
+
+/* Reduced motion support - CRITICAL for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable performance-heavy effects for reduced motion */
+    .container, nav a, .glass-button, .glass-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Simplify hover effects */
+    .featured-image:hover, .index-image:hover, .tag-image:hover, .archive-image:hover {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Glassmorphism color scheme - IMPROVED contrast ratios */
+    --glass-bg: rgba(255, 255, 255, 0.20); /* MAXIMUM CONTRAST: Much higher opacity for better readability */
+    --glass-border: rgba(255, 255, 255, 0.25); /* Increased opacity */
+    --glass-shadow: rgba(0, 0, 0, 0.15); /* Increased for better definition */
+    --glass-highlight: rgba(255, 255, 255, 0.08);
+    --bg-color-1: #0F3443;
+    --bg-color-2: #348F50;
+    --bg-color-3: #56B4D3;
+    --text-color: rgba(0, 0, 0, 0.9); /* MAXIMUM contrast: Dark text on light backgrounds */
+    --text-color-muted: rgba(0, 0, 0, 0.8); /* MAXIMUM contrast: Slightly muted but still dark */
+    --accent-color: #00FFCC;
+    --accent-color-hover: #99FFE6;
+    --link-color: rgba(0, 255, 204, 0.95); /* Improved contrast */
+    --link-hover: rgba(150, 255, 230, 1);
+    --title-gradient-start: rgba(0, 255, 204, 1);
+    --title-gradient-end: rgba(56, 180, 211, 1);
+
+    /* Typography - Added fallbacks for text browsers */
+    --font-main: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-headings: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'SF Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, 'Courier New', monospace;
+
+    /* Sizing - OPTIMIZED blur amount */
+    --content-width: 1000px;
+    --blur-amount: 12px; /* Reduced from 20px for better performance */
+    --blur-amount-light: 6px; /* For less critical elements */
+    --border-radius: 16px;
+    --small-radius: 10px;
+}
+
+/* Base elements with optimized gradient background */
+body {
+    font-family: var(--font-main);
+    background: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 50%, var(--bg-color-3) 100%);
+    /* REMOVED: background-attachment: fixed for better mobile performance */
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 100vh;
+}
+
+/* OPTIMIZED: Container with reduced glass morphism effect */
+.container {
+    max-width: var(--content-width);
+    margin: 40px auto;
+    padding: 0;
+    position: relative;
+    background: var(--glass-bg);
+    /* CONDITIONAL: Only apply backdrop-filter if motion is not reduced */
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    overflow: hidden;
+}
+
+/* FALLBACK: For browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+    .container {
+        background: rgba(255, 255, 255, 0.9); /* Light solid fallback background for better contrast */
+    }
+    
+    nav a {
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .glass-button {
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* OPTIMIZED: Simplified gradient glass highlight effect */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* Reduced height for performance */
+    background: linear-gradient(to bottom, var(--glass-highlight), transparent);
+    pointer-events: none;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+/* Header with optimized glass effect */
+header {
+    background: rgba(255, 255, 255, 0.20); /* MAXIMUM CONTRAST: Much higher opacity for better readability */
+    padding: 30px 40px;
+    position: relative;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    opacity: 0.95;
+}
+
+/* Site title with improved glassmorphic gradient effect */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.site-title a {
+    text-decoration: none;
+    background: linear-gradient(120deg, var(--title-gradient-start), var(--title-gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    border-bottom: none;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 10px rgba(0, 255, 204, 0.4);
+}
+
+.site-title a:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 4px 20px rgba(0, 255, 204, 0.6);
+    border-bottom: none;
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-bottom: none;
+}
+
+/* FALLBACK: For browsers that don't support background-clip */
+@supports not (background-clip: text) {
+    .site-title a {
+        color: var(--accent-color) !important;
+        background: none !important;
+    }
+}
+
+/* OPTIMIZED: Navigation with reduced glass effects */
+nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 16px 40px;
+    justify-content: flex-end;
+    position: relative;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05); /* Increased opacity */
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    border-radius: 30px;
+    background: var(--glass-bg);
+    /* CONDITIONAL: Only apply backdrop-filter if motion is not reduced */
+    backdrop-filter: blur(var(--blur-amount-light)); /* Reduced blur for nav items */
+    -webkit-backdrop-filter: blur(var(--blur-amount-light));
+    border: 1px solid var(--glass-border);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+nav a:hover, nav a:focus {
+    background: rgba(255, 255, 255, 0.18); /* Increased opacity for better contrast */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* IMPROVED: Focus outline for accessibility */
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Active navigation with accent glow */
+nav a.active {
+    background: rgba(0, 204, 255, 0.2); /* Increased opacity */
+    border-color: rgba(0, 204, 255, 0.4); /* Increased opacity */
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+}
+
+/* RSS in accent color */
+nav a:last-child {
+    background: rgba(0, 204, 255, 0.25); /* Increased opacity */
+    border-color: rgba(0, 204, 255, 0.4); /* Increased opacity */
+}
+
+nav a:last-child:hover {
+    background: rgba(0, 204, 255, 0.35); /* Increased opacity */
+}
+
+/* Content area with glass effect */
+main {
+    padding: 40px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.15); /* IMPROVED: Better background for content readability */
+}
+
+/* Typography with improved contrast */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-color); /* Improved contrast */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+article {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.25); /* MAXIMUM CONTRAST: Much higher opacity for text readability */
+    border: 1px solid var(--glass-border);
+    border-radius: var(--small-radius);
+    /* OPTIMIZED: Reduced shadow complexity */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+article:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article h1 {
+    margin-top: 0;
+    color: var(--text-color);
+}
+
+article .article-content {
+    color: var(--text-color); /* Improved contrast */
+}
+
+article .meta {
+    color: rgba(255, 255, 255, 1); /* WHITE text on dark background for maximum contrast */
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* MAXIMUM CONTRAST: Very strong background for perfect metadata visibility */
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.75rem 1rem;
+    border-radius: var(--small-radius);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.reading-time {
+    color: rgba(255, 255, 255, 1); /* WHITE text on dark meta background for maximum contrast */
+    font-weight: 500; /* IMPROVED: Make it slightly bolder */
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tags a {
+    background: rgba(0, 0, 0, 0.8); /* Dark background for better contrast */
+    color: rgba(0, 255, 204, 1); /* Bright cyan text on dark background */
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(0, 255, 204, 0.5);
+    border-bottom: 1px solid rgba(0, 255, 204, 0.5); /* Consistent border */
+    transition: all 0.2s ease;
+    font-weight: 500; /* Make text slightly bolder for better readability */
+}
+
+.tags a:hover {
+    background: rgba(0, 0, 0, 0.9); /* Darker background on hover */
+    color: rgba(0, 255, 204, 1); /* Keep bright cyan text */
+    transform: translateY(-1px);
+    border: 1px solid rgba(0, 255, 204, 0.8); /* Brighter border on hover */
+    border-bottom: 1px solid rgba(0, 255, 204, 0.8); /* Consistent border */
+    box-shadow: 0 2px 8px rgba(0, 255, 204, 0.3); /* Add cyan glow on hover */
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tag-count {
+    background: rgba(0, 255, 204, 0.2); /* Increased opacity */
+    color: var(--accent-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+code {
+    background: rgba(0, 0, 0, 0.4); /* Improved contrast */
+    color: var(--accent-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+pre {
+    background: rgba(0, 0, 0, 0.5); /* Improved contrast */
+    color: var(--text-color);
+    padding: 1.5rem;
+    border-radius: var(--small-radius);
+    overflow-x: auto;
+    border: 1px solid var(--glass-border);
+    margin: 1.5rem 0;
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--small-radius);
+    margin: 1rem 0;
+}
+
+img:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+/* OPTIMIZED: Featured image with reduced glass effects */
+.featured-image {
+    position: relative;
+    margin: 2rem 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    /* OPTIMIZED: Simplified shadow */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.featured-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    /* OPTIMIZED: Simplified filter effects */
+    filter: brightness(1.05) contrast(1.05);
+}
+
+.featured-image:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.featured-image:hover img {
+    transform: scale(1.02); /* Reduced scale for better performance */
+}
+
+.featured-image .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7); /* Improved contrast */
+    color: var(--text-color);
+    padding: 1rem;
+    font-size: 0.9rem;
+    z-index: 2;
+}
+
+/* OPTIMIZED: Index image with reduced effects */
+.index-image {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: var(--small-radius);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.index-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    filter: brightness(1.02) contrast(1.02);
+}
+
+.index-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.index-image:hover img {
+    transform: scale(1.01);
+}
+
+.tag-image {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: var(--small-radius);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.tag-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    filter: brightness(1.02) contrast(1.02);
+}
+
+.tag-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tag-image:hover img {
+    transform: scale(1.01);
+}
+
+.archive-image {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: var(--small-radius);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.archive-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    filter: brightness(1.02) contrast(1.02);
+}
+
+.archive-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.archive-image:hover img {
+    transform: scale(1.01);
+}
+
+footer {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem 40px;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-color-muted);
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--accent-color);
+    border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+}
+
+footer a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.pagination a {
+    background: var(--glass-bg);
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    transition: all 0.2s ease;
+    font-weight: 500;
+    border-bottom: 1px solid var(--glass-border); /* Consistent border */
+}
+
+.pagination a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--glass-border); /* Consistent border */
+}
+
+.pagination .page-info {
+    color: var(--text-color-muted);
+    font-weight: 500;
+}
+
+/* OPTIMIZED: Glass button component with reduced effects */
+.glass-button {
+    background: var(--glass-bg);
+    /* CONDITIONAL: Only apply backdrop-filter if motion is not reduced */
+    backdrop-filter: blur(var(--blur-amount-light));
+    -webkit-backdrop-filter: blur(var(--blur-amount-light));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--small-radius);
+    padding: 0.75rem 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* OPTIMIZED: Glass card component with reduced effects */
+.glass-card {
+    background: var(--glass-bg);
+    /* CONDITIONAL: Only apply backdrop-filter if motion is not reduced */
+    backdrop-filter: blur(var(--blur-amount-light));
+    -webkit-backdrop-filter: blur(var(--blur-amount-light));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* IMPROVED: Better responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        /* OPTIMIZED: Simplified background on mobile */
+        background: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+    }
+    
+    .container {
+        margin: 20px auto;
+        border-radius: var(--small-radius);
+        /* OPTIMIZED: Remove backdrop-filter on mobile for better performance */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.9); /* Light solid background for mobile with maximum contrast */
+    }
+    
+    header, main, footer {
+        padding: 20px;
+    }
+    
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 20px;
+    }
+    
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 16px;
+        /* OPTIMIZED: Remove backdrop-filter on mobile */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    article h1 {
+        font-size: 1.8rem;
+    }
+    
+    article .meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    article .article-content {
+        font-size: 1rem;
+    }
+    
+    footer {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+    
+    .container {
+        margin: 10px auto;
+        border-radius: 8px;
+    }
+    
+    nav {
+        padding: 12px 16px;
+    }
+    
+    nav a {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .pagination a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+}

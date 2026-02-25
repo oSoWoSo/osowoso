@@ -1,0 +1,494 @@
+/* 
+ * Windows 95 Theme for BSSG
+ * Authentic styling from the Windows 95 era
+ * Enhanced with accessibility, performance, and compatibility improvements
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Windows 95 color scheme */
+    --bg-color: #008080; /* Classic teal desktop */
+    --window-bg: #ffffff;
+    --text-color: #000000;
+    --link-color: #0000ee;
+    --link-visited: #551a8b;
+    --header-color: #000000;
+    --border-color: #808080;
+    --button-highlight: #ffffff;
+    --button-shadow: #808080;
+    --button-face: #c0c0c0;
+    --title-bar: #000080; /* Classic Windows blue */
+    --title-text: #ffffff;
+    --menu-bar: #c0c0c0;
+    --inactive-title-bar: #808080;
+    --inactive-title-text: #c0c0c0;
+    
+    /* Typography - system fonts for authentic Windows 95 look */
+    --font-main: 'MS Sans Serif', 'Tahoma', 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
+    --font-headings: 'Times New Roman', 'Times', 'Georgia', serif;
+    --font-mono: 'Courier New', 'Courier', 'Consolas', 'Liberation Mono', monospace;
+    
+    /* Font Sizes */
+    --text-xs: 0.85rem;     /* 13.6px */
+    --text-sm: 0.95rem;     /* 15.2px */
+    --text-base: 1.05rem;   /* 16.8px */
+    --text-md: 1.2rem;      /* 19.2px */
+    --text-lg: 1.4rem;      /* 22.4px */
+    --text-xl: 1.6rem;      /* 25.6px */
+    --text-2xl: 1.8rem;     /* 28.8px */
+    
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.4;
+    --line-height-relaxed: 1.6;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 0.75rem;   /* 12px */
+    --spacing-lg: 1rem;      /* 16px */
+    --spacing-xl: 1.5rem;    /* 24px */
+    --spacing-2xl: 2rem;     /* 32px */
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-medium: 0.25s ease;
+    
+    /* Sizing */
+    --content-width: 950px;  /* Increased for better screen utilization */
+}
+
+/* Removed embedded font for better performance and text browser compatibility */
+
+/* Base elements */
+html {
+    font-size: 16px;  /* Increased from 14px */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-md);
+    line-height: var(--line-height-normal);
+    font-size: var(--text-base);
+}
+
+/* Common Windows 95 border styles */
+.win95-border {
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+}
+
+.win95-inset {
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+}
+
+.container {
+    max-width: var(--content-width);
+    margin: var(--spacing-xl) auto;
+    background-color: var(--button-face);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 2px;
+    border: 1px solid var(--border-color);
+}
+
+/* Title bar like Windows 95 window */
+header {
+    background-color: var(--title-bar);
+    color: var(--title-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: 0;
+    position: relative;
+    font-weight: bold;
+    font-size: var(--text-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Site title */
+.site-title {
+    font-family: var(--font-main);
+    font-weight: bold;
+    margin: 0;
+    font-size: var(--text-md);
+    color: var(--title-text);
+    padding: 0;
+}
+
+.site-title a {
+    color: var(--title-text);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.site-title a:hover {
+    text-decoration: none;
+}
+
+/* Window control icons */
+.window-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.win95-control {
+    width: 16px;
+    height: 14px;
+    background-color: var(--button-face);
+    border: 1px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xs);
+    cursor: pointer;
+}
+
+/* Text browser fallback for window controls */
+.win95-close::after {
+    content: "X";
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Progressive enhancement for decorative symbol */
+@supports (content: "×") {
+    .win95-close::after {
+        content: "×";
+    }
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-md);
+    font-weight: bold;
+    font-family: var(--font-main);
+    color: var(--title-text);
+}
+
+header p {
+    display: none;
+}
+
+/* Menu bar */
+nav {
+    background-color: var(--button-face);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    margin: 0 var(--spacing-xs);
+    font-size: var(--text-base);
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: var(--button-face);
+    border: 1px solid var(--button-shadow);
+    border-top-color: var(--button-highlight);
+    border-left-color: var(--button-highlight);
+    padding: calc(var(--spacing-xs) - 1px) calc(var(--spacing-md) - 1px);
+}
+
+/* Accessibility: Focus outlines for all interactive elements */
+nav a:focus,
+.site-title a:focus,
+a:focus,
+.tags a:focus,
+.pagination a:focus,
+.win95-control:focus {
+    outline: 2px solid var(--title-bar);
+    outline-offset: 2px;
+}
+
+nav a.active {
+    background-color: var(--button-face);
+    border: 1px solid var(--button-shadow);
+    border-top-color: var(--button-highlight);
+    border-left-color: var(--button-highlight);
+    padding: calc(var(--spacing-xs) - 1px) calc(var(--spacing-md) - 1px);
+}
+
+/* Content area */
+main {
+    padding: var(--spacing-lg);
+    background-color: var(--window-bg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--text-2xl);
+}
+
+h2 {
+    font-size: var(--text-xl);
+}
+
+h3 {
+    font-size: var(--text-lg);
+}
+
+p {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--text-base);
+    line-height: var(--line-height-normal);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Featured images in Windows 95 style */
+.featured-image, .index-image, .tag-image, .archive-image {
+    margin-top: var(--spacing-2xl);
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+    position: relative;
+    background-color: var(--window-bg);
+    padding: 0;
+}
+
+/* Title bar for featured images */
+.featured-image::before, .index-image::before, .tag-image::before, .archive-image::before {
+    box-sizing: border-box;
+    content: "Image Viewer";
+    position: absolute;
+    top: -20px;
+    left: -2px;
+    width: calc(100% + 4px); /* Exact width of the window */
+    height: 20px;
+    background-color: var(--title-bar);
+    color: var(--title-text);
+    padding: 3px var(--spacing-sm);
+    font-size: var(--text-sm);
+    font-weight: bold;
+    font-family: var(--font-main);
+    z-index: 10;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.index-image::before {
+    content: "Preview";
+}
+
+.tag-image::before {
+    content: "Tag Viewer";
+}
+
+.archive-image::before {
+    content: "Archive Viewer";
+}
+
+/* Text browser fallback for image viewer close buttons */
+.featured-image::after, .index-image::after, .tag-image::after, .archive-image::after {
+    content: "X";
+    position: absolute;
+    top: -19px;
+    right: 2px;
+    width: 16px;
+    height: 14px;
+    background-color: var(--button-face);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-md);
+    font-weight: bold;
+    z-index: 11;
+    box-sizing: border-box;
+}
+
+/* Progressive enhancement for decorative symbol */
+@supports (content: "×") {
+    .featured-image::after, .index-image::after, .tag-image::after, .archive-image::after {
+        content: "×";
+    }
+}
+
+.featured-image img, .index-image img, .tag-image img, .archive-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* Tag styling */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.tags a {
+    background-color: var(--button-face);
+    color: var(--text-color);
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    display: inline-block;
+    transition: all var(--transition-fast);
+}
+
+.tags a:hover {
+    text-decoration: none;
+}
+
+.tags a:active {
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+}
+
+/* Post lists in archives */
+.posts-list article {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.posts-list h3 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Footer with taskbar appearance */
+footer {
+    background-color: var(--button-face);
+    border-top: 2px solid var(--button-highlight);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--text-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-sm);
+    background-color: var(--button-face);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+}
+
+.pagination a {
+    background-color: var(--button-face);
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--text-base);
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    transition: all var(--transition-fast);
+}
+
+.pagination a:active {
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+}
+
+.pagination .page-info {
+    font-size: var(--text-sm);
+    color: var(--text-color);
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        margin: var(--spacing-sm);
+        width: auto;
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    nav a {
+        margin: var(--spacing-xs);
+        flex-basis: 45%;
+        text-align: center;
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: var(--spacing-xs);
+    }
+    
+    nav a {
+        flex-basis: 100%;
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+} 

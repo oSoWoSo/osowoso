@@ -1,0 +1,828 @@
+/* 
+ * Terminal Theme for BSSG
+ * Simulates an old teletype/terminal output with monospace text 
+ * on a simple background, with a character-by-character "print" effect.
+ * Enhanced with accessibility, performance, and compatibility improvements.
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable all terminal effects for reduced motion */
+    .tty-effect {
+        animation: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    body::before,
+    .container::before {
+        display: none !important;
+    }
+}
+
+:root {
+    /* Colors - retro terminal */
+    --terminal-black: #000000;
+    --terminal-green: #00ff00;
+    --terminal-amber: #ffb000;
+    --terminal-dim-green: #005500;
+    --terminal-gray: #808080;
+    --terminal-light-gray: #c0c0c0;
+    
+    /* Theme color assignments */
+    --bg-color: var(--terminal-black);
+    --text-color: var(--terminal-green);
+    --heading-color: var(--terminal-green);
+    --link-color: var(--terminal-amber);
+    --link-hover: var(--terminal-light-gray);
+    --border-color: var(--terminal-dim-green);
+    --code-bg: rgba(0, 85, 0, 0.3);
+    --cursor-color: var(--terminal-green);
+    
+    /* Typography - system monospace fonts for terminal aesthetic */
+    --font-main: 'Courier New', 'Liberation Mono', 'DejaVu Sans Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    --font-headings: 'Courier New', 'Liberation Mono', 'DejaVu Sans Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    --font-mono: 'Courier New', 'Liberation Mono', 'DejaVu Sans Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    
+    /* Font sizes */
+    --text-xs: 0.8rem;
+    --text-sm: 0.9rem;
+    --text-base: 1rem;
+    --text-md: 1.1rem;
+    --text-lg: 1.3rem;
+    --text-xl: 1.5rem;
+    
+    /* Sizing */
+    --content-width: 90%;
+    --max-content-width: 900px;
+    --line-height: 1.5;
+    --line-height-tight: 1.3;
+    --character-width: 0.6em; /* For cursor animation */
+    --cursor-blink-speed: 0.8s;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.3s;
+}
+
+/* Base elements */
+html {
+    background-color: var(--bg-color);
+    font-size: 16px;
+    scrollbar-color: var(--terminal-dim-green) var(--terminal-black);
+    scrollbar-width: thin;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: var(--line-height);
+    margin: 0;
+    padding: var(--spacing-sm);
+    position: relative;
+}
+
+/* Progressive enhancement for terminal effects */
+@supports (background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px)) {
+    body {
+        /* Terminal scanlines effect - reduced intensity */
+        background-image: linear-gradient(
+            rgba(0, 255, 0, 0.02) 1px, 
+            transparent 1px
+        );
+        background-size: 100% 3px;
+        /* CRT glow effect - reduced intensity */
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.03) inset;
+    }
+}
+
+/* Progressive enhancement for CRT vignette effect */
+@supports (background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 80%)) {
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.1) 80%,
+            rgba(0, 0, 0, 0.2) 100%
+        );
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.5;
+    }
+}
+
+/* Scrollbars - webkit */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--terminal-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--terminal-dim-green);
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terminal-green);
+}
+
+.container {
+    width: var(--content-width);
+    max-width: var(--max-content-width);
+    margin: var(--spacing-md) auto;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    position: relative;
+    /* Simulate an old terminal window */
+    overflow: hidden;
+}
+
+/* Progressive enhancement for container scanlines */
+@supports (background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px)) {
+    .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.05),
+            rgba(0, 0, 0, 0.05) 1px,
+            rgba(0, 0, 0, 0) 1px,
+            rgba(0, 0, 0, 0) 3px
+        );
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.2;
+    }
+}
+
+/* Terminal header */
+header {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Terminal prompt in header */
+.site-title {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--spacing-xs) 0;
+    position: relative;
+    padding-left: 1.2em;
+}
+
+.site-title::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--terminal-green);
+}
+
+.site-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-block;
+    /* Simulate typewriter effect */
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.1em solid var(--cursor-color);
+    animation: typing 3.5s steps(40, end), 
+               blink-caret var(--cursor-blink-speed) step-end infinite;
+}
+
+/* Site description */
+header p {
+    font-size: var(--text-base);
+    margin: var(--spacing-sm) 0;
+    max-width: 600px;
+    padding-left: 1.2em;
+    opacity: 0.9;
+}
+
+/* Terminal-style navigation */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+    padding-left: 1.2em;
+}
+
+nav::before {
+    content: "$ ";
+    color: var(--terminal-green);
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.2em 0.4em;
+    margin-right: var(--spacing-xs);
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+nav a:hover, 
+nav a.active {
+    color: var(--terminal-amber);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+nav a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--terminal-dim-green);
+    transform: scaleX(0);
+    transition: transform var(--transition-medium) ease;
+}
+
+nav a:hover::before, 
+nav a.active::before {
+    transform: scaleX(1);
+}
+
+/* Main content */
+main {
+    min-height: 50vh;
+    padding-bottom: var(--spacing-lg);
+    /* Prepare for the typewriter effect on content */
+    position: relative;
+}
+
+/* Typography for terminal */
+h1, h2, h3 {
+    font-weight: normal;
+    margin: var(--spacing-md) 0 var(--spacing-xs) 0;
+    line-height: 1.3;
+    position: relative;
+    padding-left: 2em; /* Sufficient padding for 1-3 # symbols */
+}
+
+h4, h5, h6 {
+    font-weight: normal;
+    margin: var(--spacing-md) 0 var(--spacing-xs) 0;
+    line-height: 1.3;
+    position: relative;
+    padding-left: 3.5em; /* Increased padding for 4-6 # symbols */
+}
+
+h1::before, h2::before, h3::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--terminal-amber);
+    width: 1.8em; /* Sufficient width for 1-3 # symbols */
+}
+
+h4::before, h5::before, h6::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--terminal-amber);
+    width: 3.2em; /* Sufficient width for 4-6 # symbols */
+}
+
+h1::before { content: "#"; }
+h2::before { content: "##"; }
+h3::before { content: "###"; }
+h4::before { content: "####"; }
+h5::before { content: "#####"; }
+h6::before { content: "######"; }
+
+h1 {
+    font-size: var(--text-xl);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+h2 {
+    font-size: var(--text-lg);
+}
+
+h3 {
+    font-size: var(--text-md);
+}
+
+p {
+    margin: var(--spacing-sm) 0;
+    position: relative;
+    padding-left: 1.2em;
+}
+
+p::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--terminal-dim-green);
+}
+
+/* Links with command-like styling */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--link-color);
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+a:hover {
+    color: var(--link-hover);
+    background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--link-hover);
+}
+
+/* Accessibility: Focus outlines for all interactive elements */
+a:focus,
+nav a:focus,
+.tags a:focus,
+.pagination a:focus {
+    outline: 2px solid var(--terminal-amber);
+    outline-offset: 2px;
+    background-color: rgba(255, 176, 0, 0.1);
+}
+
+/* Article styling */
+article {
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+/* Text browser fallback for article header */
+article::before {
+    content: "Article:";
+    color: var(--terminal-green);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Progressive enhancement for terminal command */
+@supports (content: "cat article.txt") {
+    article::before {
+        content: "cat article.txt";
+    }
+}
+
+article h1 {
+    margin-top: var(--spacing-sm);
+}
+
+/* Article metadata */
+article .meta {
+    font-size: var(--text-sm);
+    color: var(--terminal-dim-green);
+    margin: var(--spacing-xs) 0 var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding-left: 1.2em;
+}
+
+/* Reading time */
+.reading-time {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+/* Text browser fallback for reading time */
+.reading-time::before {
+    content: "Time: ";
+    font-size: var(--text-base);
+}
+
+/* Progressive enhancement for decorative symbol */
+@supports (content: "⧗") {
+    .reading-time::before {
+        content: "⧗";
+    }
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    justify-content: center;
+}
+
+.tags a {
+    color: var(--terminal-amber);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--terminal-dim-green);
+    text-decoration: none;
+    font-size: var(--text-xs);
+}
+
+.tags a:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--terminal-light-gray);
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+}
+
+code {
+    padding: 0.1em 0.3em;
+    font-size: var(--text-sm);
+}
+
+pre {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+    overflow-x: auto;
+    line-height: var(--line-height-tight);
+    position: relative;
+}
+
+/* Text browser fallback for code header */
+pre::before {
+    content: "Code:";
+    color: var(--terminal-green);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Progressive enhancement for terminal command */
+@supports (content: "$ cat code.txt") {
+    pre::before {
+        content: "$ cat code.txt";
+    }
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+/* Blockquote */
+blockquote {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--terminal-amber);
+    position: relative;
+}
+
+/* Text browser fallback for blockquote decorations */
+blockquote::before {
+    content: "Quote: ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: var(--text-xs);
+    color: var(--terminal-gray);
+    padding: 0.2em 0.4em;
+}
+
+blockquote::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: var(--text-xs);
+    color: var(--terminal-gray);
+    padding: 0.2em 0.4em;
+}
+
+/* Progressive enhancement for terminal command */
+@supports (content: "echo '") {
+    blockquote::before {
+        content: "echo '";
+    }
+    
+    blockquote::after {
+        content: "'";
+    }
+}
+
+blockquote p {
+    margin: var(--spacing-xs) 0;
+    padding-left: 0;
+}
+
+blockquote p::before {
+    content: none;
+}
+
+/* Lists with proper spacing to prevent overlap */
+ul, ol {
+    margin: var(--spacing-sm) 0;
+    padding-left: 4em; /* Increased to prevent overlap */
+    position: relative;
+}
+
+ul::before, ol::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--terminal-dim-green);
+    width: 3.5em; /* Ensure sufficient width */
+}
+
+/* Text browser fallbacks for list headers */
+ul::before {
+    content: "List:";
+}
+
+ol::before {
+    content: "List:";
+}
+
+/* Progressive enhancement for terminal commands */
+@supports (content: "ls:") {
+    ul::before {
+        content: "ls:";
+    }
+    
+    ol::before {
+        content: "seq:";
+    }
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+}
+
+ul li::before {
+    content: "- ";
+    color: var(--terminal-dim-green);
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    filter: grayscale(50%) sepia(20%) hue-rotate(80deg) brightness(1.1) contrast(1.2);
+    image-rendering: pixelated;
+}
+
+figure {
+    margin: var(--spacing-md) 0;
+    position: relative;
+}
+
+/* Text browser fallback for figure header */
+figure::before {
+    content: "Image:";
+    color: var(--terminal-green);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Progressive enhancement for terminal command */
+@supports (content: "cat image.jpg") {
+    figure::before {
+        content: "cat image.jpg";
+    }
+}
+
+figcaption {
+    font-size: var(--text-sm);
+    padding: var(--spacing-xs);
+    color: var(--terminal-gray);
+    text-align: center;
+}
+
+/* Post list */
+.posts-list article {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.posts-list article::before {
+    content: "cat post_" attr(data-index) ".txt";
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.posts-list h2,
+.posts-list h3 {
+    margin-top: 0;
+    font-size: var(--text-md);
+    padding-left: 1.5em; /* Increased to prevent overlap */
+    position: relative;
+}
+
+.posts-list h2::before,
+.posts-list h3::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--terminal-amber);
+    content: "##";
+    width: 1.3em; /* Ensure sufficient width */
+}
+
+.posts-list article p:last-child {
+    margin-bottom: 0;
+}
+
+/* Terminal footer */
+footer {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--border-color);
+    font-size: var(--text-sm);
+    text-align: center;
+    position: relative;
+}
+
+/* Text browser fallback for footer */
+footer::before {
+    content: "End";
+    color: var(--terminal-green);
+    display: block;
+    text-align: left;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Progressive enhancement for terminal command */
+@supports (content: "exit") {
+    footer::before {
+        content: "exit";
+    }
+}
+
+footer p {
+    margin: var(--spacing-xs) 0;
+    padding-left: 0;
+}
+
+footer p::before {
+    content: none;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--border-color);
+}
+
+.pagination a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.3em 0.6em;
+    border: 1px solid var(--terminal-dim-green);
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all var(--transition-fast);
+}
+
+.pagination a:hover {
+    border-color: var(--terminal-amber);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--terminal-amber);
+}
+
+/* Terminal typing and cursor animations */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--cursor-color) }
+}
+
+/* Apply a simulated delayed "typing" effect on page load */
+.tty-effect {
+    visibility: hidden;
+    opacity: 0;
+    animation: appear 0.1s forwards;
+    animation-delay: calc(var(--tty-index) * 0.05s);
+}
+
+@keyframes appear {
+    to {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 95%;
+        padding: var(--spacing-sm);
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav a {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    h1, h2, h3, p {
+        padding-left: 1.5em; /* Reduced but still sufficient padding for mobile */
+    }
+    
+    h4, h5, h6 {
+        padding-left: 2.5em; /* Reduced but still sufficient padding for mobile */
+    }
+    
+    h1 {
+        font-size: var(--text-lg);
+    }
+    
+    h2 {
+        font-size: var(--text-md);
+    }
+    
+    h3 {
+        font-size: var(--text-base);
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .container {
+        max-width: 100%;
+        border: none;
+        padding: 0;
+    }
+
+    a {
+        color: #006600;
+        text-decoration: underline;
+    }
+
+    nav, footer {
+        display: none;
+    }
+}
+
+/* Center tags listings */
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+/* Ensure tag/archive headings are properly aligned */
+.tag-title,
+.archive-title {
+    text-align: center;
+}

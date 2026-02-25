@@ -1,0 +1,849 @@
+/* 
+ * Windows 7 Theme for BSSG
+ * Recreating the Windows 7 Aero Glass effect with transparency and subtle gradients
+ * IMPROVED: Better accessibility, performance, and text browser support
+ */
+
+/* Reduced motion support - CRITICAL for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable performance-heavy effects */
+    .container, header, nav, article, .featured-image, .featured-image .image-caption {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Simplify hover effects */
+    .featured-image:hover img {
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Windows 7 Aero color scheme - IMPROVED contrast ratios */
+    --bg-color: #e3eefb;
+    --window-bg: rgba(255, 255, 255, 0.95);
+    --text-color: #000000;
+    --link-color: #0066cc;
+    --link-visited: #800080;
+    --header-color: #003399;
+    --border-color: rgba(177, 199, 216, 0.8);
+    --shadow-color: rgba(111, 151, 182, 0.5);
+    --button-face: #f0f0f0;
+    --title-bar: linear-gradient(to bottom, rgba(209, 228, 246, 0.95) 0%, rgba(177, 211, 241, 0.95) 100%);
+    --title-text: #000000;
+    --task-bar: rgba(30, 57, 91, 0.95);
+    --taskbar-start: #1b7edf;
+    --taskbar-text: #ffffff;
+    --highlight-color: #d2e8ff;
+    --accent-color: #1b7edf;
+    --accent-secondary: #5da7e6;
+    --quote-bg: rgba(240, 240, 240, 0.7);
+    
+    /* Typography - IMPROVED fallbacks for text browsers */
+    --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    --font-headings: 'Segoe UI Light', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+    
+    /* Font Sizes */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.85rem;      /* 13.6px */
+    --text-base: 0.9rem;     /* 14.4px - Win7 standard */
+    --text-md: 1rem;         /* 16px */
+    --text-lg: 1.2rem;       /* 19.2px */
+    --text-xl: 1.4rem;       /* 22.4px */
+    --text-2xl: 1.7rem;      /* 27.2px */
+    --text-3xl: 2rem;        /* 32px */
+    
+    /* Line Heights */
+    --line-height-tight: 1.3;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.7;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 0.75rem;   /* 12px */
+    --spacing-lg: 1rem;      /* 16px */
+    --spacing-xl: 1.5rem;    /* 24px */
+    --spacing-2xl: 2rem;     /* 32px */
+    --spacing-3xl: 2.5rem;   /* 40px */
+    
+    /* Transitions - OPTIMIZED for performance */
+    --transition-fast: 0.15s ease; /* Reduced for better performance */
+    --transition-medium: 0.2s ease; /* Reduced for better performance */
+    --transition-slow: 0.3s ease; /* Reduced for better performance */
+    
+    /* Sizing */
+    --content-width: 1100px;  /* Increased from 900px for better screen utilization */
+    --border-radius: 6px;
+    --small-radius: 3px;
+}
+
+/* Windows 7 default background pattern - OPTIMIZED */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    /* SIMPLIFIED: Basic gradient instead of base64 image for better performance */
+    background-image: linear-gradient(135deg, #e3eefb 0%, #d1e7f0 50%, #c8ddf0 100%);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-xl);
+    line-height: var(--line-height-normal);
+    font-size: var(--text-base);
+    /* REMOVED: background-attachment: fixed for better mobile performance */
+}
+
+/* Aero Glass window style effect with shadow - OPTIMIZED */
+.container {
+    max-width: var(--content-width);
+    margin: var(--spacing-2xl) auto;
+    background: var(--window-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 20px var(--shadow-color);
+    overflow: hidden;
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(10px); /* Reduced from 15px for better performance */
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+    .container {
+        background: rgba(255, 255, 255, 0.98); /* More opaque fallback */
+    }
+}
+
+/* Title bar with Windows 7 Aero glass effect - OPTIMIZED */
+header {
+    background: var(--title-bar);
+    color: var(--title-text);
+    padding: var(--spacing-md) var(--spacing-xl);
+    margin: 0;
+    position: relative;
+    font-weight: normal;
+    font-size: var(--text-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(8px); /* Reduced from 10px for better performance */
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(8px)) {
+    header {
+        background: linear-gradient(to bottom, rgba(209, 228, 246, 0.98) 0%, rgba(177, 211, 241, 0.98) 100%);
+    }
+}
+
+/* Window control icons - Windows 7 style - IMPROVED accessibility */
+.window-controls {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.win7-control {
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xs);
+    cursor: pointer;
+    position: relative;
+    transition: background-color var(--transition-fast);
+}
+
+.win7-minimize {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--small-radius);
+}
+
+.win7-minimize::after {
+    content: "";
+    width: 10px;
+    height: 2px;
+    background-color: #333;
+    position: absolute;
+    bottom: 7px;
+}
+
+.win7-maximize {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--small-radius);
+}
+
+.win7-maximize::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 1px solid #333;
+    position: absolute;
+    background: transparent;
+}
+
+.win7-close {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--small-radius);
+}
+
+.win7-close:hover {
+    background-color: #e81123;
+}
+
+.win7-close::after {
+    content: "×";
+    color: #333;
+    font-size: var(--text-xl);
+    font-weight: bold;
+}
+
+.win7-close:hover::after {
+    color: white;
+}
+
+/* IMPROVED: Better focus states for accessibility */
+.win7-control:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-lg);
+    font-weight: normal;
+    font-family: var(--font-headings);
+    color: var(--title-text);
+}
+
+/* Site title with Aero glass effect - IMPROVED accessibility */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-xl);
+    font-weight: 300;
+    font-family: var(--font-headings);
+    position: relative;
+    z-index: 1;
+    flex-grow: 1;
+}
+
+.site-title a {
+    text-decoration: none;
+    color: var(--title-text); /* Fallback for text browsers */
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    transition: all var(--transition-medium);
+    font-weight: 500;
+}
+
+/* Progressive enhancement for gradient text */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(200, 230, 255, 0.9) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a:hover {
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Progressive enhancement for hover gradient */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .site-title a:hover {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(220, 240, 255, 1) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Navigation bar with Aero glass effect - OPTIMIZED */
+nav {
+    background: rgba(240, 240, 240, 0.6);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(8px); /* Reduced from 10px for better performance */
+    -webkit-backdrop-filter: blur(8px);
+    justify-content: center;
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(8px)) {
+    nav {
+        background: rgba(240, 240, 240, 0.9); /* More opaque fallback */
+    }
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: 0 var(--spacing-xs);
+    border-radius: var(--small-radius);
+    font-size: var(--text-sm);
+    position: relative;
+    display: inline-block;
+    transition: background var(--transition-fast);
+    white-space: nowrap;
+}
+
+nav a:hover, nav a:focus {
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Selected menu item */
+nav a.active {
+    background: rgba(217, 233, 250, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Content area with slight transparency - IMPROVED contrast */
+main {
+    padding: var(--spacing-2xl);
+    background-color: var(--window-bg);
+}
+
+/* Typography - Windows 7 specific - IMPROVED contrast */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    font-weight: 300;
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--text-3xl);
+    color: #1a73e8;
+}
+
+h2 {
+    font-size: var(--text-2xl);
+    color: #1a73e8;
+}
+
+h3 {
+    font-size: var(--text-xl);
+}
+
+p {
+    margin-bottom: var(--spacing-lg);
+    line-height: var(--line-height-normal);
+}
+
+/* Links - IMPROVED accessibility */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Windows 7 style buttons - IMPROVED accessibility */
+.win7-button {
+    background: linear-gradient(to bottom, #f8f8f8 0%, #e1e1e1 100%);
+    border: 1px solid #ababab;
+    border-radius: var(--small-radius);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: var(--text-xs);
+    cursor: pointer;
+    margin: var(--spacing-xs);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    transition: all var(--transition-fast);
+}
+
+.win7-button:hover {
+    background: linear-gradient(to bottom, #f8f8f8 0%, #d8d8d8 100%);
+    border-color: #7eb4ea;
+    box-shadow: 0 0 3px rgba(42,100,150,0.4);
+}
+
+.win7-button:active {
+    background: linear-gradient(to bottom, #cee7fc 0%, #8abde6 100%);
+    border-color: #5c8ab9;
+}
+
+.win7-button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-color: #7eb4ea;
+    box-shadow: 0 0 3px rgba(42,100,150,0.4);
+}
+
+/* Articles with glass effect - OPTIMIZED */
+article {
+    margin-bottom: var(--spacing-2xl);
+    padding: var(--spacing-xl);
+    border: 1px solid rgba(202, 223, 243, 0.7);
+    border-radius: var(--small-radius);
+    background-color: rgba(255, 255, 255, 0.5);
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(3px); /* Reduced from 5px for better performance */
+    -webkit-backdrop-filter: blur(3px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(3px)) {
+    article {
+        background-color: rgba(255, 255, 255, 0.85); /* More opaque fallback */
+    }
+}
+
+article:hover {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border-color: rgba(179, 207, 233, 0.9);
+}
+
+article .meta {
+    font-size: var(--text-sm);
+    color: #666;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.reading-time {
+    color: #666;
+    font-style: italic;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.tags a {
+    background: rgba(235, 245, 255, 0.7);
+    color: #1562ad;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--text-xs);
+    border-radius: 12px;
+    text-decoration: none;
+    border: 1px solid rgba(179, 207, 233, 0.7);
+    transition: all var(--transition-fast);
+}
+
+.tags a:hover {
+    background: rgba(213, 233, 252, 0.9);
+    text-decoration: none;
+}
+
+.tags a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background: rgba(213, 233, 252, 0.9);
+    text-decoration: none;
+}
+
+code {
+    font-family: var(--font-mono);
+    background-color: rgba(240, 240, 240, 0.7);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--small-radius);
+    font-size: var(--text-sm);
+}
+
+pre {
+    background-color: rgba(245, 245, 245, 0.7);
+    padding: var(--spacing-md);
+    border-radius: var(--small-radius);
+    overflow-x: auto;
+    border: 1px solid rgba(217, 217, 217, 0.7);
+    line-height: var(--line-height-tight);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--small-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer styled as Windows 7 taskbar - IMPROVED accessibility */
+footer {
+    background: linear-gradient(to bottom, #2980d5 0%, #1e5faa 100%);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--text-sm);
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #0c3b82;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+/* Footer links with better contrast - IMPROVED accessibility */
+footer a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #ffff99;
+    text-decoration: underline;
+}
+
+footer a:focus {
+    outline: 2px solid #ffff99;
+    outline-offset: 2px;
+    color: #ffff99;
+    text-decoration: underline;
+}
+
+/* Start button - IMPROVED accessibility */
+.start-button {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(to bottom, #3c95ea 0%, #1562ad 100%);
+    color: white;
+    font-weight: normal;
+    padding: var(--spacing-sm) var(--spacing-xl) var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--small-radius);
+    font-size: var(--text-sm);
+    position: relative;
+    border: 1px solid #09407f;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.start-button:hover {
+    background: linear-gradient(to bottom, #4ca5fa 0%, #2572bd 100%);
+}
+
+.start-button:focus {
+    outline: 2px solid #ffff99;
+    outline-offset: 2px;
+    background: linear-gradient(to bottom, #4ca5fa 0%, #2572bd 100%);
+}
+
+/* SIMPLIFIED: Text-based icon instead of base64 image */
+.start-button::before {
+    content: "⊞";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: var(--spacing-sm);
+    font-size: var(--text-lg);
+    text-align: center;
+    line-height: 1;
+    color: white;
+}
+
+/* Win7 taskbar time - IMPROVED accessibility */
+.taskbar-time {
+    display: inline-block;
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--small-radius);
+    font-size: var(--text-xs);
+}
+
+/* Pagination in Win7 style - IMPROVED accessibility */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: var(--spacing-2xl) 0;
+    gap: var(--spacing-md);
+}
+
+.pagination a {
+    background: linear-gradient(to bottom, #f8f8f8 0%, #e1e1e1 100%);
+    color: var(--text-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    border-radius: var(--small-radius);
+    border: 1px solid #ababab;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    transition: all var(--transition-fast);
+}
+
+.pagination a:hover {
+    background: linear-gradient(to bottom, #f8f8f8 0%, #d8d8d8 100%);
+    border-color: #7eb4ea;
+    box-shadow: 0 0 3px rgba(42,100,150,0.4);
+    text-decoration: none;
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    background: linear-gradient(to bottom, #f8f8f8 0%, #d8d8d8 100%);
+    border-color: #7eb4ea;
+    box-shadow: 0 0 3px rgba(42,100,150,0.4);
+    text-decoration: none;
+}
+
+.pagination .page-info {
+    color: #666;
+    font-size: var(--text-sm);
+}
+
+/* IMPROVED: Better responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-md);
+        /* OPTIMIZED: Simplified background on mobile */
+        background-image: linear-gradient(135deg, #e3eefb 0%, #d1e7f0 100%);
+    }
+    
+    .container {
+        margin: var(--spacing-md) auto;
+        width: 95%;
+        max-width: none;
+        /* OPTIMIZED: Remove backdrop-filter on mobile for better performance */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.98);
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: var(--spacing-xl);
+        /* OPTIMIZED: Remove backdrop-filter on mobile */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: linear-gradient(to bottom, rgba(209, 228, 246, 0.98) 0%, rgba(177, 211, 241, 0.98) 100%);
+    }
+    
+    header h1 {
+        margin: 0 0 var(--spacing-md) 0;
+        font-size: var(--text-xl);
+        width: 100%;
+        text-align: center;
+    }
+    
+    header p {
+        margin: 0;
+        padding: 0;
+        font-size: var(--text-sm);
+        text-align: center;
+    }
+    
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: var(--spacing-md);
+        gap: var(--spacing-md);
+        /* OPTIMIZED: Remove backdrop-filter on mobile */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(240, 240, 240, 0.95);
+    }
+    
+    nav a {
+        flex: 0 0 auto;
+        margin: var(--spacing-xs);
+        padding: var(--spacing-md) var(--spacing-xl);
+        width: 80%;
+        text-align: center;
+        border-radius: var(--small-radius);
+        font-size: var(--text-sm);
+        border: 1px solid var(--border-color);
+        background: linear-gradient(to bottom, #f8f8f8 0%, #e1e1e1 100%);
+    }
+    
+    article {
+        /* OPTIMIZED: Remove backdrop-filter on mobile */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-xl);
+        text-align: center;
+    }
+    
+    .taskbar-time {
+        margin-top: var(--spacing-md);
+    }
+}
+
+/* Additional breakpoint for very small screens */
+@media (max-width: 480px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    .container {
+        margin: var(--spacing-sm) auto;
+        width: 95%;
+    }
+    
+    header {
+        padding: var(--spacing-md);
+    }
+    
+    header h1 {
+        font-size: var(--text-lg);
+    }
+    
+    nav {
+        padding: var(--spacing-sm);
+    }
+    
+    nav a {
+        margin: var(--spacing-xs) auto;
+        padding: var(--spacing-md) 0;
+        width: 90%;
+        font-size: var(--text-xs);
+    }
+}
+
+/* Featured Images with Windows 7 Aero styling - OPTIMIZED */
+.featured-image {
+    margin: var(--spacing-xl) 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    background: rgba(255, 255, 255, 0.5);
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(3px); /* Reduced from 5px for better performance */
+    -webkit-backdrop-filter: blur(3px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(3px)) {
+    .featured-image {
+        background: rgba(255, 255, 255, 0.85);
+    }
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all var(--transition-medium);
+}
+
+.featured-image:hover img {
+    transform: scale(1.01); /* Reduced scale for better performance */
+}
+
+.featured-image .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--title-bar);
+    color: var(--title-text);
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--text-sm);
+    text-align: center;
+    /* CONDITIONAL: backdrop-filter only if motion is not reduced */
+    backdrop-filter: blur(8px); /* Reduced from 10px for better performance */
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(8px)) {
+    .featured-image .image-caption {
+        background: linear-gradient(to bottom, rgba(209, 228, 246, 0.98) 0%, rgba(177, 211, 241, 0.98) 100%);
+    }
+}
+
+.index-image, .tag-image, .archive-image {
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 1px 5px var(--shadow-color);
+}
+
+.index-image img, .tag-image img, .archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* IMPROVED: Better text selection */
+::selection {
+    background-color: var(--highlight-color);
+    color: var(--text-color);
+}
+
+/* Date header with Win7 styling - IMPROVED accessibility */
+.date-header {
+    font-family: var(--font-headings);
+    font-weight: 300;
+    color: var(--title-text);
+    margin: var(--spacing-xl) 0 var(--spacing-lg) 0;
+    font-size: var(--text-md);
+    display: inline-block;
+    position: relative;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background: var(--title-bar);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
+} 

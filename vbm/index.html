@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vbm | oSoWoSo</title>
+    <meta name="description" content="open Source World Society">
+    <meta property="og:title" content="vbm">
+    <meta property="og:description" content="open Source World Society">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://osowoso.org//vbm/">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="vbm">
+    <meta name="twitter:description" content="open Source World Society">
+    
+    <meta name="theme-color" content="#808080">
+    <link rel="icon" href="https://osowoso.org/favicon.png">
+    <link rel="stylesheet" href="https://osowoso.org/selector.css">
+    <link rel="stylesheet" href="https://osowoso.org/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://osowoso.org/rss.xml">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "vbm",
+  "url": "https://osowoso.org/vbm/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "oSoWoSo",
+    "url": "https://osowoso.org"
+  }
+}
+</script>
+    <link rel="stylesheet" href="https://osowoso.org/selector.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="site-title"><a href="https://osowoso.org/">oSoWoSo</a></div>
+            <p>open Source World Society</p>
+            <div class="theme-selector">
+                <label for="theme-select">theme:</label>
+                <select id='theme-select' onchange='changeTheme()'>
+                                <option value='amiga500'>amiga500</option>
+                <option value='apple2'>apple2</option>
+                <option value='art-deco'>art-deco</option>
+                <option value='atarist'>atarist</option>
+                <option value='bauhaus'>bauhaus</option>
+                <option value='bbs'>bbs</option>
+                <option value='beos'>beos</option>
+                <option value='blackberry'>blackberry</option>
+                <option value='braun'>braun</option>
+                <option value='brutalist'>brutalist</option>
+                <option value='cyber-dark'>cyber-dark</option>
+                <option value='c64'>c64</option>
+                <option value='dark'>dark</option>
+                <option value='default'>default</option>
+                <option value='diary'>diary</option>
+                <option value='docs'>docs</option>
+                <option value='flat'>flat</option>
+                <option value='gameboy'>gameboy</option>
+                <option value='glassmorphism'>glassmorphism</option>
+                <option value='ios'>ios</option>
+                <option value='italy'>italy</option>
+                <option value='longform'>longform</option>
+                <option value='macclassic'>macclassic</option>
+                <option value='macos9'>macos9</option>
+                <option value='mario'>mario</option>
+                <option value='material'>material</option>
+                <option value='mid-century'>mid-century</option>
+                <option value='minimal'>minimal</option>
+                <option value='mondrian'>mondrian</option>
+                <option value='msdos'>msdos</option>
+                <option value='nes'>nes</option>
+                <option value='newspaper'>newspaper</option>
+                <option value='nextstep'>nextstep</option>
+                <option value='nordic-clean'>nordic-clean</option>
+                <option value='osowoso'>osowoso</option>
+                <option value='osx'>osx</option>
+                <option value='reader-mode'>reader-mode</option>
+                <option value='skeuomorphic'>skeuomorphic</option>
+                <option value='stefano'>stefano</option>
+                <option value='swiss-design'>swiss-design</option>
+                <option value='terminal'>terminal</option>
+                <option value='text-only'>text-only</option>
+                <option value='thoughtful'>thoughtful</option>
+                <option value='tty'>tty</option>
+                <option value='vaporwave'>vaporwave</option>
+                <option value='web1'>web1</option>
+                <option value='web2'>web2</option>
+                <option value='winxp'>winxp</option>
+                <option value='win311'>win311</option>
+                <option value='win7'>win7</option>
+                <option value='win95'>win95</option>
+                <option value='y2k'>y2k</option>
+                <option value='zxspectrum'>zxspectrum</option>
+
+                </select>
+                <link id='theme-style' rel='stylesheet' href=''>
+            </div>
+            <nav>
+                <div class="nav-left">
+                    <a href="https://osowoso.org/">Home</a> <a href="https://osowoso.org/contributing/">Contributing</a> <a href="https://osowoso.org/projects/">Projects</a> <a href="https://osowoso.org/resources/">Resources</a> <a href="https://osowoso.org/void/">Void</a> <a href="https://osowoso.org/pages.html">Pages</a> <a href="https://osowoso.org/archives/">Archives</a> <a href="https://osowoso.org/rss.xml">RSS</a>
+                </div>
+                <div class="nav-right">
+                    <a href="https://osowoso.discourse.group/">forum</a>
+                </div>
+                <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-left">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </nav>
+            <script src="https://osowoso.org/theme-switcher.js" defer></script>
+            <script src="https://osowoso.org/hamburger.js" defer></script>
+        </header>
+        <main><article class="page">
+  <h1>vbm</h1>
+  <div class="page-content">
+<h3 id="changed-name-from-vpm-to-vbm">Changed name from vpm to vbm</h3>
+<h1
+id="vbm---an-xbps-package-management-helper-for-vb-aka-void-gnulinux">vbm
+- An XBPS package management helper for vb aka Void GNU/Linux</h1>
+<p>version 1.0</p>
+<p><code>vbm</code> is a simple to use, daily-driver enhancement to the
+awesome XBPS (X Binary Package System), initially designed as a helper
+tool for use with VoidLinux. Feel free to think “Void Package
+Management” or something if it helps you remember its name, but please
+note that it’s NOT a “package manager” in the nitpickers understanding
+of the word - especially vbm shouldn’t be confused with XBPS - vbm is
+just an addon helper tool for XBPS to make your life easier. That’s
+it.</p>
+<h1 id="better-then-screenshots">better then screenshots</h1>
+<p>vbm…</p>
+<p><a href="https://asciinema.org/a/476068"><img
+src="https://asciinema.org/a/476068.svg" alt="asciicast" /></a></p>
+<h1 id="motivation-to-write-vpm">Motivation to write vpm</h1>
+<p>I initially found XBPS to have a steep learning-curve, so I wanted to
+ease the life of new VoidLinux users, and XBPS users in general. Please
+don’t feel afraid to look up the corresponding XBPS commands it
+translates to, or use vpm –show-translations so you even see the
+translations already when using vpm help. It has been said that vpm will
+ease the transition from Debian’s APT, and some other user-friendly
+repository/package-managers.</p>
+<h1 id="dependencies">Dependencies</h1>
+<p>vbm requires BASH, the Bourne Again SHell, which should be installed
+by default on a new VoidLinux system. You also will need git and
+xcheckrestart both provided by xtools package to obtain a clone of the
+vbm repository. (see “Installation” section, below).</p>
+<p>Or you can just grab vbm and paste it anywhere in your system.</p>
+<h1 id="installation">Installation</h1>
+<h3 id="optional---needed-for-xcheckrestart-functions">(optional -
+needed for xcheckrestart functions)</h3>
+<h3 id="install-xtools-via-xbps-install">Install xtools via
+<code>xbps-install</code></h3>
+<pre><code>xbps-install -S xtools    </code></pre>
+<h3 id="clone-vbm-repository">1. Clone vbm repository</h3>
+<pre><code>git clone https://codeberg.org/oSoWoSo/vbm.git</code></pre>
+<h3 id="enter-the-cloned-repo-and-run">3. Enter the cloned repo and
+run:</h3>
+<pre><code>sudo make install</code></pre>
+<h3 id="a.-remove-vbm">3a. Remove vbm</h3>
+<p>If you want to remove vbm, just use make to remove it. Make sure you
+are in the cloned directory first, then run:</p>
+<pre><code>sudo make uninstall
+
+or simply
+
+vbm remove vbm :)</code></pre>
+<h1 id="zomg-ponies111">ZOMG! PONIES!!111</h1>
+<p>Rainbows and unicorns, indeed. If you like colorized output, please
+see the –color=true option, too! All vbm options try to have human
+readable and easy to remember syntax, no
+–long-option-with-multiple-complex-words, no need to even prefix
+arguments with –, vbm just tries to do its best it can to understand the
+user (there are some command-line-switches, though, see vbm help).</p>
+<p>Also vbm will ask for password if needed.</p>
+<h1 id="license">License</h1>
+<p>vbm is released under the terms of the GNU General Public License,
+Version 3. See the LICENSE file for further information.</p>
+<pre><code>Copyright (c) 2016: Armin Jenewein &lt;vpm@m2m.pm&gt;
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</code></pre>
+<h1 id="authors">Authors</h1>
+<ul>
+<li>https://github.com/netzverweigerer/vpm - vpm was written by Armin
+Jenewein <a href="mailto:vpm@m2m.pm" class="email">vpm@m2m.pm</a></li>
+<li>https://github.com/bahamas10/vpm - forked by Dave Eddy <a
+href="mailto:dave@daveeddy.com" class="email">dave@daveeddy.com</a></li>
+<li>https://codeberg.org/oSoWoSo/vbm - and this fork by zenobit <a
+href="mailto:zen@duck.com" class="email">zen@duck.com</a></li>
+</ul>
+<h1 id="mirrors">Mirrors</h1>
+<ul>
+<li>repos mirrored at:</li>
+<li>‘https://github.com/oSoWoSo/vbm’</li>
+<li>‘https://gitlab.com/linux15/void/vbm’</li>
+<li>‘https://git.disroot.org/oSoWoSo/vbm’</li>
+<li>more mirrors will come…</li>
+</ul>
+  </div>
+</article>        </main>
+        <footer>
+            <p>&copy; 2026 oSoWoSo. All rights reserved.</p>
+            <p>This site was generated with <a href="https://bssg.dragas.net">BSSG</a>, a Bash Static Site Generator.</p>
+            <p>
+                <a href="https://osowoso.org/">Home</a> &middot; <a href="https://osowoso.org/contributing/">Contributing</a> &middot; <a href="https://osowoso.org/projects/">Projects</a> &middot; <a href="https://osowoso.org/resources/">Resources</a> &middot; <a href="https://osowoso.org/void/">Void</a> &middot; <a href="https://osowoso.org/pages.html">Pages</a> &middot; <a href="https://osowoso.org/archives/">Archives</a> &middot; <a href="https://osowoso.org/rss.xml">Subscribe via RSS</a>
+            </p>
+            <p><a href="#">Back to Top</a></p>
+        </footer>
+    </div>
+</body>
+</html> 

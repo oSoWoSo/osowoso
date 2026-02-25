@@ -1,0 +1,675 @@
+/* 
+ * Apple II Theme for BSSG
+ * Green monochrome text terminal style from the Apple II era
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Added text browser fallbacks for gradient text and decorative elements
+ * - Optimized font loading with better fallbacks
+ * - Enhanced performance while maintaining authentic Apple II look
+ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+}
+
+:root {
+    /* Apple II color scheme */
+    --bg-color: #000000;
+    --text-color: #33ff33;
+    --link-color: #88ff88;
+    --link-visited: #55bb55;
+    --header-color: #33ff33;
+    --border-color: #33ff33;
+    --title-color: #88ff88;
+    --title-highlight: #ccffcc;
+    
+    /* Typography - ENHANCED fallbacks for text browsers */
+    --font-main: 'Courier New', 'Lucida Console', Monaco, 'Consolas', monospace;
+    --font-headings: 'Courier New', 'Lucida Console', Monaco, 'Consolas', monospace;
+    --font-mono: 'Courier New', 'Lucida Console', Monaco, 'Consolas', monospace;
+    
+    /* Sizing */
+    --content-width: 800px;
+    --transition: 0.2s ease;
+}
+
+/* Apple II screen effect */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+    text-shadow: 0 0 5px var(--text-color);
+}
+
+/* OPTIMIZED scanline effect with progressive enhancement */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* TEXT BROWSER FALLBACK: Disable complex background when not supported */
+@supports not (background-clip: text) {
+    body::before {
+        display: none;
+    }
+}
+
+/* Container with simulated terminal screen */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Terminal header */
+header {
+    border-bottom: 1px solid var(--text-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Site title with Apple II inspired gradient */
+.site-title {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.site-title a {
+    text-decoration: none;
+    /* Apple II green gradient */
+    background: linear-gradient(to right, var(--title-color) 0%, var(--title-highlight) 50%, var(--title-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 8px var(--title-color);
+    display: inline-block;
+    position: relative;
+    transition: all var(--transition);
+}
+
+/* TEXT BROWSER FALLBACK: Provide solid color when gradient text isn't supported */
+@supports not (background-clip: text) {
+    .site-title a {
+        color: var(--title-color);
+        background: none;
+    }
+    
+    .site-title a:hover {
+        color: var(--title-highlight);
+        background: none;
+    }
+}
+
+.site-title a:hover {
+    text-decoration: none;
+    background: linear-gradient(to right, var(--title-highlight) 0%, var(--title-color) 50%, var(--title-highlight) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px var(--title-highlight);
+}
+
+.site-title a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+}
+
+.site-title a::after {
+    content: "_";
+    display: inline-block;
+    opacity: 1;
+    animation: blink 1s step-end infinite;
+    color: var(--title-color);
+    text-shadow: 0 0 8px var(--title-color);
+    margin-left: 2px;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+/* Navigation with terminal prompt style */
+nav {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--text-color);
+    position: relative;
+    display: inline-block;
+    transition: all var(--transition);
+}
+
+nav a::before {
+    content: "]";
+    margin-right: 5px;
+}
+
+nav a::after {
+    content: "[";
+    margin-left: 5px;
+}
+
+nav a:hover, nav a:focus {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-shadow: none;
+}
+
+nav a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+}
+
+/* Selected menu item */
+nav a.active {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-shadow: none;
+}
+
+/* Content area */
+main {
+    min-height: 50vh;
+}
+
+/* Typography - Apple II style */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.3rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Terminal cursor blinking effect */
+.cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    background-color: var(--text-color);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    transition: color var(--transition);
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    color: var(--title-highlight);
+    text-shadow: 0 0 5px var(--title-highlight);
+}
+
+a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+    color: var(--title-highlight);
+}
+
+article {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px dashed var(--text-color);
+    position: relative;
+}
+
+article::before {
+    content: "***** ARTICLE START *****";
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+article:last-child {
+    margin-bottom: 0;
+}
+
+article .meta {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.reading-time {
+    display: inline-block;
+}
+
+.reading-time::before {
+    content: "TIME:";
+    margin-right: 5px;
+}
+
+/* Featured image styles for Apple II */
+.featured-image {
+    display: block;
+    margin: 20px 0;
+    border: 1px dashed var(--text-color);
+    padding: 10px;
+    position: relative;
+}
+
+.featured-image::before {
+    content: "***** IMAGE DATA *****";
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.featured-image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    filter: sepia(100%) hue-rotate(70deg) saturate(400%) brightness(0.8);
+    border: 1px solid var(--text-color);
+    box-shadow: 0 0 15px rgba(51, 255, 51, 0.5);
+}
+
+.featured-image .image-caption {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.featured-image::after {
+    content: "***** END IMAGE *****";
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.index-image {
+    display: block;
+    margin: 20px 0;
+    border: 1px dashed var(--text-color);
+    padding: 10px;
+    position: relative;
+}
+
+.index-image::before {
+    content: "***** INDEX IMAGE *****";
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.index-image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    filter: sepia(100%) hue-rotate(70deg) saturate(400%) brightness(0.8);
+    border: 1px solid var(--text-color);
+}
+
+.index-image::after {
+    content: "********************";
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.tag-image {
+    display: block;
+    margin: 20px 0;
+    border: 1px dashed var(--text-color);
+    padding: 10px;
+    position: relative;
+}
+
+.tag-image::before {
+    content: "***** TAG IMAGE *****";
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.tag-image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    filter: sepia(100%) hue-rotate(70deg) saturate(400%) brightness(0.8);
+    border: 1px solid var(--text-color);
+}
+
+.tag-image::after {
+    content: "********************";
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.archive-image {
+    display: block;
+    margin: 20px 0;
+    border: 1px dashed var(--text-color);
+    padding: 10px;
+    position: relative;
+}
+
+.archive-image::before {
+    content: "***** ARCHIVE IMAGE *****";
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.archive-image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    filter: sepia(100%) hue-rotate(70deg) saturate(400%) brightness(0.8);
+    border: 1px solid var(--text-color);
+}
+
+.archive-image::after {
+    content: "************************";
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tags::before {
+    content: "TAGS:";
+    margin-right: 5px;
+}
+
+.tags a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.tags a:hover {
+    text-decoration: underline;
+    color: var(--title-highlight);
+}
+
+.tags a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+    color: var(--title-highlight);
+}
+
+code {
+    font-family: var(--font-mono);
+    background-color: rgba(51, 255, 51, 0.1);
+    padding: 2px 4px;
+}
+
+pre {
+    background-color: rgba(51, 255, 51, 0.1);
+    padding: 10px;
+    overflow-x: auto;
+    border: 1px solid var(--text-color);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    filter: sepia(100%) hue-rotate(70deg) saturate(400%) brightness(0.8);
+    border: 1px solid var(--text-color);
+}
+
+footer {
+    margin-top: 30px;
+    padding: 15px;
+    border-top: 1px solid var(--text-color);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+footer::before {
+    content: "***** SYSTEM STATUS: READY *****";
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+footer a {
+    color: var(--link-color);
+    transition: color var(--transition);
+}
+
+footer a:hover {
+    color: var(--title-highlight);
+}
+
+footer a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+    color: var(--title-highlight);
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px dashed var(--text-color);
+}
+
+.pagination a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid var(--text-color);
+    transition: all var(--transition);
+}
+
+.pagination a::before {
+    content: "> ";
+}
+
+.pagination a:hover, .pagination a:focus {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.pagination a:focus {
+    outline: 2px solid var(--title-color);
+    outline-offset: 2px;
+}
+
+.pagination .page-info {
+    color: var(--text-color);
+    font-family: var(--font-mono);
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+        max-width: none;
+    }
+    
+    nav {
+        flex-direction: column;
+    }
+    
+    nav a {
+        margin-bottom: 5px;
+        padding: 8px 12px;
+        text-align: center;
+    }
+    
+    article::before {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .featured-image,
+    .index-image,
+    .tag-image,
+    .archive-image {
+        margin: 15px 0;
+        padding: 8px;
+    }
+    
+    article {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    
+    footer {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+    
+    pre {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+    
+    .featured-image::before,
+    .index-image::before,
+    .tag-image::before,
+    .archive-image::before,
+    .featured-image::after,
+    .index-image::after,
+    .tag-image::after,
+    .archive-image::after,
+    article::before,
+    footer::before {
+        font-size: 0.7rem;
+    }
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--text-color);
+    margin: 20px 0;
+    height: 1px;
+}
+
+.date-header {
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}

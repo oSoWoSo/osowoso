@@ -1,0 +1,1290 @@
+/* 
+ * Reflections - A modern, elegant diary theme
+ * Rich visual design with progressive enhancement
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Removed external font loading for better performance and text browser compatibility
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining elegant diary aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Disable fade-in animations */
+    .container, article {
+        animation: none !important;
+    }
+    
+    /* Disable hover transforms */
+    article:hover, figure:hover, .featured-image:hover, 
+    .index-image:hover, .tag-image:hover, .archive-image:hover {
+        transform: none !important;
+    }
+}
+
+:root {
+  /* Modern, refined color palette */
+  --bg-color: #faf7f2;
+  --bg-secondary: #f3efe7;
+  --text-color: #2d2a24;
+  --text-secondary: #5d584f;
+  --heading-color: #191815;
+  --link-color: #566e94;
+  --link-hover: #4056a1;
+  --accent-primary: #a2836e;
+  --accent-secondary: #8fb9aa;
+  --border-color: #e2dcd2;
+  --code-bg: #edeae2;
+  --blockquote-bg: #f3efe7;
+  --blockquote-border: #d4caba;
+  --card-bg: #ffffff;
+  --tag-bg: #e9e4da;
+  --tag-hover: #d9d2c4;
+  --title-gradient-start: #a2836e;
+  --title-gradient-end: #8fb9aa;
+  
+  /* Typography - ENHANCED fallbacks for text browsers */
+  --font-main: Georgia, 'Times New Roman', Times, serif;
+  --font-headings: Georgia, 'Times New Roman', Times, serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  
+  /* Spacing and structure */
+  --content-width: 46rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --line-height: 1.75;
+  
+  /* Effects (optional enhancements) */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.4s ease;
+}
+
+/* Dark mode with more vibrant tones */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1c1a18;
+    --bg-secondary: #252320;
+    --text-color: #e6e0d4;
+    --text-secondary: #b2ab9f;
+    --heading-color: #f0ebe0;
+    --link-color: #91a7d0;
+    --link-hover: #b3c5e6;
+    --accent-primary: #c4a58e;
+    --accent-secondary: #a3c8bb;
+    --border-color: #38352f;
+    --code-bg: #2c2924;
+    --blockquote-bg: #252320;
+    --blockquote-border: #4a443b;
+    --card-bg: #252320;
+    --tag-bg: #38352f;
+    --tag-hover: #4a443b;
+    --title-gradient-start: #c4a58e;
+    --title-gradient-end: #a3c8bb;
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* REMOVED: External font loading for better performance and text browser compatibility */
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  line-height: var(--line-height);
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus states for accessibility */
+:focus-visible {
+  outline: 3px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+/* Skip-to-content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--link-color);
+  color: var(--bg-color);
+  padding: var(--spacing-sm);
+  z-index: 100;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Layout & Container */
+.container {
+  width: 90%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+/* Header */
+header {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0 var(--spacing-md);
+  position: relative;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, 
+    transparent, 
+    var(--border-color) 20%, 
+    var(--border-color) 80%, 
+    transparent
+  );
+}
+
+header h1 {
+  color: var(--heading-color);
+  font-size: 2.6rem;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-family: var(--font-headings);
+  /* Optional decorative gradient text effect */
+  background: linear-gradient(120deg, var(--accent-primary), var(--heading-color) 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (background-clip: text) {
+  header h1 {
+    color: var(--heading-color);
+    background: none;
+  }
+}
+
+header p {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Navigation */
+nav {
+  padding: var(--spacing-md) 0;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  padding: var(--spacing-xs) var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  transition: all var(--transition-normal);
+  transform: translateX(-50%);
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--accent-primary);
+}
+
+nav a:hover::after,
+nav a:focus::after,
+nav a.active::after {
+  width: 80%;
+}
+
+nav a.active {
+  color: var(--accent-primary);
+}
+
+/* Main Content */
+main {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Article */
+article {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-lg);
+  position: relative;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  overflow: hidden;
+}
+
+article::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+}
+
+/* PERFORMANCE: Simplified hover effect without expensive transforms */
+article:hover {
+  box-shadow: var(--shadow-md); /* Reduced shadow complexity */
+}
+
+article:last-child {
+  margin-bottom: 0;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  color: var(--heading-color);
+  line-height: 1.3;
+  margin: var(--spacing-lg) 0 var(--spacing-sm);
+  font-weight: 600;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent-primary), transparent);
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5, h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+/* For diary-like first-letter styling */
+article > p:first-of-type::first-letter {
+  font-size: 3.2em;
+  float: left;
+  line-height: 0.85;
+  margin-right: 0.15em;
+  padding-top: 0.1em;
+  color: var(--accent-primary);
+  font-family: var(--font-headings);
+  font-weight: 500;
+}
+
+/* Links */
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: all var(--transition-normal);
+}
+
+a:hover,
+a:focus {
+  color: var(--link-hover);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent-primary);
+}
+
+/* Lists */
+ul, ol {
+  margin: var(--spacing-md) 0;
+  padding-left: 1.8rem;
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+  position: relative;
+}
+
+/* Decorated list bullets */
+ul li::marker {
+  color: var(--accent-primary);
+}
+
+/* Blockquotes - styled like handwritten notes */
+blockquote {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--blockquote-bg);
+  border-left: 4px solid var(--blockquote-border);
+  border-radius: var(--border-radius-md);
+  font-style: italic;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  font-family: Georgia, serif;
+  color: var(--accent-primary);
+  opacity: 0.15;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  line-height: 1;
+}
+
+/* TEXT BROWSER FALLBACK: Simplify quote mark when positioning isn't supported */
+@supports not (position: absolute) {
+  blockquote::before {
+    content: '"';
+    position: static;
+    top: auto;
+    left: auto;
+    font-size: 1.2rem;
+    opacity: 1;
+  }
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Code and Pre elements */
+code {
+  font-family: var(--font-mono);
+  background-color: var(--code-bg);
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+  border-radius: var(--border-radius-sm);
+}
+
+pre {
+  font-family: var(--font-mono);
+  background-color: var(--code-bg);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius-md);
+  line-height: 1.5;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Images */
+figure {
+  margin: var(--spacing-lg) 0;
+  /* PERFORMANCE: Removed expensive transform transition */
+}
+
+/* PERFORMANCE: Removed scale transform that causes layout recalculation */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+figcaption {
+  text-align: center;
+  font-size: 0.9em;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-sm);
+  padding: 0 var(--spacing-md);
+  font-family: var(--font-ui);
+}
+
+/* Date and metadata */
+.meta {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  font-style: italic;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.date {
+  font-family: var(--font-ui);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Date: " prefix for date */
+.date::before {
+  content: "Date: ";
+  margin-right: 0.35rem;
+  font-size: 1.1em;
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+  .date::before {
+    content: "📅";
+  }
+}
+
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* TEXT BROWSER FALLBACK: Add "Time: " prefix for reading time */
+.reading-time::before {
+  content: "Time: ";
+  margin-right: 0.35rem;
+  font-size: 1.1em;
+}
+
+/* Hide the prefix when CSS transforms are supported (modern browsers) */
+@supports (transform: translateX(0)) {
+  .reading-time::before {
+    content: "⏱️";
+  }
+}
+
+/* Tags */
+.tags {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tags a {
+  display: inline-block;
+  background-color: var(--tag-bg);
+  color: var(--text-color);
+  padding: 0.3em 0.8em;
+  font-size: 0.85rem;
+  border-radius: 100px;
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.tags a:hover,
+.tags a:focus {
+  background-color: var(--tag-hover);
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-sm); /* Reduced shadow complexity */
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, 
+    transparent, 
+    var(--border-color) 20%, 
+    var(--border-color) 80%, 
+    transparent
+  );
+  margin: var(--spacing-lg) 0;
+  position: relative;
+}
+
+hr::before {
+  content: "✦";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  color: var(--accent-primary);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+}
+
+/* TEXT BROWSER FALLBACK: Simplify decorative element when positioning isn't supported */
+@supports not (position: absolute) {
+  hr::before {
+    content: "*";
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background-color: transparent;
+  }
+}
+
+/* Footer */
+footer {
+  padding-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  position: relative;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(to right, 
+    transparent, 
+    var(--border-color) 20%, 
+    var(--border-color) 80%, 
+    transparent
+  );
+}
+
+footer p {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-lg);
+  font-family: var(--font-ui);
+}
+
+.pagination a {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.pagination a:hover,
+.pagination a:focus {
+  background-color: var(--bg-secondary);
+  box-shadow: var(--shadow-sm); /* Reduced shadow complexity */
+}
+
+.pagination a.prev::before {
+  content: "←";
+  margin-right: 0.5rem;
+}
+
+.pagination a.next::after {
+  content: "→";
+  margin-left: 0.5rem;
+}
+
+/* Archive list */
+.archive-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.archive-list li {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.archive-list li:hover {
+  box-shadow: var(--shadow-sm); /* Reduced shadow complexity */
+}
+
+.archive-date {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-right: var(--spacing-sm);
+}
+
+/* Post summary in lists */
+.post-summary {
+  padding: var(--spacing-md);
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  border-left: 3px solid var(--accent-primary);
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.post-summary:hover {
+  box-shadow: var(--shadow-sm); /* Reduced shadow complexity */
+}
+
+.post-summary h3 {
+  margin-top: 0;
+}
+
+/* Search form */
+.search {
+  margin: var(--spacing-md) 0;
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  font-family: var(--font-ui);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.search input:focus {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0 3px rgba(141, 185, 170, 0.2);
+  outline: none;
+}
+
+.search button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  transition: color var(--transition-normal);
+}
+
+.search button:hover {
+  color: var(--accent-primary);
+}
+
+/* PERFORMANCE OPTIMIZATION: Simplified animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* PERFORMANCE: Removed staggered animations that cause layout thrashing */
+.container {
+  opacity: 1; /* Default visible state for better performance */
+}
+
+/* PERFORMANCE: Simplified article animation without transforms */
+article {
+  opacity: 1; /* Default visible state */
+  animation: fadeIn 0.3s ease-out; /* Shorter, simpler animation */
+}
+
+/* PERFORMANCE: Removed staggered delays that cause multiple repaints */
+
+/* Ensure content is visible even without animations */
+@media (prefers-reduced-motion: reduce) {
+  .container, article {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  
+  .container {
+    width: 95%;
+  }
+  
+  h1 {
+    font-size: 1.9rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+  }
+  
+  article {
+    padding: var(--spacing-md);
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .meta {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .featured-image, .index-image, .tag-image, .archive-image {
+    margin: var(--spacing-md) 0;
+  }
+  
+  article > p:first-of-type::first-letter {
+    font-size: 3.2em;
+    line-height: 0.8;
+  }
+  
+  blockquote {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Medium-small devices */
+@media (max-width: 600px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .container {
+    width: 93%;
+    padding: var(--spacing-sm);
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  article {
+    padding: var(--spacing-sm);
+  }
+  
+  header h1, .site-title {
+    font-size: 2rem;
+  }
+  
+  header p {
+    font-size: 1rem;
+  }
+  
+  nav ul {
+    gap: var(--spacing-sm);
+  }
+  
+  nav a {
+    padding: var(--spacing-xs) 0;
+  }
+  
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  blockquote {
+    padding: var(--spacing-sm);
+  }
+  
+  blockquote::before {
+    font-size: 3.5rem;
+    top: -1rem;
+  }
+  
+  article > p:first-of-type::first-letter {
+    font-size: 3em;
+    line-height: 0.75;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    width: 92%;
+    padding: var(--spacing-xs);
+  }
+  
+  nav ul {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  article {
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  header h1, .site-title {
+    font-size: 1.8rem;
+  }
+  
+  header::after, footer::before {
+    background: linear-gradient(to right, 
+      transparent, 
+      var(--border-color) 10%, 
+      var(--border-color) 90%, 
+      transparent
+    );
+  }
+  
+  .featured-image, .index-image, .tag-image, .archive-image {
+    padding: var(--spacing-xs);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .tags {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .tags a {
+    text-align: center;
+  }
+  
+  article > p:first-of-type::first-letter {
+    font-size: 2.5em;
+    line-height: 0.7;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  html {
+    font-size: 13px;
+  }
+  
+  .container {
+    width: 95%;
+    padding: var(--spacing-xs) calc(var(--spacing-xs) / 2);
+  }
+  
+  h1 {
+    font-size: 1.7rem;
+  }
+  
+  h2 {
+    font-size: 1.4rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  header h1, .site-title {
+    font-size: 1.7rem;
+  }
+  
+  article {
+    padding: var(--spacing-xs);
+  }
+  
+  .pagination a {
+    padding: calc(var(--spacing-xs) * 0.8) var(--spacing-sm);
+    font-size: 0.9rem;
+  }
+  
+  blockquote {
+    padding: var(--spacing-xs);
+  }
+  
+  blockquote::before {
+    font-size: 3rem;
+  }
+  
+  pre {
+    padding: var(--spacing-sm);
+  }
+  
+  article > p:first-of-type::first-letter {
+    font-size: 2.2em;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    font-size: 12pt;
+    background: #fff;
+    color: #000;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav, .pagination, .tags, footer, .search {
+    display: none;
+  }
+  
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+  }
+  
+  article, .post-summary, blockquote, pre {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  article::before {
+    display: none;
+  }
+  
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    box-shadow: none;
+  }
+  
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+  }
+  
+  p, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  article > p:first-of-type::first-letter {
+    color: #000;
+  }
+}
+
+/* Site title styling with elegant gradient */
+.site-title {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  font-size: 2.6rem;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.2;
+}
+
+.site-title a {
+  text-decoration: none;
+  background: linear-gradient(120deg, var(--title-gradient-start), var(--title-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.05);
+  transition: all var(--transition-normal);
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform and gradient recalculation */
+.site-title a:hover {
+  color: var(--accent-secondary); /* Simple color change instead of gradient */
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (background-clip: text) {
+  .site-title a {
+    color: var(--accent-primary);
+    background: none;
+  }
+  
+  .site-title a:hover {
+    color: var(--accent-secondary);
+  }
+}
+
+/* Featured image styling with elegant diary-like frame */
+.featured-image {
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  background-color: var(--card-bg);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.featured-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--title-gradient-start), var(--title-gradient-end));
+}
+
+.featured-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+  margin: 0;
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform and filter */
+.featured-image:hover {
+  box-shadow: var(--shadow-md); /* Reduced shadow complexity */
+}
+
+/* PERFORMANCE: Removed expensive filter effect */
+
+.featured-image .image-caption {
+  padding: var(--spacing-sm) var(--spacing-xs) 0;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.index-image {
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  background-color: var(--card-bg);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.index-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+}
+
+.index-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+  margin: 0;
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.index-image:hover {
+  box-shadow: var(--shadow-md); /* Reduced shadow complexity */
+}
+
+.tag-image {
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  background-color: var(--card-bg);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.tag-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--link-color), var(--accent-secondary));
+}
+
+.tag-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+  margin: 0;
+}
+
+/* PERFORMANCE: Simplified hover without expensive transform */
+.tag-image:hover {
+  box-shadow: var(--shadow-md); /* Reduced shadow complexity */
+}
+
+.archive-image {
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  background-color: var(--card-bg);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.archive-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent-secondary), var(--link-color));
+}
+
+.archive-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+  margin: 0;
+}

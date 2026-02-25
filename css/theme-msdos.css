@@ -1,0 +1,759 @@
+/* 
+ * MS-DOS Theme for BSSG
+ * Classic blue command line interface reminiscent of MS-DOS
+ * 
+ * IMPROVEMENTS APPLIED:
+ * - Added comprehensive reduced motion support
+ * - Enhanced accessibility with focus outlines
+ * - Enhanced font fallbacks with comprehensive system font stacks
+ * - Added text browser fallbacks for decorative elements
+ * - Optimized performance while maintaining authentic MS-DOS aesthetics
+ */
+
+/* REDUCED MOTION SUPPORT - Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Disable DOS-specific animations */
+    .site-title a,
+    .dos-loading,
+    .dos-loading::after {
+        animation: none !important;
+    }
+}
+
+:root {
+    /* MS-DOS classic colors */
+    --bg-color: #000088;
+    --text-color: #cccccc;
+    --border-color: #aaaaaa;
+    --link-color: #ffffff;
+    --link-visited: #bbbbbb;
+    --header-color: #ffffff;
+    --menu-bg: #000088;
+    --menu-text: #ffffff;
+    --menu-highlight-bg: #aaaaaa;
+    --menu-highlight-text: #000088;
+    
+    /* Title colors for DOS-style gradient */
+    --title-gradient-start: #ffffff;
+    --title-gradient-end: #aaaaaa;
+    
+    /* Typography - Enhanced font fallbacks for MS-DOS terminal look */
+    --font-main: 'Consolas', 'Monaco', 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+    --font-headings: 'Consolas', 'Monaco', 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+    --font-mono: 'Consolas', 'Monaco', 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+    
+    /* Sizing */
+    --content-width: 820px;
+    --spacing-unit: 8px; /* Base unit for consistent spacing */
+}
+
+/* Base elements */
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: calc(var(--spacing-unit) * 2);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* Terminal-style container */
+.container {
+    max-width: var(--content-width);
+    margin: calc(var(--spacing-unit) * 1.5) auto;
+    padding: 0;
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+/* Header like a DOS prompt */
+header {
+    color: var(--header-color);
+    padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 1.5);
+    margin: 0;
+    position: relative;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Site title with MS-DOS style */
+.site-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--header-color);
+    width: 100%;
+    display: block;
+}
+
+.site-title a {
+    color: var(--header-color);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    animation: textFlicker 2s linear infinite;
+}
+
+@keyframes textFlicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 97.999%, 99.999%, 100% {
+        opacity: 1;
+    }
+    20%, 21.999%, 63%, 63.999%, 98%, 99.998% {
+        opacity: 0.8;
+    }
+}
+
+.site-title a::before {
+    content: "C:\\> ";
+    color: var(--text-color);
+    animation: none;
+}
+
+/* TEXT BROWSER FALLBACK: Simple prompt for site title */
+@supports not (animation: none) {
+    .site-title a::before {
+        content: "> ";
+    }
+}
+
+.site-title a:hover {
+    animation: none;
+    background: linear-gradient(to right, 
+        var(--title-gradient-start),
+        var(--title-gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ACCESSIBILITY: Focus states for site title */
+.site-title a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    animation: none;
+    background: linear-gradient(to right, 
+        var(--title-gradient-start),
+        var(--title-gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.site-title a:hover::after {
+    content: "█";
+    animation: blink 1s step-end infinite;
+    font-weight: normal;
+    color: var(--text-color);
+    margin-left: 2px;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--header-color);
+    width: 100%;
+    display: block;
+}
+
+header h1::before {
+    content: "C:\\> ";
+    color: var(--text-color);
+}
+
+header p {
+    margin: calc(var(--spacing-unit) / 2) 0 0 25px; /* Indent the tagline */
+    padding: 0;
+    font-size: 0.95rem;
+    font-weight: normal;
+    color: var(--text-color);
+    width: 100%;
+    display: block;
+}
+
+/* Navigation as DOS menu */
+nav {
+    background-color: var(--menu-bg);
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: visible;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+nav a {
+    color: var(--menu-text);
+    text-decoration: none;
+    padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
+    margin: 0;
+    font-size: 0.95rem;
+    position: relative;
+    display: inline-block;
+    border-right: 1px solid var(--border-color);
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+}
+
+nav a:first-child {
+    border-left: 1px solid var(--border-color);
+}
+
+nav a:hover, nav a:focus {
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+}
+
+/* ACCESSIBILITY: Enhanced focus states for navigation */
+nav a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+}
+
+/* Selected menu item */
+nav a.active {
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+}
+
+/* Content area */
+main {
+    padding: calc(var(--spacing-unit) * 1.5);
+    background-color: var(--bg-color);
+    min-height: 450px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--header-color);
+    margin-top: calc(var(--spacing-unit) * 2);
+    margin-bottom: calc(var(--spacing-unit));
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin-top: calc(var(--spacing-unit) * 3);
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-top: calc(var(--spacing-unit) * 2.5);
+}
+
+article h1 {
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: calc(var(--spacing-unit) * 0.75);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+article h1::before {
+    content: "> ";
+    color: var(--text-color);
+}
+
+p {
+    margin-top: calc(var(--spacing-unit));
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    line-height: 1.5;
+}
+
+/* DOS-style blinking cursor effect at the end of paragraphs */
+p:after {
+    content: "█";
+    animation: blink 1s step-end infinite;
+    font-weight: normal;
+    color: var(--text-color);
+}
+
+/* TEXT BROWSER FALLBACK: Simple cursor for paragraphs */
+@supports not (animation: blink) {
+    p:after {
+        content: "_";
+        animation: none;
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+a:visited {
+    color: var(--link-visited);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ACCESSIBILITY: Focus states for general links */
+a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Articles with command prompt style */
+article {
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    padding: calc(var(--spacing-unit) * 1.5);
+    position: relative;
+    border-bottom: 1px dotted var(--border-color);
+}
+
+article::before {
+    content: "DIR>";
+    color: var(--text-color);
+    margin-right: calc(var(--spacing-unit));
+}
+
+/* TEXT BROWSER FALLBACK: Simple prompt for articles */
+@supports not (position: relative) {
+    article::before {
+        content: "* ";
+    }
+}
+
+article:last-child {
+    margin-bottom: calc(var(--spacing-unit));
+    border-bottom: none;
+}
+
+article .meta {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 2);
+    margin-left: calc(var(--spacing-unit) * 1.5);
+}
+
+.reading-time {
+    color: var(--text-color);
+    font-style: italic;
+}
+
+.reading-time::before {
+    content: "TIME: ";
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 0.75);
+    margin-top: calc(var(--spacing-unit) * 1.5);
+}
+
+.tags a {
+    color: var(--link-color);
+    padding: calc(var(--spacing-unit) * 0.35) calc(var(--spacing-unit));
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    line-height: 1;
+    transition: all 0.15s ease;
+}
+
+.tags a:hover {
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+    text-decoration: none;
+}
+
+/* ACCESSIBILITY: Focus states for tags */
+.tags a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+    text-decoration: none;
+}
+
+.tags a::before {
+    content: "[";
+}
+
+.tags a::after {
+    content: "]";
+}
+
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 1.25);
+    margin: calc(var(--spacing-unit) * 2.5) 0;
+}
+
+.tag-count {
+    color: var(--text-color);
+    font-size: 0.85em;
+    margin-left: calc(var(--spacing-unit) * 0.75);
+}
+
+/* Code formatting */
+code {
+    font-family: var(--font-mono);
+    background-color: #000055;
+    padding: calc(var(--spacing-unit) * 0.25) calc(var(--spacing-unit) * 0.5);
+    font-size: 0.9em;
+}
+
+pre {
+    background-color: #000055;
+    padding: calc(var(--spacing-unit) * 1.25);
+    overflow-x: auto;
+    font-size: 0.9em;
+    border: 1px solid var(--border-color);
+    margin: calc(var(--spacing-unit) * 1.5) 0;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    filter: grayscale(30%);
+    margin: calc(var(--spacing-unit) * 1.5) 0;
+}
+
+/* Footer styled as command prompt */
+footer {
+    color: var(--text-color);
+    padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 1.5);
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: calc(var(--spacing-unit) * 3);
+}
+
+footer::before {
+    content: "C:\\>";
+    margin-right: calc(var(--spacing-unit));
+}
+
+/* Pagination in DOS style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: calc(var(--spacing-unit) * 3) 0 calc(var(--spacing-unit) * 1.5);
+    gap: calc(var(--spacing-unit) * 1.25);
+}
+
+.pagination a {
+    color: var(--link-color);
+    padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1.25);
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    transition: all 0.15s ease;
+}
+
+.pagination a:hover {
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+    text-decoration: none;
+}
+
+/* ACCESSIBILITY: Focus states for pagination */
+.pagination a:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    background-color: var(--menu-highlight-bg);
+    color: var(--menu-highlight-text);
+    text-decoration: none;
+}
+
+.pagination .page-info {
+    margin: 0 calc(var(--spacing-unit) * 1.25);
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+/* MS-DOS command line elements */
+.dos-prompt {
+    color: var(--text-color);
+    font-weight: normal;
+    margin-right: calc(var(--spacing-unit) * 0.75);
+}
+
+.dos-command {
+    color: var(--header-color);
+    font-weight: bold;
+}
+
+.dos-path {
+    color: var(--text-color);
+}
+
+.dos-error {
+    color: #ff5555;
+}
+
+.dos-success {
+    color: #55ff55;
+}
+
+/* Simulated loading bar for pagination */
+.dos-loading {
+    width: 100%;
+    margin: calc(var(--spacing-unit) * 1.25) 0;
+    height: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.dos-loading::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--text-color);
+    animation: loading 2s infinite;
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin: calc(var(--spacing-unit) * 0.75);
+        width: auto;
+        max-width: none;
+    }
+    
+    header {
+        padding: calc(var(--spacing-unit) * 1.25);
+    }
+    
+    header h1 {
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+    
+    header p {
+        margin-top: calc(var(--spacing-unit) * 0.75);
+    }
+    
+    nav {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    nav a {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        width: 100%;
+        text-align: center;
+        padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 1.25);
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: calc(var(--spacing-unit) * 1.25);
+        text-align: center;
+        padding: calc(var(--spacing-unit) * 1.25);
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: calc(var(--spacing-unit));
+    }
+    
+    .pagination a {
+        width: 80%;
+        text-align: center;
+    }
+    
+    .pagination .page-info {
+        order: -1;
+        margin-bottom: calc(var(--spacing-unit) * 0.75);
+    }
+}
+
+/* Featured image with DOS viewer style */
+.featured-image {
+    margin: calc(var(--spacing-unit) * 2) 0;
+    border: 1px solid var(--border-color);
+    padding: calc(var(--spacing-unit) * 0.75);
+    position: relative;
+    background-color: var(--bg-color);
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featured-image::before {
+    content: "IMAGE.EXE /LOAD";
+    display: block;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    font-family: var(--font-mono);
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: 1px solid var(--border-color);
+    filter: brightness(0.9) contrast(1.1); /* DOS-like contrast */
+    margin: 0;
+}
+
+.featured-image .image-caption {
+    margin-top: calc(var(--spacing-unit) * 0.75);
+    padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 0.75);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    border-top: 1px dashed var(--border-color);
+}
+
+.featured-image .image-caption::before {
+    content: "IMAGE.INF: ";
+    color: var(--link-color);
+}
+
+.index-image {
+    margin: calc(var(--spacing-unit) * 2) 0;
+    border: 1px solid var(--border-color);
+    padding: calc(var(--spacing-unit) * 0.75);
+    position: relative;
+    background-color: var(--bg-color);
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.index-image::before {
+    content: "PREVIEW.EXE /LOAD";
+    display: block;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    font-family: var(--font-mono);
+}
+
+.index-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: 1px solid var(--border-color);
+    filter: brightness(0.9) contrast(1.1);
+    margin: 0;
+}
+
+.tag-image {
+    margin: calc(var(--spacing-unit) * 2) 0;
+    border: 1px solid var(--border-color);
+    padding: calc(var(--spacing-unit) * 0.75);
+    position: relative;
+    background-color: var(--bg-color);
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tag-image::before {
+    content: "TAG.EXE /DISPLAY";
+    display: block;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    font-family: var(--font-mono);
+}
+
+.tag-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: 1px solid var(--border-color);
+    filter: brightness(0.9) contrast(1.1);
+    margin: 0;
+}
+
+.archive-image {
+    margin: calc(var(--spacing-unit) * 2) 0;
+    border: 1px solid var(--border-color);
+    padding: calc(var(--spacing-unit) * 0.75);
+    position: relative;
+    background-color: var(--bg-color);
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.archive-image::before {
+    content: "ARCHIVE.EXE /DISPLAY";
+    display: block;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    font-family: var(--font-mono);
+}
+
+.archive-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    border: 1px solid var(--border-color);
+    filter: brightness(0.9) contrast(1.1);
+    margin: 0;
+} 
