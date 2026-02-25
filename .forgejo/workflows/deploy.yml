@@ -1,0 +1,37 @@
+name: "Copy content of output directory to pages branch"
+on:
+  push:
+    branches: main
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: codeberg-tiny
+    #runs-on: codeberg-small
+    #runs-on: codeberg-medium
+# Available runners
+# Label            Arch  CPU  RAM Runtime  Notes
+# codeberg-tiny    amd64  1   2G  2 min    Intended for very lightweight jobs like linters and other helpers
+# codeberg-small   amd64  2   4G  5 min
+# codeberg-medium  amd64  4   6G  10 min
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy output to pages
+        run: |
+          git config user.name "Forgejo Actions"
+          git config user.email "actions@codeberg.org"
+
+          git remote set-url origin https://x-token:${{ secrets.GITHUB_TOKEN }}@codeberg.org/${{ github.repository }}.git
+
+          cp -r output /tmp/pages_output
+
+          git fetch origin pages || true
+          git checkout pages 2>/dev/null || git checkout --orphan pages
+
+          git rm -rf . || true
+          cp -r /tmp/pages_output/. .
+
+          git add .
+          git diff --cached --quiet || git commit -m "Deploy pages from output [ci skip]"
+          git push origin pages --force
